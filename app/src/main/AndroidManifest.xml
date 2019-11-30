@@ -23,6 +23,7 @@
         </activity>
         <activity
             android:name=".module.MainActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
     </application>
 

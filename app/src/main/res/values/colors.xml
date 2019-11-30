@@ -281,6 +281,8 @@
     <color name="navy">#000080</color><!--海军色 -->
       
     <color name="black">#000000</color><!--黑色 -->
+
+    <color name="black_44">#44000000</color><!--黑色 -->
       
     <color name="grassgreen">#99cc33</color><!--草绿色 -->
      
