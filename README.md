@@ -21,8 +21,6 @@
 
 
 
-![test-pic](https://upload.jianshu.io/users/upload_avatars/13623636/b65d89a7-6115-479e-8004-18753e925b69?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240 "my title")
-
 
 ### 更新日志
 
@@ -32,4 +30,11 @@ _2019年12月5日21:56:12_
 + 本地html显示本地图片验证通过
 + 开机启动app
 
+
+
+### 项目功能思维导图
+
+![xmind](./ProjcetData/多元智能评估与训练系统.png "xmind")
+
+![test-pic](https://upload.jianshu.io/users/upload_avatars/13623636/b65d89a7-6115-479e-8004-18753e925b69?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240 "my title")
 
