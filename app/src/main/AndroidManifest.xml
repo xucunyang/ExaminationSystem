@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.oranle.es">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".app.SessionApp"
         android:allowBackup="true"
@@ -25,6 +27,27 @@
             android:name=".module.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".module.ui.detail.InnovationDetailActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".module.base.WebViewActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+
+        <receiver
+            android:name=".module.receiver.MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+
     </application>
 
 </manifest>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关于《阿凡达》续集的xxxxxxxxxxx消息终于有了进展。"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:text="阿凡达》（Avatar）是一部由詹姆斯·卡梅隆执导，二十世纪福克斯出品，萨姆·沃辛顿、佐伊·索尔达娜和西格妮·韦弗等人主演的科幻电影，该片于2009年12月16日以2D、3D和IMAX-3D三种制式在北美上映。
+该片主要讲述人类穿上阿凡达的躯壳，飞到遥远的星球潘多拉开采资源。受伤后以轮椅代步的前海军杰克，自愿接受实验并以他的阿凡达来到潘多拉。在结识了当地纳美族人公主涅提妮之后，杰克在一场人类与潘多拉军民的战争中陷入两难。"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
