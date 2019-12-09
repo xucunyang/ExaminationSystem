@@ -31,11 +31,18 @@ _2019年12月5日21:56:12_
 + 本地html显示本地图片验证通过
 + 开机启动app
 
+_2019-12-9 22:09:59_
++ 数据库思维导图，很多尚未明确
++ 数据库Room框架实现User表的管理
+
 
 
 ### 项目功能思维导图
 
-![xmind](./ProjcetData/多元智能评估与训练系统.png "xmind")
++ 整体功能
+    + ![xmind](./ProjcetData/多元智能评估与训练系统.png "xmind")
 
++ 数据库
+    + ![数据库](./ProjcetData/数据库.png "数据库")
 ![test-pic](https://upload.jianshu.io/users/upload_avatars/13623636/b65d89a7-6115-479e-8004-18753e925b69?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240 "my title")
 
