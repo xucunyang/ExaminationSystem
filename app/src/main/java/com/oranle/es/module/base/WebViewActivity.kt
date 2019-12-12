@@ -32,9 +32,12 @@ class WebViewActivity: BaseActivity<LayoutWebviewBinding>() {
                 javaScriptEnabled = true
                 useWideViewPort = true
                 loadWithOverviewMode = true
-                webView.webViewClient = (mWebViewClient)
-                webView.setWebChromeClient(mWebChromeClient)
+                allowFileAccess = true;
+                allowContentAccess = true;
             }
+            webView.webViewClient = (mWebViewClient)
+            webView.webChromeClient = mWebChromeClient
+
 
             includeTitle.tvTitle?.text = mTitle
             webView.loadUrl(url)
