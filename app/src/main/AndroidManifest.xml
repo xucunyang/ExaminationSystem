@@ -44,6 +44,10 @@
             android:name=".module.ui.ListActivityDemo"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.ui.ExaminationSystemLoginActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
 
         <receiver
             android:name=".module.receiver.MyReceiver"
