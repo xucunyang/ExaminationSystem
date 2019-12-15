@@ -78,7 +78,8 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity()
 
     private val permissions = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.INTERNET
     )
 
     private fun isAllPermissionGranted(): Boolean {

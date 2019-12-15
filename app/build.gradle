@@ -27,6 +27,11 @@ android {
         enabled = true
         enabledForTests = true
     }
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -68,4 +73,6 @@ dependencies {
     // Dependencies for local unit tests
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+
+    implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 }
