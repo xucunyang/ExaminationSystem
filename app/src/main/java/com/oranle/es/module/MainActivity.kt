@@ -42,8 +42,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         toast("${view.id} xxxx")
 
 //        val intent = Intent(view.context, ListActivityDemo::class.java)
-        val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
-        view.context.startActivity(intent)
+//        val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
+//        view.context.startActivity(intent)
+
+
 
     }
 }
