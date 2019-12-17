@@ -26,7 +26,7 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity()
         super.onCreate(savedInstanceState)
 
         dataBinding = DataBindingUtil.setContentView(this, layoutId)
-        dataBinding.lifecycleOwner = this
+        dataBinding.setLifecycleOwner(this)
 
         checkPermission()
     }
