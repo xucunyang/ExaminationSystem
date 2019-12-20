@@ -30,7 +30,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="高级管理员"
+                        android:text="wp"
                         android:textSize="30sp" />
 
                     <TextView
@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onUnit"
+                    android:onClick="onLoginManager"
                     android:text="登陆账号管理"
                     android:textSize="25sp" />
 
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onUnit"
+                    android:onClick="onReport"
                     android:text="查看报告"
                     android:textSize="25sp" />
 
@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onAdmin"
+                    android:onClick="onEntry"
                     android:text="手工录入"
                     android:textSize="25sp" />
 
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onTable"
+                    android:onClick="onGroup"
                     android:text="团体统计"
                     android:textSize="25sp" />
 
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onPwd"
+                    android:onClick="onPerson"
                     android:text="个人统计"
                     android:textSize="25sp" />
 
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onPwd"
+                    android:onClick="onExport"
                     android:text="量表导出"
                     android:textSize="25sp" />
 
@@ -131,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center"
-                    android:onClick="onPwd"
+                    android:onClick="onAdminPwd"
                     android:text="管理员密码修改"
                     android:textSize="25sp" />
 
