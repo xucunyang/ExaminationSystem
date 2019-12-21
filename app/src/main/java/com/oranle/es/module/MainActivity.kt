@@ -2,15 +2,13 @@ package com.oranle.es.module
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.oranle.es.R
 import com.oranle.es.databinding.ActivityMainBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.WebViewActivity
 import com.oranle.es.module.base.toast
-import com.oranle.es.module.ui.ExaminationSystemLoginActivity
-import com.oranle.es.module.ui.ListActivityDemo
+import com.oranle.es.module.examination.inportFile.FileImportActivity
 import timber.log.Timber
 
 const val SD_WEB_PATH = "sdcard/es-web/web"
@@ -42,8 +40,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         toast("${view.id} xxxx")
 
 //        val intent = Intent(view.context, ListActivityDemo::class.java)
+        val intent = Intent(view.context, FileImportActivity::class.java)
 //        val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
-//        view.context.startActivity(intent)
+        view.context.startActivity(intent)
 
 
 

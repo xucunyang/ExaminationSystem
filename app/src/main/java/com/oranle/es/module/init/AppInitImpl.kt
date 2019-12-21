@@ -1,8 +1,9 @@
 package com.oranle.es.module.init
 
+import com.oranle.es.app.SessionApp
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
-import com.oranle.es.data.repository.UserRepository
+import com.oranle.es.data.repository.DBRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class AppInitImpl: AppInit {
             role = Role.Root.value,
             psw = "admin")
         GlobalScope.launch (IO) {
-            UserRepository().getDB().getUserDao().addUser(admin)
+            DBRepository.getDB(SessionApp.instance!!).getUserDao().addUser(admin)
         }
     }
 }
