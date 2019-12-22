@@ -273,6 +273,7 @@
     <color name="darkgreen">#006400</color><!--暗绿色 -->
       
     <color name="blue">#0000FF</color><!--蓝色 -->
+    <color name="blue_bg">#1177cc</color><!--蓝色 -->
       
     <color name="mediumblue">#0000CD</color><!--中兰色 -->
       
@@ -282,7 +283,7 @@
       
     <color name="black">#000000</color><!--黑色 -->
 
-    <color name="black_44">#44000000</color><!--黑色 -->
+    <color name="black_77">#77000000</color><!--黑色 -->
       
     <color name="grassgreen">#99cc33</color><!--草绿色 -->
      
