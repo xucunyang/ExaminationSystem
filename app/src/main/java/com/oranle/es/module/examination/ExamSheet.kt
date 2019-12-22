@@ -34,7 +34,7 @@ data class ExamSheet @JvmOverloads constructor(
     val answerList: List<String?>?
 ) {
     suspend fun saveToDB(): String {
-        var msg: String
+        val msg: String
         val answerStr = answerList?.joinToString(",") ?: ""
         val assessment = Assessment(id, title, introduction, showIntroduction, showTip, answerStr)
 

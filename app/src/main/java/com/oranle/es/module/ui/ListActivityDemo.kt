@@ -2,7 +2,6 @@ package com.oranle.es.module.ui
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,13 +18,13 @@ class ListActivityDemo : BaseActivity<ActivityListBinding>() {
 
     override val layoutId = R.layout.activity_list
 
+    private lateinit var viewModel : DemoListViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val listViewModel = ViewModelProviders.of(this).get(DemoListViewModel::class.java)
-
-        dataBinding.vm = listViewModel
-        val myAdapter = MyAdapter(listViewModel)
+        dataBinding.vm = getViewModel()
+        val myAdapter = MyAdapter(viewModel)
         dataBinding.rv.adapter = myAdapter
         dataBinding.rv.itemAnimator = DefaultItemAnimator()
         dataBinding.rv.layoutManager = LinearLayoutManager(this)
@@ -38,9 +37,9 @@ class ListActivityDemo : BaseActivity<ActivityListBinding>() {
 
         Timber.d("start")
 
-        listViewModel.start()
+        viewModel.start()
 
-        listViewModel.items.observe(this, Observer {
+        viewModel.items.observe(this, Observer {
             Timber.d("observer changed $it")
 
             myAdapter.submitList(it)

@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.MainActivity"
+            android:name=".module.ui.home.HomeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
 

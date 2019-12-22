@@ -20,29 +20,33 @@ import java.io.InputStream
 
 import timber.log.Timber
 
-//使用HWPFDocument读文件
+/**
+ *  使用HWPFDocument读文件
+ */
 class HWPFDocumentUtils {
 
+    val docParseDebug = false;
+
     private fun log(o: Any) {
-        Timber.d(o.toString())
+        if (docParseDebug)
+            Timber.d(o.toString())
     }
 
     @Throws(Exception::class)
     suspend fun readDocAndSave(path: String): String {
-        val text: String
         val `is` = FileInputStream(path)
         val doc = HWPFDocument(`is`)
         val range = doc.range
 
         //读表格
-        Timber.d("---------读表格----------")
-        text = this.readTable(range)
+        log("---------读表格----------")
+        readTable(range)
 
         val examSheet = getExamSheet(range)
 
         val msg = examSheet.saveToDB()
 
-        Timber.d("---------examSheet---------- $examSheet")
+        log("---------examSheet---------- $examSheet")
 
         this.closeStream(`is`)
         return msg
@@ -87,8 +91,7 @@ class HWPFDocumentUtils {
      *
      * @param range
      */
-    private fun readTable(range: Range): String {
-        val content = StringBuilder()
+    private fun readTable(range: Range) {
         //遍历range范围内的table。
         val tableIter = TableIterator(range)
         var table: Table
@@ -103,12 +106,10 @@ class HWPFDocumentUtils {
                 for (k in 0 until cellNum) {
                     cell = row.getCell(k)
                     //输出单元格的文本
-                    content.append(cell.text().trim { it <= ' ' })
                     log("第" + j + "行，第" + k + "列：" + cell.text().trim { it <= ' ' })
                 }
             }
         }
-        return content.toString()
     }
 
     /**

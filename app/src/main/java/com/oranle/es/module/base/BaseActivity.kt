@@ -10,10 +10,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import timber.log.Timber
 
 
-abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<ViewBinding : ViewDataBinding> :
+    AppCompatActivity() {
 
     private val PERMISSON_REQ_CODE = 100
 
@@ -21,6 +24,8 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity()
     abstract val layoutId: Int
 
     lateinit var dataBinding: ViewBinding
+
+    private val progressUtil = ProgressUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,5 +97,17 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> : AppCompatActivity()
         }
         return true
     }
+
+    protected fun initDialog(viewModel: BaseViewModel) {
+        viewModel.showDialog.observe(this, Observer { value ->
+            if (value)
+                progressUtil.showLoading(this@BaseActivity, true, viewModel.content.value)
+            else
+                progressUtil.dismiss()
+        })
+    }
+
+    protected inline fun <reified T : BaseViewModel> getViewModel() =
+        ViewModelProviders.of(this).get(T::class.java)
 
 }

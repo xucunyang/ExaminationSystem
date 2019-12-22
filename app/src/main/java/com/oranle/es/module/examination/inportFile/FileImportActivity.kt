@@ -28,6 +28,8 @@ class FileImportActivity : BaseActivity<ActivityImportFileBinding>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        Timber.d(" onActivityResult $requestCode, $resultCode $data")
+
         if (resultCode == Activity.RESULT_OK && requestCode == FILE_REQUEST_CODE) {
             Timber.d("timer: ${getRealFilePath(this, data?.data)}")
 

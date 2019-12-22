@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="@{vm.text}"
+            android:textSize="@dimen/sp_32"
             app:layout_constraintBottom_toBottomOf="@+id/import_file"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/import_file" />
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:textSize="@dimen/sp_32"
             android:onClick="@{(view) -> vm.onFileImportClick(view)}"
             android:text="选择量表"
             app:layout_constraintEnd_toEndOf="parent"
