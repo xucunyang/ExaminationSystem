@@ -9,6 +9,7 @@ import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.WebViewActivity
 import com.oranle.es.module.base.toast
 import com.oranle.es.module.examination.inportFile.FileImportActivity
+import com.oranle.es.module.ui.ExaminationSystemLoginActivity
 
 const val SD_WEB_PATH = "sdcard/es-web/web"
 
@@ -42,17 +43,10 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
     fun onMultiTest(view: View) {
         toast("${view.id} xxxx")
 
-        if (!viewModel.showDialog.value!!) {
-            viewModel.showDialog("xxxxxx")
-        } else {
-            viewModel.hideDialog()
-
 //            val intent = Intent(view.context, ListActivityDemo::class.java)
-            val intent = Intent(view.context, FileImportActivity::class.java)
-//        val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
-            view.context.startActivity(intent)
-
-        }
+//            val intent = Intent(view.context, FileImportActivity::class.java)
+        val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
+        view.context.startActivity(intent)
 
 
     }
