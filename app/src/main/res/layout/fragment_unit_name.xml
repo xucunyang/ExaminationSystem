@@ -1,85 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="单位名称设置"
-        android:textColor="@color/black"
-        android:textSize="25sp" />
+    <data></data>
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="学校名称"
+            android:padding="15dp"
+            android:text="单位名称设置"
             android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:textSize="25sp" />
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="增加(设置成功后无法修改)"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="学校名称"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:onClick="onAddOrganizationName"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="增加(设置成功后无法修改)"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/organization_name_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:layout_marginEnd="@dimen/dp_50"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp_50"
+                android:text="确定" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="班级名称"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="增加(设置成功后无法修改)"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/recyclerview" />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="江宁小学"
-        android:textColor="@color/black"
-        android:textSize="25sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="班级名称"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/green"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="增加(设置成功后无法修改)"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
-
-    </LinearLayout>
-
-    <include layout="@layout/recyclerview" />
-
-</LinearLayout>
+</layout>

@@ -13,7 +13,7 @@ import com.oranle.es.module.base.BaseActivity;
 import com.oranle.es.module.ui.senior.fragment.AdministratorFragment;
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment;
 import com.oranle.es.module.ui.senior.fragment.TableFragment;
-import com.oranle.es.module.ui.senior.fragment.UnitNameFragment;
+import com.oranle.es.module.ui.senior.fragment.OrganizationNameFragment;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +38,7 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
 
     private void initView() {
         fragList = new ArrayList<>();
-        fragList.add(new UnitNameFragment());
+        fragList.add(new OrganizationNameFragment());
         fragList.add(new AdministratorFragment());
         fragList.add(new TableFragment());
         fragList.add(new ModifyPwdFragment());

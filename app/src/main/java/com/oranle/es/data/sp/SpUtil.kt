@@ -12,7 +12,9 @@ class SpUtil private constructor() {
         }
     }
 
-    private val FIRST_OPEN = "FIRST_OPEN"
+    private val FIRST_OPEN = "first_open"
+
+    private val ORGANIZATION_NAME = "organization_name"
 
     private val editor: SharedPreferences.Editor
     private val sp = SessionApp.instance!!.getSharedPreferences("sp", Context.MODE_PRIVATE)
@@ -35,5 +37,9 @@ class SpUtil private constructor() {
         }
         return isFirst
     }
+
+    fun setOrganizationName(name: String) = wrap { editor.putString(ORGANIZATION_NAME, name) }
+
+    fun getOrganizationName() = sp.getString(ORGANIZATION_NAME, "")
 
 }
