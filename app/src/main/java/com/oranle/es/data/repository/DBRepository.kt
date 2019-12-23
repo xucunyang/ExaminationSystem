@@ -2,17 +2,18 @@ package com.oranle.es.data.repository
 
 import android.content.Context
 import androidx.room.Room
+import com.oranle.es.app.SessionApp
 import com.oranle.es.data.DB
 
 object DBRepository {
 
     private var dataBase: DB? = null
 
-    fun getDB(context: Context) = dataBase ?: createDB(context)
+    fun getDB() = dataBase ?: createDB()
 
-    private fun createDB(context: Context): DB {
+    private fun createDB(): DB {
         val result = Room.databaseBuilder(
-            context,
+            SessionApp.instance!!,
             DB::class.java,
             "es_data.db"
         ).build()

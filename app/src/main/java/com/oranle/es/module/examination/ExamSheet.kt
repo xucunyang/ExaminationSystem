@@ -39,11 +39,11 @@ data class ExamSheet @JvmOverloads constructor(
         val assessment = Assessment(id, title, introduction, showIntroduction, showTip, answerStr)
 
 
-        val assessmentDao = DBRepository.getDB(SessionApp.instance!!).getAssessmentDao()
+        val assessmentDao = DBRepository.getDB().getAssessmentDao()
         val assessmentByTitle = assessmentDao.getAssessmentByTitle(title)
         if (assessmentByTitle == null) {
             assessmentDao.addAssessment(assessment)
-            DBRepository.getDB(SessionApp.instance!!).getSingleChoiceDao().addSingleChoices(singleChoiceList)
+            DBRepository.getDB().getSingleChoiceDao().addSingleChoices(singleChoiceList)
             Timber.d("assessmentByTitle $assessmentByTitle")
             msg = "量表《${assessment.title}》导入成功"
         } else {

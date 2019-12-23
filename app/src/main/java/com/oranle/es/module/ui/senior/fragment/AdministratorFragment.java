@@ -1,4 +1,4 @@
-package com.oranle.es.module.ui.Senior.fragment;
+package com.oranle.es.module.ui.senior.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

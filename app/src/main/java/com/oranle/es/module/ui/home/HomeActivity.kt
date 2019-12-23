@@ -8,8 +8,7 @@ import com.oranle.es.databinding.ActivityMainBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.WebViewActivity
 import com.oranle.es.module.base.toast
-import com.oranle.es.module.examination.inportFile.FileImportActivity
-import com.oranle.es.module.ui.ExaminationSystemLoginActivity
+import com.oranle.es.module.ui.login.ExaminationSystemLoginActivity
 
 const val SD_WEB_PATH = "sdcard/es-web/web"
 

@@ -11,7 +11,7 @@ import timber.log.Timber
 class SessionApp : Application() {
 
     val localDB: DB
-        get() = DBRepository.getDB(this)
+        get() = DBRepository.getDB()
 
     companion object {
         var instance: SessionApp? = null

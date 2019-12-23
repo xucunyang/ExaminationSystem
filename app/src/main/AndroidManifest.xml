@@ -50,11 +50,15 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".module.ui.ExaminationSystemLoginActivity"
+            android:name=".module.ui.login.ExaminationSystemLoginActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".module.examination.inportFile.FileImportActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.ui.senior.SeniorAdminActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
 

@@ -3,6 +3,7 @@ package com.oranle.es.data.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "user")
 data class User @JvmOverloads constructor(
@@ -15,4 +16,4 @@ data class User @JvmOverloads constructor(
      */
     @ColumnInfo(name = "role") val role: Int,
     @ColumnInfo(name = "psw") val psw: String
-)
+) : Serializable

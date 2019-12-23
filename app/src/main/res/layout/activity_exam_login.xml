@@ -24,39 +24,42 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/user_name_ed"
             android:layout_width="120dp"
             android:layout_height="35dp"
-            android:background="@color/white"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="132dp"
+            android:background="@color/white"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
             app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/psw_et"
             android:layout_width="120dp"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="132dp"
             android:background="@color/white"
+            android:inputType="textPassword"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/user_name_ed" />
 
         <Spinner
-            android:id="@+id/editText2"
+            android:id="@+id/spinner"
             android:layout_width="120dp"
             android:layout_height="35dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="132dp"
-            android:entries="@array/role_type"
             android:background="@color/white"
-            android:spinnerMode="dropdown"
-            android:dropDownVerticalOffset="-50dp"
             android:dropDownHorizontalOffset="20dp"
+            android:dropDownVerticalOffset="-50dp"
+            android:entries="@array/role_type"
+            android:spinnerMode="dropdown"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/editText1" />
+            app:layout_constraintTop_toBottomOf="@+id/psw_et" />
 
         <ImageView
             android:id="@+id/arrow"
@@ -64,9 +67,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@android:drawable/arrow_down_float"
-            app:layout_constraintBottom_toBottomOf="@+id/editText2"
-            app:layout_constraintEnd_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="@+id/editText2" />
+            app:layout_constraintBottom_toBottomOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="@+id/spinner" />
 
         <TextView
             android:id="@+id/textView2"
@@ -75,9 +78,9 @@
             android:layout_marginEnd="16dp"
             android:text="用户名"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/editText"
-            app:layout_constraintEnd_toStartOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="@+id/editText" />
+            app:layout_constraintBottom_toBottomOf="@+id/user_name_ed"
+            app:layout_constraintEnd_toStartOf="@+id/user_name_ed"
+            app:layout_constraintTop_toTopOf="@+id/user_name_ed" />
 
         <TextView
             android:id="@+id/textView3"
@@ -86,9 +89,9 @@
             android:layout_marginEnd="16dp"
             android:text="密 码"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/editText1"
-            app:layout_constraintEnd_toStartOf="@+id/editText1"
-            app:layout_constraintTop_toTopOf="@+id/editText1" />
+            app:layout_constraintBottom_toBottomOf="@+id/psw_et"
+            app:layout_constraintEnd_toStartOf="@+id/psw_et"
+            app:layout_constraintTop_toTopOf="@+id/psw_et" />
 
         <TextView
             android:id="@+id/textView6"
@@ -97,9 +100,9 @@
             android:layout_marginEnd="16dp"
             android:text="类 型"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/editText2"
-            app:layout_constraintEnd_toStartOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="@+id/editText2" />
+            app:layout_constraintBottom_toBottomOf="@+id/spinner"
+            app:layout_constraintEnd_toStartOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="@+id/spinner" />
 
         <Button
             android:id="@+id/button"
@@ -107,12 +110,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@drawable/shape_login_bg"
+            android:onClick="onLoginClick"
             android:text="登录"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/editText2"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner"
             app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="@+id/editText2" />
+            app:layout_constraintStart_toEndOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="@+id/spinner" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

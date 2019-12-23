@@ -8,11 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oranle.es.R;
+import com.oranle.es.databinding.ActivityAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
-import com.oranle.es.module.ui.Senior.fragment.AdministratorFragment;
-import com.oranle.es.module.ui.Senior.fragment.ModifyPwdFragment;
-import com.oranle.es.module.ui.Senior.fragment.TableFragment;
-import com.oranle.es.module.ui.Senior.fragment.UnitNameFragment;
 import com.oranle.es.module.ui.administrator.fragment.AdminPwdFragment;
 import com.oranle.es.module.ui.administrator.fragment.EntryFragment;
 import com.oranle.es.module.ui.administrator.fragment.ExportFragment;
@@ -26,7 +23,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdministratorActivity extends BaseActivity {
+import timber.log.Timber;
+
+public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
     private FragmentManager supportFragmentManager;
     private List<Fragment> fragList;
 
@@ -38,6 +37,9 @@ public class AdministratorActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Timber.d("xxx %s", getIntent().getExtras().get("user"));
+
         initView();
     }
 

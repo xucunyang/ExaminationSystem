@@ -20,7 +20,7 @@ class AppInitImpl: AppInit {
             role = Role.Root.value,
             psw = "admin")
         GlobalScope.launch (IO) {
-            DBRepository.getDB(SessionApp.instance!!).getUserDao().addUser(admin)
+            DBRepository.getDB().getUserDao().addUser(admin)
         }
     }
 }

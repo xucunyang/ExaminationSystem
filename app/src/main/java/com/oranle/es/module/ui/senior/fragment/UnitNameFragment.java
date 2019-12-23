@@ -1,4 +1,4 @@
-package com.oranle.es.module.ui.Senior.fragment;
+package com.oranle.es.module.ui.senior.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.oranle.es.R;
 
-public class TableFragment extends Fragment {
+public class UnitNameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_table, container, false);
+        View view = inflater.inflate(R.layout.fragment_unit_name, container, false);
         return view;
     }
 }

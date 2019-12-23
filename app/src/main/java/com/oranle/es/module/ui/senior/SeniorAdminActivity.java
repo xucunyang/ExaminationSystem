@@ -1,4 +1,4 @@
-package com.oranle.es.module.ui.Senior;
+package com.oranle.es.module.ui.senior;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,18 +8,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oranle.es.R;
+import com.oranle.es.databinding.ActivitySeniorAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
-import com.oranle.es.module.ui.Senior.fragment.AdministratorFragment;
-import com.oranle.es.module.ui.Senior.fragment.ModifyPwdFragment;
-import com.oranle.es.module.ui.Senior.fragment.TableFragment;
-import com.oranle.es.module.ui.Senior.fragment.UnitNameFragment;
+import com.oranle.es.module.ui.senior.fragment.AdministratorFragment;
+import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment;
+import com.oranle.es.module.ui.senior.fragment.TableFragment;
+import com.oranle.es.module.ui.senior.fragment.UnitNameFragment;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeniorAdminActivity extends BaseActivity {
+public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding> {
 
     private FragmentManager supportFragmentManager;
     private List<Fragment> fragList;
