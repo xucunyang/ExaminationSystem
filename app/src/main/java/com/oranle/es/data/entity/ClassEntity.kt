@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class ClassEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id : Int = 0,
-    @ColumnInfo(name = "className") val className : String = "",
-    @ColumnInfo(name = "isRegister") val isRegister : Boolean = true,
+    @ColumnInfo(name = "class_name") val className : String = "",
+    @ColumnInfo(name = "can_register") val isRegister : Boolean = true,
     @ColumnInfo(name = "setting") val setting : String = ""
 )

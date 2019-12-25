@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.oranle.es.R;
 import com.oranle.es.databinding.ActivitySeniorAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
+import com.oranle.es.module.ui.senior.fragment.AddClassFragment;
 import com.oranle.es.module.ui.senior.fragment.AdministratorFragment;
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment;
 import com.oranle.es.module.ui.senior.fragment.TableFragment;
@@ -42,6 +43,7 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         fragList.add(new AdministratorFragment());
         fragList.add(new TableFragment());
         fragList.add(new ModifyPwdFragment());
+        fragList.add(new AddClassFragment());
 
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragList.get(0), "0").commit();
@@ -61,6 +63,10 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
 
     public void onPwd(View view) {
         initViewpager(3);
+    }
+
+    public void showAddClassFrag() {
+        initViewpager(4);
     }
 
     private void initViewpager(int tag) {

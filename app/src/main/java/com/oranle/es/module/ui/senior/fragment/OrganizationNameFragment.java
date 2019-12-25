@@ -10,6 +10,7 @@ import com.oranle.es.R;
 import com.oranle.es.data.sp.SpUtil;
 import com.oranle.es.databinding.FragmentUnitNameBinding;
 import com.oranle.es.module.base.BaseFragment;
+import com.oranle.es.module.ui.senior.SeniorAdminActivity;
 
 public class OrganizationNameFragment extends BaseFragment<FragmentUnitNameBinding> {
 
@@ -48,6 +49,14 @@ public class OrganizationNameFragment extends BaseFragment<FragmentUnitNameBindi
             }
             Toast.makeText(getActivity(), tip, Toast.LENGTH_SHORT).show();
         });
+
+
+        getDataBinding().addClass.setOnClickListener(
+                (View view) -> {
+                    ((SeniorAdminActivity)getActivity()).showAddClassFrag();
+                }
+
+        );
     }
 
 }
