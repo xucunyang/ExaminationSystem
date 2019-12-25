@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="clazz"
+            type="com.oranle.es.data.entity.ClassEntity" />
+
+        <variable
+            name="vm"
+            type="com.oranle.es.module.ui.senior.viewmodel.ClassViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="实验1班"
+            android:text="@{clazz.className + `(` + clazz.memberSize + `)`}"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -19,6 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
+            android:onClick="@{(v) -> vm.onDelete(clazz)}"
             android:text="删除"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -27,6 +39,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
+            android:onClick="@{(v) -> vm.onChange(clazz)}"
             android:text="修改"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -35,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
+            android:onClick="@{(v) -> vm.onClearMember(clazz)}"
             android:text="清空测评人"
             android:textColor="@color/black"
             android:textSize="20sp" />

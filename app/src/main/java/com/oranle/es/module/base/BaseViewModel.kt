@@ -2,6 +2,7 @@ package com.oranle.es.module.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.oranle.es.data.repository.DBRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
@@ -33,5 +34,7 @@ abstract class BaseViewModel : ViewModel() {
     fun hideDialog() {
         showDialog.value = false
     }
+
+    fun getDB() = DBRepository.getDB()
 
 }

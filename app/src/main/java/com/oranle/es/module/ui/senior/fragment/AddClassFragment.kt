@@ -9,6 +9,7 @@ import com.oranle.es.module.base.UI
 import com.oranle.es.module.base.launchWithLifecycle
 import com.oranle.es.module.base.toast
 import com.oranle.es.module.ui.senior.SeniorAdminActivity
+import com.oranle.es.module.ui.senior.viewmodel.ClassViewModel
 import kotlinx.coroutines.GlobalScope
 
 class AddClassFragment : BaseFragment<FragmentClassAddBinding>() {
@@ -16,6 +17,7 @@ class AddClassFragment : BaseFragment<FragmentClassAddBinding>() {
         get() = R.layout.fragment_class_add
 
     override fun initView() {
+
         dataBinding?.apply {
 
             var isPermitRegister: Boolean = true
@@ -43,7 +45,7 @@ class AddClassFragment : BaseFragment<FragmentClassAddBinding>() {
 
             back.setOnClickListener{
                 val seniorAdminActivity = activity as SeniorAdminActivity
-                seniorAdminActivity.onAdmin(it)
+                seniorAdminActivity.onUnit(it)
             }
 
         }

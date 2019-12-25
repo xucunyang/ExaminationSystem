@@ -10,5 +10,6 @@ data class ClassEntity(
     @ColumnInfo(name = "id") val id : Int = 0,
     @ColumnInfo(name = "class_name") val className : String = "",
     @ColumnInfo(name = "can_register") val isRegister : Boolean = true,
-    @ColumnInfo(name = "setting") val setting : String = ""
+    @ColumnInfo(name = "setting") val setting : String = "",
+    @ColumnInfo(name = "member_size") val memberSize : Int = 0
 )

@@ -30,8 +30,8 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
 
         val intent = Intent(view.context, WebViewActivity::class.java)
         val bundle = Bundle()
-//        bundle.putString("url", "file:///$SD_WEB_PATH/laguage/language_smart.html")
-        bundle.putString("url", "file:///android_asset/indexx.html")
+//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
         bundle.putString("title", "用户协议")
         intent.putExtras(bundle)
         view.context.startActivity(intent)

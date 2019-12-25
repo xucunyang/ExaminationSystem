@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <data></data>
+    <data>
+        <variable
+            name="vm"
+            type="com.oranle.es.module.ui.senior.viewmodel.ClassViewModel" />
+    </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -26,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:background="@color/green"
+                android:background="@color/light_green"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="学校名称"
@@ -38,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/green"
+                android:background="@color/light_green"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="增加(设置成功后无法修改)"
@@ -86,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
-                android:background="@color/green"
+                android:background="@color/light_green"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="班级名称"
@@ -98,7 +102,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/green"
+                android:background="@color/light_green"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="增加(设置成功后无法修改)"
@@ -107,7 +111,9 @@
 
         </LinearLayout>
 
-        <include layout="@layout/recyclerview" />
+        <include
+            android:id="@+id/rv"
+            layout="@layout/recyclerview" />
 
     </LinearLayout>
 </layout>

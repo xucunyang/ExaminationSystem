@@ -35,4 +35,10 @@ data class Assessment(
 ) {
     @Ignore
     val correctAnswerList = correctAnswer.split(",").toList()
+
+    /**
+     *  展示列表时是否选中
+     */
+    @Ignore
+    var isSelect = false
 }
