@@ -10,14 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.oranle.es.R;
+import com.oranle.es.databinding.FragmentGroupBinding;
+import com.oranle.es.module.base.BaseFragment;
 
-public class GroupFragment extends Fragment {
-    @Nullable
+public class GroupFragment extends BaseFragment<FragmentGroupBinding> {
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_group, container, false);
-        return view;
+    public int getLayoutId() {
+        return R.layout.fragment_group;
+    }
+
+    @Override
+    public void initView() {
+
     }
 }

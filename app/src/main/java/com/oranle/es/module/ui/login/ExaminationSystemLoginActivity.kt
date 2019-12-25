@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import com.oranle.es.BuildConfig
 import com.oranle.es.R
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.repository.DBRepository
@@ -25,6 +26,13 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        if (BuildConfig.DEBUG) {
+            user_name_ed.setText("admin")
+            psw_et.setText("admin")
+            spinner.setSelection(2)
+        }
 
         dataBinding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}

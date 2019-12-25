@@ -10,14 +10,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.oranle.es.R;
+import com.oranle.es.databinding.FragmentEntryBinding;
+import com.oranle.es.module.base.BaseFragment;
 
-public class EntryFragment extends Fragment {
+public class EntryFragment extends BaseFragment<FragmentEntryBinding> {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_entry, container, false);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_entry;
+    }
+
+    @Override
+    public void initView() {
+
     }
 }
