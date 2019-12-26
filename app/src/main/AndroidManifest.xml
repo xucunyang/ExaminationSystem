@@ -60,6 +60,7 @@
         <activity
             android:name=".module.ui.senior.SeniorAdminActivity"
             android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme" />
 
         <receiver

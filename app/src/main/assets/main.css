@@ -29,7 +29,7 @@ a,.excerptimg img,.blogger img,.comment-text img,.sidetext li img,.sidetext .t_i
 #logo{height:50px;background:__url(images/logo.png) no-repeat; width:160px;}
 
 
-#menu{left:0px; font-size:11pt; font-weight:bold; }
+#menu{left:0px; font-size:7pt; font-weight:bold; }
 #menu li{float:left;}
 #menu a {display:inline-block;text-align:center;padding:0 10px; line-height:50px}
 #menu a:hover {color:#CCCCCC}
@@ -42,7 +42,7 @@ a,.excerptimg img,.blogger img,.comment-text img,.sidetext li img,.sidetext .t_i
 
 
 
-/*¼ÓÈëÏÂÀ­*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 
 .li01{position:absolute;top:50px;left:0px;width:100%;height:100px; background-color:#000000; margin:auto;}
 .li01 li a{ color:#ffffff; font-size:9pt;text-shadow:none;}
@@ -150,7 +150,7 @@ body{_padding:0;}
 
 
 
-/*Ê×Ò³¹ö¶¯Í¼Æ¬*/
+/*ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½Í¼Æ¬*/
 
 
 .slider_index{padding:0 0 0 0; margin:0 auto;}

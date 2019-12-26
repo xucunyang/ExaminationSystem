@@ -5,21 +5,24 @@ import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.oranle.es.R
 import com.oranle.es.databinding.LayoutWebviewBinding
+import kotlinx.android.synthetic.main.layout_webview.*
+import timber.log.Timber
 
 const val URL = "url"
 const val TITLE = "title"
 
-class WebViewActivity: BaseActivity<LayoutWebviewBinding>() {
+class WebViewActivity : BaseActivity<LayoutWebviewBinding>() {
 
     override val layoutId: Int
         get() = R.layout.layout_webview
-    
+
     private val url by argument<String>(URL)
     val mTitle by argument<String>(TITLE)
 
@@ -91,5 +94,15 @@ class WebViewActivity: BaseActivity<LayoutWebviewBinding>() {
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
+        Timber.d("onKeyDown ${webView.canGoBack()}")
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            webView.goBack()
+            return true
+        }
+        return super.onKeyDown(keyCode, event);//退出H5界面
+    }
 
 }

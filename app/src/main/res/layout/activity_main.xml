@@ -35,7 +35,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/dp_8"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_logo_bg">
+                    android:background="@drawable/ripple_rectangle_bg"
+                    android:onClick="toLanguageWise">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -56,7 +57,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="onMathLogic">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -77,7 +79,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toCommunication">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -98,7 +101,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toVision">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -128,7 +132,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toMusic">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -149,7 +154,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toSelfAware">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -170,7 +176,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toSports">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -191,7 +198,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:onClick="toNatureObserve">
 
                     <ImageView
                         android:layout_width="match_parent"

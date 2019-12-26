@@ -46,7 +46,89 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
 //            val intent = Intent(view.context, FileImportActivity::class.java)
         val intent = Intent(view.context, ExaminationSystemLoginActivity::class.java)
         view.context.startActivity(intent)
-
-
     }
+
+    fun toLanguageWise(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun onMathLogic(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toCommunication(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toVision(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toMusic(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toSelfAware(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toSports(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
+
+    fun toNatureObserve(view: View) {
+        val intent = Intent(view.context, WebViewActivity::class.java)
+        val bundle = Bundle()
+//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
+        bundle.putString("url", "file:///android_asset/language/language-two.html")
+        bundle.putString("title", "用户协议")
+        intent.putExtras(bundle)
+        view.context.startActivity(intent)
+    }
+
 }
