@@ -16,7 +16,7 @@ class ExamSheetViewModel : BaseRecycleViewModel<Assessment>() {
                 val list = withContext(IO) {
                     getDB().getAssessmentDao().getAllAssessments()
                 }
-                Timber.d("ExamSheetViewModel load $list")
+                Timber.d("ExamSheetOperateViewModel load $list")
                 notifyItem(list)
             }
         }

@@ -74,7 +74,10 @@ class FileImportViewModel : BaseViewModel() {
             Timber.d("uri::$uri")
             intent.setDataAndType(uri, "file/*.doc")
         } else {
-            intent.setDataAndType(Uri.fromFile(File("sdcard/es-web/")), "file/*.doc")
+//            intent.setDataAndType(Uri.fromFile(File("sdcard/")), "file/*.doc")
+
+            intent.type = "*/*"
+
         }
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         activity.startActivityForResult(intent, FILE_REQUEST_CODE)

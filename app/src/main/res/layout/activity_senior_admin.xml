@@ -34,27 +34,28 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:layout_weight="0.3"
-                    android:background="@color/green"
+                    android:background="@color/light_green"
                     android:gravity="center"
                     android:text="基础设置"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 
                 <TextView
+                    style="@style/menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:gravity="center"
                     android:onClick="onUnit"
                     android:text="单位名称设置"
                     android:textSize="25sp" />
 
                 <TextView
+                    style="@style/menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:gravity="center"
                     android:onClick="onAdmin"
                     android:text="管理员账号管理"
                     android:textSize="25sp" />
@@ -63,42 +64,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.3"
-                    android:background="@color/green"
+                    android:background="@color/light_green"
                     android:gravity="center"
                     android:text="基础设置"
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 
                 <TextView
+                    style="@style/menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:gravity="center"
                     android:onClick="onTable"
-                    android:text="测评量表管理"
-                    android:textSize="25sp" />
+                    android:text="测评量表管理" />
 
                 <TextView
+                    style="@style/menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.4"
-                    android:gravity="center"
                     android:onClick="onPwd"
-                    android:text="密码修改"
-                    android:textSize="25sp" />
+                    android:text="密码修改" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/green" />
+                    android:background="@color/light_green" />
 
                 <TextView
+                    style="@style/menu_item"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
-                    android:gravity="center"
-                    android:text="退出"
-                    android:textSize="25sp" />
+                    android:text="退出" />
             </LinearLayout>
 
             <FrameLayout

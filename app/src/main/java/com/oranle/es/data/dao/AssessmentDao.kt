@@ -10,7 +10,7 @@ interface AssessmentDao {
     suspend fun addAssessment(assessment: Assessment)
 
     @Query("select * from assessment where title = :title")
-    suspend fun getAssessmentByTitle(title: String): Assessment
+    suspend fun getAssessmentByTitle(title: String): Assessment?
 
     @Query("select * from assessment")
     suspend fun getAllAssessments(): List<Assessment>

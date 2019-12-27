@@ -9,7 +9,6 @@ import com.oranle.es.module.base.UI
 import com.oranle.es.module.base.launchWithLifecycle
 import com.oranle.es.module.base.toast
 import com.oranle.es.module.ui.senior.SeniorAdminActivity
-import com.oranle.es.module.ui.senior.viewmodel.ClassViewModel
 import kotlinx.coroutines.GlobalScope
 
 class AddClassFragment : BaseFragment<FragmentClassAddBinding>() {

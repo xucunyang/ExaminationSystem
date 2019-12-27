@@ -1,6 +1,5 @@
 package com.oranle.es.module.examination
 
-import com.oranle.es.app.SessionApp
 import com.oranle.es.data.entity.Assessment
 import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.repository.DBRepository
@@ -38,17 +37,23 @@ data class ExamSheet @JvmOverloads constructor(
         val answerStr = answerList?.joinToString(",") ?: ""
         val assessment = Assessment(id, title, introduction, showIntroduction, showTip, answerStr)
 
-
         val assessmentDao = DBRepository.getDB().getAssessmentDao()
         val assessmentByTitle = assessmentDao.getAssessmentByTitle(title)
-        if (assessmentByTitle == null) {
+
+        if (answerList?.size != singleChoiceList.size) {
+            return "量表解析错误：题目数量与答案不匹配"
+        }
+
+        // TODO 规则解析
+
+        msg = if (assessmentByTitle == null) {
             assessmentDao.addAssessment(assessment)
             DBRepository.getDB().getSingleChoiceDao().addSingleChoices(singleChoiceList)
             Timber.d("assessmentByTitle $assessmentByTitle")
-            msg = "量表《${assessment.title}》导入成功"
+            "量表《${assessment.title}》导入成功"
         } else {
             Timber.d("exist $assessmentByTitle")
-            msg = "量表《${assessment.title}》已存在"
+            "量表《${assessment.title}》已存在"
         }
 
         return msg
