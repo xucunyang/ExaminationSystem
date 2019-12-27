@@ -4,7 +4,7 @@
     <data>
         <variable
             name="vm"
-            type="com.oranle.es.module.base.AssessmentSheetDialog.ExamSheetViewModel" />
+            type="com.oranle.es.module.base.examsheetdialog.AssessmentSheetDialog" />
         <variable
             name="item"
             type="com.oranle.es.data.entity.Assessment" />

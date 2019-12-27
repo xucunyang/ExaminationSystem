@@ -3,11 +3,9 @@ package com.oranle.es.module.ui.senior.viewmodel
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.oranle.es.data.entity.ClassEntity
-import com.oranle.es.data.repository.DBRepository
-import com.oranle.es.module.base.BaseRecycleViewModel
-import com.oranle.es.module.base.BaseViewModel
-import com.oranle.es.module.base.IO
-import com.oranle.es.module.base.UI
+import com.oranle.es.module.base.*
+import com.oranle.es.module.base.examsheetdialog.AssessmentSheetDialog
+import com.oranle.es.module.ui.senior.SeniorAdminActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -16,7 +14,7 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
     fun start() {
         viewModelScope.launch(UI) {
             val allClass = withContext(IO) {
-                DBRepository.getDB().getClassDao().getAllClass()
+                getDB().getClassDao().getAllClass()
             }
             notifyItem(allClass)
         }
@@ -34,8 +32,16 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
         }
     }
 
-    fun onChange(entity: ClassEntity) {
+    fun onChange(v: View, entity: ClassEntity) {
+        toast("onclick on change")
+        val dialog = AssessmentSheetDialog(v.context)
+        val activity = v.context as SeniorAdminActivity
+        dialog.show(activity.supportFragmentManager, "")
 
+
+//        val dialog = CommonDialog(activity, "")
+//        dialog.create()
+//        dialog.show()
     }
 
     fun onClearMember(entity: ClassEntity) {
