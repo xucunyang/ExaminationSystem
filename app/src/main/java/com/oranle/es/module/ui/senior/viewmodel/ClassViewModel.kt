@@ -24,7 +24,7 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
     fun onDelete(entity: ClassEntity) {
         viewModelScope.launch {
             val deleteSize = withContext(IO) {
-                getDB().getClassDao().deletelass(entity)
+                getDB().getClassDao().deleteClass(entity)
             }
             if (deleteSize == 1) {
                 toast("已删除")
@@ -34,7 +34,7 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
 
     fun onChange(v: View, entity: ClassEntity) {
         toast("onclick on change")
-        val dialog = AssessmentSheetDialog(v.context)
+        val dialog = AssessmentSheetDialog(v.context, entity)
         val activity = v.context as SeniorAdminActivity
         dialog.show(activity.supportFragmentManager, "")
 

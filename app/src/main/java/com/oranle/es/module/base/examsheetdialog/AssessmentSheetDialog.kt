@@ -1,6 +1,5 @@
 package com.oranle.es.module.base.examsheetdialog
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
@@ -15,18 +14,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
+import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.databinding.DialogExamSheetSelectBinding
 import com.oranle.es.databinding.ItemExamSheetBinding
 import com.oranle.es.module.base.BaseAdapter
 import kotlinx.android.synthetic.main.recyclerview.view.*
+import timber.log.Timber
 
 
-class AssessmentSheetDialog(val cxt: Context) : DialogFragment() {
+class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogFragment() {
 
     lateinit var dataBinding: DialogExamSheetSelectBinding
 
     lateinit var vm: ExamSheetViewModel
-    lateinit var assessmentListAdapter: AssessmentListAdapter
+
+    private lateinit var adapter: AssessmentListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +36,14 @@ class AssessmentSheetDialog(val cxt: Context) : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        dataBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_exam_sheet_select, container, false)
-        initView()
-        return dataBinding.root
-    }
+        dataBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.dialog_exam_sheet_select, container, false
+        )
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState)
+        initView()
+
+        return dataBinding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,41 +63,77 @@ class AssessmentSheetDialog(val cxt: Context) : DialogFragment() {
         val dialogWindow = dialog.window
         dialogWindow!!.setGravity(Gravity.CENTER)
         val lp = dialogWindow.attributes
-        lp.width = 750
-        lp.height = 600
+        lp.width = 1024
+        lp.height = 700
         dialogWindow.attributes = lp
     }
-
 
     private fun initView() {
 
         dataBinding.apply {
 
             closeBtn.setOnClickListener {
+
+                vm.saveToDB(entity)
+
                 dismiss()
+
+                Timber.d(" selectedSheets ${entity.sheetList.size}")
             }
 
-            assessmentListAdapter = AssessmentListAdapter(vm)
-            rvInclude.recycler_view.adapter = assessmentListAdapter
+            adapter = AssessmentListAdapter(vm, entity)
+            rvInclude.recycler_view.adapter = adapter
             rvInclude.recycler_view.layoutManager = LinearLayoutManager(cxt)
         }
 
         vm.items.observe(this, Observer {
-            assessmentListAdapter.submitList(it)
+            adapter.submitList(it)
         })
 
         vm.load()
 
     }
 
-    inner class AssessmentListAdapter(vm: ExamSheetViewModel) :
+    inner class AssessmentListAdapter(vm: ExamSheetViewModel, val entity: ClassEntity) :
         BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm, Diff()) {
+
+        init {
+            Timber.d("init $entity")
+        }
+
         override fun doBindViewHolder(
             binding: ItemExamSheetBinding,
             item: Assessment,
             viewModel: ExamSheetViewModel
         ) {
+            entity.sheetList.forEach {
+                if ((item.id.toString() == it))
+                    binding.checkSheet.isChecked = true
+            }
+
+            entity.showSheetReportList.forEach {
+                if ((item.id.toString() == it))
+                    binding.showReportSheet.isChecked = true
+            }
+
             binding.item = item
+
+            binding.checkSheet.setOnCheckedChangeListener { buttonView, isChecked ->
+                val sheetList = entity.sheetList
+                if (!isChecked) {
+                    sheetList.remove(item.id.toString())
+                } else {
+                    sheetList.add(item.id.toString())
+                }
+            }
+
+            binding.showReportSheet.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (!isChecked) {
+                    entity.showSheetReportList.remove(item.id.toString())
+                } else {
+                    entity.showSheetReportList.add(item.id.toString())
+                }
+            }
         }
 
         override val layoutRes: Int

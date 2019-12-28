@@ -51,7 +51,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/light_green"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
@@ -69,6 +68,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/select_all_sheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_12"
@@ -76,6 +76,7 @@
                         android:text="(全选" />
 
                     <TextView
+                        android:id="@+id/unselect_all_sheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_12"
@@ -89,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_weight="1"
-                android:background="@color/light_green"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/dp_10">
@@ -107,6 +107,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/select_all_report"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_12"
@@ -114,6 +115,7 @@
                         android:text="(全选" />
 
                     <TextView
+                        android:id="@+id/unselect_all_report"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="全不选)" />
