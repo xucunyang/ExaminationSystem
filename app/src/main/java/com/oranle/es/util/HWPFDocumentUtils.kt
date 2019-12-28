@@ -1,5 +1,6 @@
 package com.oranle.es.util
 
+import android.util.Log
 import com.oranle.es.module.examination.ExamSheet
 import com.oranle.es.data.entity.SingleChoice
 
@@ -129,6 +130,9 @@ class HWPFDocumentUtils {
 
         // exam sheet var
         val examSheetId = IDGenerator.id
+
+        Timber.d("examSheetId $examSheetId")
+
         var title = ""
         var intro = ""
         val questionList: MutableList<SingleChoice> = ArrayList()
@@ -166,8 +170,10 @@ class HWPFDocumentUtils {
                         }
                         rowIndex > 3 -> {
 
-                            if (rowIndex == rowNum)
+                            if (rowIndex == (rowNum - 1) && (cellIndex == 0)) {
+                                Timber.d("end index $cellContent")
                                 answerList = getAnswerList(cellContent)
+                            }
 
                             if (!questionReadComplete) {
                                 when (cellIndex) {

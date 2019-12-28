@@ -55,6 +55,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="删除"
+                android:onClick="@{(v) -> vm.onDelete(item)}"
                 android:textColor="@color/black"
                 android:textSize="22dp" />
 
@@ -63,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="@{(v) -> vm.onChangeSet(item)}"
                 android:text="设置"
                 android:textColor="@color/black"
                 android:textSize="22dp" />

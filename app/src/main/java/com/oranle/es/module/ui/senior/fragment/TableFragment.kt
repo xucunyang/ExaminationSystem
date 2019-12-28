@@ -13,18 +13,19 @@ import com.oranle.es.module.base.start
 import com.oranle.es.module.examination.inportFile.FileImportActivity
 import com.oranle.es.module.ui.senior.viewmodel.ExamSheetOperateViewModel
 import kotlinx.android.synthetic.main.recyclerview.view.*
+import timber.log.Timber
 
 class TableFragment : BaseFragment<FragmentTableBinding>() {
 
     override val layoutId: Int
         get() = R.layout.fragment_table
 
-    lateinit var vm : ExamSheetOperateViewModel
+    lateinit var vm: ExamSheetOperateViewModel
 
     override fun initView() {
         dataBinding?.apply {
 
-            addSheet.setOnClickListener{
+            addSheet.setOnClickListener {
                 activity?.start<FileImportActivity>()
             }
 
@@ -37,14 +38,28 @@ class TableFragment : BaseFragment<FragmentTableBinding>() {
             vm.items.observe(this@TableFragment, Observer {
                 adapter.submitList(it)
             })
+        }
+    }
 
-            vm.start()
+    override fun onResume() {
+        super.onResume()
+        Timber.d("on resume ")
+        vm.load()
+    }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        Timber.d("onHiddenChanged $hidden")
+        if (!hidden) {
+            vm.load()
         }
     }
 
     inner class Adapter(viewModel: ExamSheetOperateViewModel) :
-        BaseAdapter<Assessment, ItemExamSheetOperateBinding, ExamSheetOperateViewModel>(viewModel, Diff()) {
+        BaseAdapter<Assessment, ItemExamSheetOperateBinding, ExamSheetOperateViewModel>(
+            viewModel,
+            Diff()
+        ) {
 
         override fun doBindViewHolder(
             binding: ItemExamSheetOperateBinding,

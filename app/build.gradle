@@ -76,5 +76,7 @@ dependencies {
 
     implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 
-    api project(':poilib')
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad
+    implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+
 }

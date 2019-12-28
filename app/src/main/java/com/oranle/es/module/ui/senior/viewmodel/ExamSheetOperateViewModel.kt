@@ -12,6 +12,10 @@ import kotlinx.coroutines.withContext
 class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
 
     fun start() {
+        load()
+    }
+
+    fun load() {
         viewModelScope.launch(UI) {
             val allClass = withContext(IO) {
                 getDB().getAssessmentDao().getAllAssessments()
@@ -20,7 +24,6 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
         }
     }
 
-
     fun onDelete(entity: Assessment) {
         viewModelScope.launch {
             val deleteSize = withContext(IO) {
@@ -28,6 +31,9 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
             }
             if (deleteSize == 1) {
                 toast("已删除")
+                load()
+            } else {
+                toast("删除失败")
             }
         }
     }
@@ -38,13 +44,9 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
         val activity = v.context as SeniorAdminActivity
         dialog.show(activity.supportFragmentManager, "")
 
-
-//        val dialog = CommonDialog(activity, "")
-//        dialog.create()
-//        dialog.show()
     }
 
-    fun onClearMember(entity: Assessment) {
+    fun onChangeSet(entity: Assessment) {
 
     }
 
