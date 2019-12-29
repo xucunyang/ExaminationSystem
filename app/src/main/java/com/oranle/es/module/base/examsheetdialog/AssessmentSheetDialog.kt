@@ -73,6 +73,7 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
         dataBinding.apply {
 
             viewmodel = vm
+            item = entity
 
             closeBtn.setOnClickListener {
 

@@ -24,21 +24,19 @@ class ExamSheetViewModel : BaseRecycleViewModel<Assessment>() {
 
     fun selectAllSheet(entity: ClassEntity) {
         items.value?.forEach {
-            it.isSelect.value = true
+            entity.sheetList.add(it.id.toString())
         }
 
         items.value?.forEach {
-            Timber.d("select all sheet ${it.id}  ${it.isSelect}")
+            Timber.d("select all sheet ${entity.sheetList}")
         }
-
-        updateEntity(entity)
 
         notifyItem(items.value)
     }
 
-    fun unselectAllSheet() {
+    fun unselectAllSheet(entity: ClassEntity) {
         items.value?.forEach {
-            it.isSelect.value = false
+            entity.sheetList.remove(it.id.toString())
         }
 
         items.value?.forEach {
@@ -82,9 +80,6 @@ class ExamSheetViewModel : BaseRecycleViewModel<Assessment>() {
     fun saveToDB(entity: ClassEntity) {
         viewModelScope.launch(UI) {
             withContext(IO) {
-
-                updateEntity(entity)
-
                 val sheetStr = entity.sheetList.joinToString(",").replace(" ", "")
                 val reportStr = entity.showSheetReportList.joinToString(",").replace(" ", "")
                 Timber.d("saveToDB $entity ,   xxxxx $sheetStr")
