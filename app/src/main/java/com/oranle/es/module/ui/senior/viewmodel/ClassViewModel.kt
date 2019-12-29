@@ -29,6 +29,11 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
             if (deleteSize == 1) {
                 toast("已删除")
             }
+
+            val list = (items.value)?.toMutableList()
+            list?.remove(entity)
+
+            notifyItem(list)
         }
     }
 

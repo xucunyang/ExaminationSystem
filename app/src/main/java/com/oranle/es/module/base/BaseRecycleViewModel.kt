@@ -1,24 +1,25 @@
 package com.oranle.es.module.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import timber.log.Timber
 
-open class BaseRecycleViewModel<E>: BaseViewModel() {
+open class BaseRecycleViewModel<E> : BaseViewModel() {
 
     val isEmpty = MutableLiveData<Boolean>(true)
 
-    protected val _items = MutableLiveData<List<E>>().apply { value = ArrayList()}
+    private val _items = MutableLiveData<List<E>>().apply { value = emptyList() }
 
-    val items: MutableLiveData<List<E>> = _items
+    val items: LiveData<List<E>> = _items
 
     fun toast(msg: String) {
         com.oranle.es.module.base.toast(msg)
     }
 
-    protected fun notifyItem(rows: List<E>?) {
+    fun notifyItem(rows: List<E>?) {
         if (rows != null && rows.isNotEmpty()) {
             Timber.d("notifyItem")
-            _items.value = rows
+            _items.value = ArrayList(rows)
         } else {
             _items.value = emptyList()
         }

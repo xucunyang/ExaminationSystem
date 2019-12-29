@@ -17,8 +17,8 @@ data class ClassEntity(
 ) {
 
     @Ignore
-    val sheetList = sheet.split(",").toMutableList()
+    var sheetList = sheet.split(",").toMutableSet()
 
     @Ignore
-    val showSheetReportList = showSheetReport.split(",").toMutableList()
+    var showSheetReportList = showSheetReport.split(",").toMutableSet()
 }

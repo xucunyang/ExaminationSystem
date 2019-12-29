@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.oranle.es.module.base.examsheetdialog.ExamSheetViewModel" />
+
+        <variable
+            name="item"
+            type="com.oranle.es.data.entity.ClassEntity" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,8 +65,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/sp_12"
-                    android:text="选择量表" />
+                    android:text="选择量表"
+                    android:textSize="@dimen/sp_12" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -71,16 +78,16 @@
                         android:id="@+id/select_all_sheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_12"
                         android:layout_marginEnd="@dimen/dp_10"
-                        android:text="(全选" />
+                        android:text="(全选"
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
                         android:id="@+id/unselect_all_sheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_12"
-                        android:text="全不选)" />
+                        android:text="全不选)"
+                        android:textSize="@dimen/sp_12" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -110,9 +117,9 @@
                         android:id="@+id/select_all_report"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_12"
                         android:layout_marginEnd="@dimen/dp_10"
-                        android:text="(全选" />
+                        android:text="(全选"
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
                         android:id="@+id/unselect_all_report"
@@ -123,19 +130,14 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-
-        <include
-            android:id="@+id/rv_include"
-            layout="@layout/recyclerview" />
-
-        <TextView
-            android:layout_width="@dimen/dp_300"
-            android:layout_height="@dimen/dp_300"
-            android:background="@color/gray"
-            android:text="全不选)" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            app:items="@{viewmodel.items}" />
 
     </LinearLayout>
 

@@ -2,15 +2,12 @@ package com.oranle.es.module.ui.senior.fragment
 
 import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.oranle.es.R
 import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.data.sp.SpUtil
@@ -20,8 +17,6 @@ import com.oranle.es.module.base.BaseAdapter
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.ui.senior.SeniorAdminActivity
 import com.oranle.es.module.ui.senior.viewmodel.ClassViewModel
-import kotlinx.android.synthetic.main.recyclerview.*
-import kotlinx.android.synthetic.main.recyclerview.view.*
 import timber.log.Timber
 
 class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
@@ -34,22 +29,22 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
     override fun initView() {
         viewmodel = getViewModel<ClassViewModel>()
 
-        val classAdapter = ClassAdapter(viewmodel)
+        var classAdapter = ClassAdapter(viewmodel)
         viewmodel.items.observe(this, Observer {
 
             Timber.d("observe $it")
-            classAdapter.submitList(it)
+            classAdapter = ClassAdapter(viewmodel)
+            classAdapter.notifyDataSetChanged()
         })
 
         dataBinding?.apply {
             vm = viewmodel
-            rv.recycler_view.adapter = classAdapter
-            rv.recycler_view.layoutManager = LinearLayoutManager(activity)
+            recyclerView.adapter = classAdapter
+            recyclerView.layoutManager = LinearLayoutManager(activity)
 
-            rv.recycler_view.itemAnimator = DefaultItemAnimator()
-            rv.recycler_view.layoutManager = LinearLayoutManager(activity)
-            rv.recycler_view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-            )
+            recyclerView.itemAnimator = DefaultItemAnimator()
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
 
         val spUtil = SpUtil.instance

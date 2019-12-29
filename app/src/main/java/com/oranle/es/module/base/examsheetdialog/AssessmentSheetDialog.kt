@@ -18,7 +18,6 @@ import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.databinding.DialogExamSheetSelectBinding
 import com.oranle.es.databinding.ItemExamSheetBinding
 import com.oranle.es.module.base.BaseAdapter
-import kotlinx.android.synthetic.main.recyclerview.view.*
 import timber.log.Timber
 
 
@@ -40,6 +39,7 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
             inflater,
             R.layout.dialog_exam_sheet_select, container, false
         )
+        dataBinding.setLifecycleOwner(viewLifecycleOwner)
 
         initView()
 
@@ -72,6 +72,8 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
 
         dataBinding.apply {
 
+            viewmodel = vm
+
             closeBtn.setOnClickListener {
 
                 vm.saveToDB(entity)
@@ -82,11 +84,13 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
             }
 
             adapter = AssessmentListAdapter(vm, entity)
-            rvInclude.recycler_view.adapter = adapter
-            rvInclude.recycler_view.layoutManager = LinearLayoutManager(cxt)
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(cxt)
         }
 
         vm.items.observe(this, Observer {
+            Timber.d("observer value $it")
+            adapter = AssessmentListAdapter(vm, entity)
             adapter.submitList(it)
         })
 
@@ -94,7 +98,7 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
 
     }
 
-    inner class AssessmentListAdapter(vm: ExamSheetViewModel, val entity: ClassEntity) :
+    inner class AssessmentListAdapter(val vm: ExamSheetViewModel, val entity: ClassEntity) :
         BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm, Diff()) {
 
         init {

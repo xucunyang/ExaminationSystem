@@ -12,7 +12,6 @@ import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.base.start
 import com.oranle.es.module.examination.inportFile.FileImportActivity
 import com.oranle.es.module.ui.senior.viewmodel.ExamSheetOperateViewModel
-import kotlinx.android.synthetic.main.recyclerview.view.*
 import timber.log.Timber
 
 class TableFragment : BaseFragment<FragmentTableBinding>() {
@@ -23,20 +22,26 @@ class TableFragment : BaseFragment<FragmentTableBinding>() {
     lateinit var vm: ExamSheetOperateViewModel
 
     override fun initView() {
+
+        vm = getViewModel()
+
         dataBinding?.apply {
+
+            viewmodel = vm
 
             addSheet.setOnClickListener {
                 activity?.start<FileImportActivity>()
             }
 
-            vm = getViewModel()
 
-            include.recycler_view.layoutManager = LinearLayoutManager(activity)
-            val adapter = Adapter(vm)
-            include.recycler_view.adapter = adapter
+            var adapter = Adapter(vm)
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(activity)
 
             vm.items.observe(this@TableFragment, Observer {
-                adapter.submitList(it)
+                Timber.d("on Observer $it ")
+                adapter = Adapter(vm)
+                adapter.notifyDataSetChanged()
             })
         }
     }
