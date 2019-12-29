@@ -1,5 +1,6 @@
 package com.oranle.es.module.base
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,12 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter<E, VDB : ViewDataBinding, VM: BaseRecycleViewModel<E>>(
+abstract class BaseAdapter<E, VDB : ViewDataBinding, VM : BaseRecycleViewModel<E>>(
     private val viewModel: VM,
-    diffCallback: DiffUtil.ItemCallback<E>
+    diffCallback: DiffUtil.ItemCallback<E> = DefaultDiff<E>()
 ) : ListAdapter<E, BaseViewHolder<VDB>>(diffCallback) {
 
-//    init {
+    //    init {
 //        this.submitList(viewModel.items.value)
 //    }
 
@@ -46,3 +47,11 @@ abstract class BaseAdapter<E, VDB : ViewDataBinding, VM: BaseRecycleViewModel<E>
 class BaseViewHolder<out Binding : ViewDataBinding>(
     val binding: Binding
 ) : RecyclerView.ViewHolder(binding.root)
+
+class DefaultDiff<E>  : DiffUtil.ItemCallback<E>() {
+    override fun areItemsTheSame(oldItem: E, newItem: E) = oldItem == newItem
+
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: E, newItem: E) = (oldItem == newItem)
+}
+

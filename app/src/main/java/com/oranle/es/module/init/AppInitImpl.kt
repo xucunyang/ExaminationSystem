@@ -7,6 +7,7 @@ import com.oranle.es.data.repository.DBRepository
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class AppInitImpl: AppInit {
     override fun assessmentDBInit() {
@@ -20,7 +21,11 @@ class AppInitImpl: AppInit {
             role = Role.Root.value,
             psw = "admin")
         GlobalScope.launch (IO) {
-            DBRepository.getDB().getUserDao().addUser(admin)
+            val usersByRole = DBRepository.getDB().getUserDao().getUsersByRole(Role.Root.value)
+            Timber.d("$usersByRole")
+            if (usersByRole.isEmpty()) {
+                DBRepository.getDB().getUserDao().addUser(admin)
+            }
         }
     }
 }

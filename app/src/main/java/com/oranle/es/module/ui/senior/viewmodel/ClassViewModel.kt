@@ -42,14 +42,15 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
         val dialog = AssessmentSheetDialog(v.context, entity)
         val activity = v.context as SeniorAdminActivity
         dialog.show(activity.supportFragmentManager, "")
-
-
-//        val dialog = CommonDialog(activity, "")
-//        dialog.create()
-//        dialog.show()
     }
 
     fun onClearMember(entity: ClassEntity) {
+        viewModelScope.launch {
+            withContext(IO) {
+                getDB().getUserDao().clearExamineeByClassId(entity.id)
+            }
+            toast("已清空")
+        }
 
     }
 

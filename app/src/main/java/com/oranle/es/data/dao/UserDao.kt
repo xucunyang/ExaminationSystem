@@ -1,6 +1,7 @@
 package com.oranle.es.data.dao
 
 import androidx.room.*
+import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
 
 @Dao
@@ -20,5 +21,8 @@ interface UserDao {
 
     @Delete
     suspend fun deleteUser(user: User): Int
+
+    @Query("delete from user where class_id = :classId and role = :role")
+    suspend fun clearExamineeByClassId(classId: Int, role: Int = Role.Examinee.value)
 
 }
