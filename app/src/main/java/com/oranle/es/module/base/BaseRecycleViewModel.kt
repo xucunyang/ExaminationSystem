@@ -6,6 +6,9 @@ import timber.log.Timber
 
 open class BaseRecycleViewModel<E> : BaseViewModel() {
 
+    protected val UI = com.oranle.es.module.base.UI
+    protected val IO = com.oranle.es.module.base.IO
+
     val isEmpty = MutableLiveData<Boolean>(true)
 
     private val _items = MutableLiveData<List<E>>().apply { value = emptyList() }

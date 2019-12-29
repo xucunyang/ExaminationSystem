@@ -142,6 +142,7 @@ class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>(
                         role = Role.Manager.value,
                         psw = psw.value!!,
                         classId = classEntity!!.id,
+                        className = classEntity!!.className,
                         classIncharge = classIncharge.joinToString(",")
                     )
                 )

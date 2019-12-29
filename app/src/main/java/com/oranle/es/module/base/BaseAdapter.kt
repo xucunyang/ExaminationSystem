@@ -33,10 +33,14 @@ abstract class BaseAdapter<E, VDB : ViewDataBinding, VM : BaseRecycleViewModel<E
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<VDB>, position: Int) {
+        currPosition = position
         val binding = holder.binding
         doBindViewHolder(binding, getItem(position), viewModel)
         binding.executePendingBindings()
     }
+
+    private var currPosition : Int = 0
+    fun getPosition() = currPosition + 1
 
     abstract fun doBindViewHolder(binding: VDB, item: E, viewModel: VM)
 
