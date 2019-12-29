@@ -1,17 +1,20 @@
 package com.oranle.es.module.ui.senior.viewmodel
 
-import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.oranle.es.data.entity.Assessment
-import com.oranle.es.module.base.*
-import com.oranle.es.module.base.examsheetdialog.AssessmentSheetDialog
-import com.oranle.es.module.ui.senior.SeniorAdminActivity
+import com.oranle.es.module.base.BaseRecycleViewModel
+import com.oranle.es.module.base.IO
+import com.oranle.es.module.base.UI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
 
     fun start() {
+        load()
+    }
+
+    fun load() {
         viewModelScope.launch(UI) {
             val allClass = withContext(IO) {
                 getDB().getAssessmentDao().getAllAssessments()
@@ -20,7 +23,6 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
         }
     }
 
-
     fun onDelete(entity: Assessment) {
         viewModelScope.launch {
             val deleteSize = withContext(IO) {
@@ -28,23 +30,22 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
             }
             if (deleteSize == 1) {
                 toast("已删除")
+                load()
+            } else {
+                toast("删除失败")
             }
         }
     }
 
-    fun onChange(v: View, entity: Assessment) {
-        toast("onclick on change")
-        val dialog = AssessmentSheetDialog(v.context)
-        val activity = v.context as SeniorAdminActivity
-        dialog.show(activity.supportFragmentManager, "")
+//    fun onChange(v: View, entity: Assessment) {
+//        toast("onclick on change")
+//        val dialog = AssessmentSheetDialog(v.context,entity)
+//        val activity = v.context as SeniorAdminActivity
+//        dialog.show(activity.supportFragmentManager, "")
+//
+//    }
 
-
-//        val dialog = CommonDialog(activity, "")
-//        dialog.create()
-//        dialog.show()
-    }
-
-    fun onClearMember(entity: Assessment) {
+    fun onChangeSet(entity: Assessment) {
 
     }
 

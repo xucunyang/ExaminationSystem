@@ -37,6 +37,7 @@ abstract class BaseFragment<ViewBinding : ViewDataBinding> : Fragment() {
     ): View? {
         if (isViewDataBinding) {
             dataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+            dataBinding?.setLifecycleOwner(viewLifecycleOwner)
             initView()
             return dataBinding?.root
         } else {

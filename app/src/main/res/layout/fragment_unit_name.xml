@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -60,10 +60,10 @@
                 android:id="@+id/organization_name_et"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_50"
                 android:layout_weight="1"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:layout_marginEnd="@dimen/dp_50"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="25sp" />
@@ -105,15 +105,18 @@
                 android:background="@color/light_green"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="增加(设置成功后无法修改)"
+                android:text="增加"
                 android:textColor="@color/black"
                 android:textSize="22sp" />
 
         </LinearLayout>
 
-        <include
-            android:id="@+id/rv"
-            layout="@layout/recyclerview" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            app:items="@{vm.items}" />
 
     </LinearLayout>
 </layout>

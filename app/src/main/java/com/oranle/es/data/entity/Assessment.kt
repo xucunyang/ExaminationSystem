@@ -1,5 +1,6 @@
 package com.oranle.es.data.entity
 
+import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -40,5 +41,11 @@ data class Assessment(
      *  展示列表时是否选中
      */
     @Ignore
-    var isSelect = false
+    var isSelect = MutableLiveData(false)
+
+    /**
+     *  是否可以直接看到报告的量表
+     */
+    @Ignore
+    var showReportSheet =  MutableLiveData(false)
 }

@@ -15,5 +15,17 @@ data class User @JvmOverloads constructor(
      *  @see Role
      */
     @ColumnInfo(name = "role") val role: Int,
-    @ColumnInfo(name = "psw") val psw: String
+    @ColumnInfo(name = "psw") val psw: String,
+    /**
+     *  测评用户/管理员 所属班级id
+     */
+    @ColumnInfo(name = "class_id") val classId: Int = -1,
+    /**
+     *  测评用户/管理员 所属班级名称
+     */
+    @ColumnInfo(name = "class_name") val className: String = "",
+    /**
+     *  管理员所管辖班级
+     */
+    @ColumnInfo(name = "class_incharge") val classIncharge: String = ""
 ) : Serializable

@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
@@ -16,9 +17,11 @@ import com.oranle.es.app.SessionApp
 import com.oranle.es.module.base.BaseViewModel
 import com.oranle.es.module.base.IO
 import com.oranle.es.util.HWPFDocumentUtils
+import com.oranle.es.util.IDGenerator
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
+
 
 const val FILE_REQUEST_CODE = 100
 
@@ -34,7 +37,16 @@ class FileImportViewModel : BaseViewModel() {
         data?.apply {
             text.value = "文件：${this.path}, 正在解析，请稍后..."
 
-            val realPath = getRealFilePath(SessionApp.instance!!.applicationContext, data)
+            Timber.d("save assessment path is $path")
+
+            val realPath:String?
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                realPath = getRealFilePath(SessionApp.instance!!.applicationContext, data)
+            } else {
+                realPath = UriPathUtils.getPath(SessionApp.instance!!.applicationContext, data)
+            }
+
+            Timber.d("save assessment realPath is $realPath")
 
             viewModelScope.launch(IO) {
                 val msg = HWPFDocumentUtils().readDocAndSave(realPath!!)
@@ -45,7 +57,7 @@ class FileImportViewModel : BaseViewModel() {
 
             loading.value = false
         }
-        if(data == null){
+        if (data == null) {
             text.value = "文件uri错误，请重新选择！！"
         }
 
@@ -74,10 +86,7 @@ class FileImportViewModel : BaseViewModel() {
             Timber.d("uri::$uri")
             intent.setDataAndType(uri, "file/*.doc")
         } else {
-//            intent.setDataAndType(Uri.fromFile(File("sdcard/")), "file/*.doc")
-
             intent.type = "*/*"
-
         }
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         activity.startActivityForResult(intent, FILE_REQUEST_CODE)

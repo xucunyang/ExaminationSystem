@@ -24,27 +24,33 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
     fun onDelete(entity: ClassEntity) {
         viewModelScope.launch {
             val deleteSize = withContext(IO) {
-                getDB().getClassDao().deletelass(entity)
+                getDB().getClassDao().deleteClass(entity)
             }
             if (deleteSize == 1) {
                 toast("已删除")
             }
+
+            val list = (items.value)?.toMutableList()
+            list?.remove(entity)
+
+            notifyItem(list)
         }
     }
 
     fun onChange(v: View, entity: ClassEntity) {
         toast("onclick on change")
-        val dialog = AssessmentSheetDialog(v.context)
+        val dialog = AssessmentSheetDialog(v.context, entity)
         val activity = v.context as SeniorAdminActivity
         dialog.show(activity.supportFragmentManager, "")
-
-
-//        val dialog = CommonDialog(activity, "")
-//        dialog.create()
-//        dialog.show()
     }
 
     fun onClearMember(entity: ClassEntity) {
+        viewModelScope.launch {
+            withContext(IO) {
+                getDB().getUserDao().clearExamineeByClassId(entity.id)
+            }
+            toast("已清空")
+        }
 
     }
 

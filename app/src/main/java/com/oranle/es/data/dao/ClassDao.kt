@@ -19,6 +19,6 @@ interface ClassDao {
     suspend fun updateClass(classEntity: ClassEntity): Int
 
     @Delete
-    suspend fun deletelass(classEntity: ClassEntity): Int
+    suspend fun deleteClass(classEntity: ClassEntity): Int
 
 }

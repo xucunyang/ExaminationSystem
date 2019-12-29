@@ -1,13 +1,18 @@
 package com.oranle.es.util
 
+import com.oranle.es.data.sp.SpUtil
 import java.util.concurrent.atomic.AtomicInteger
 
 object IDGenerator {
 
-    private val count = AtomicInteger()
+    private val count = AtomicInteger(SpUtil.instance.getExamSheetIndex())
 
     val id: Int
-        get() = count.incrementAndGet()
+        get() {
+            val i = count.incrementAndGet()
+            SpUtil.instance.setExamSheetIndex(i)
+            return i
+        }
 
 
     @JvmStatic
