@@ -3,8 +3,7 @@ package com.oranle.es.module.ui.senior.viewmodel
 import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.oranle.es.data.entity.ClassEntity
-import com.oranle.es.module.base.*
-import com.oranle.es.module.base.examsheetdialog.AssessmentSheetDialog
+import com.oranle.es.module.base.BaseRecycleViewModel
 import com.oranle.es.module.ui.senior.SeniorAdminActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,6 +19,19 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
         }
     }
 
+    fun updateClass(entity: ClassEntity) {
+        viewModelScope.launch(UI) {
+            val size = withContext(IO) {
+                getDB().getClassDao().updateClass(entity)
+            }
+            if (size == 1) {
+                toast("已修改")
+            } else {
+                toast("修改失败")
+            }
+
+        }
+    }
 
     fun onDelete(entity: ClassEntity) {
         viewModelScope.launch {
@@ -39,9 +51,12 @@ class ClassViewModel : BaseRecycleViewModel<ClassEntity>() {
 
     fun onChange(v: View, entity: ClassEntity) {
         toast("onclick on change")
-        val dialog = AssessmentSheetDialog(v.context, entity)
         val activity = v.context as SeniorAdminActivity
-        dialog.show(activity.supportFragmentManager, "")
+//        val dialog = AssessmentSheetDialog(v.context, entity)
+//        dialog.show(activity.supportFragmentManager, "")
+
+        activity.showChangeClass(entity)
+
     }
 
     fun onClearMember(entity: ClassEntity) {

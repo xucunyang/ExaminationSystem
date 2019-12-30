@@ -27,7 +27,6 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         if (BuildConfig.DEBUG) {
             user_name_ed.setText("admin")
             psw_et.setText("admin")

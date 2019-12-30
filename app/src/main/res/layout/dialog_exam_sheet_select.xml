@@ -7,9 +7,6 @@
             name="viewmodel"
             type="com.oranle.es.module.base.examsheetdialog.ExamSheetViewModel" />
 
-        <variable
-            name="item"
-            type="com.oranle.es.data.entity.ClassEntity" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -79,7 +76,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_10"
-                        android:onClick="@{() -> viewmodel.selectAllSheet(item)}"
                         android:text="(全选"
                         android:textSize="@dimen/sp_12" />
 
@@ -87,7 +83,6 @@
                         android:id="@+id/unselect_all_sheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{() -> viewmodel.unselectAllSheet(item)}"
                         android:text="全不选)"
                         android:textSize="@dimen/sp_12" />
                 </LinearLayout>

@@ -2,19 +2,23 @@ package com.oranle.es.module.ui.senior;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oranle.es.R;
+import com.oranle.es.data.entity.ClassEntity;
 import com.oranle.es.databinding.ActivitySeniorAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
 import com.oranle.es.module.ui.senior.fragment.AddClassFragment;
+import com.oranle.es.module.ui.senior.fragment.AddClassFragmentKt;
 import com.oranle.es.module.ui.senior.fragment.AdministratorFragment;
+import com.oranle.es.module.ui.senior.fragment.ModifyClassFragment;
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment;
-import com.oranle.es.module.ui.senior.fragment.TableFragment;
 import com.oranle.es.module.ui.senior.fragment.OrganizationNameFragment;
+import com.oranle.es.module.ui.senior.fragment.TableFragment;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -44,6 +48,10 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         fragList.add(new TableFragment());
         fragList.add(new ModifyPwdFragment());
         fragList.add(new AddClassFragment());
+        fragList.add(new ModifyClassFragment());
+
+        EditText editText = new EditText(this);
+        editText.setText("xxx");
 
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragList.get(0), "0").commit();
@@ -66,6 +74,16 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
     }
 
     public void showAddClassFrag() {
+        initViewpager(4);
+    }
+
+    public void showChangeClass(ClassEntity entity) {
+        AddClassFragment frag = (AddClassFragment) fragList.get(4);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AddClassFragmentKt.CLASS_ENTITY, entity);
+        frag.setArguments(bundle);
+
         initViewpager(4);
     }
 

@@ -14,20 +14,34 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
-import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.databinding.DialogExamSheetSelectBinding
 import com.oranle.es.databinding.ItemExamSheetBinding
 import com.oranle.es.module.base.BaseAdapter
 import timber.log.Timber
 
 
-class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogFragment() {
+class AssessmentSheetDialog(
+    val cxt: Context,
+    val sheetSelectedSet: Set<Assessment> = setOf(),
+    val showSheetReportSelectedSet: Set<Assessment> = setOf()
+) : DialogFragment() {
 
     lateinit var dataBinding: DialogExamSheetSelectBinding
 
     lateinit var vm: ExamSheetViewModel
 
     private lateinit var adapter: AssessmentListAdapter
+
+    private val sheetSelectSet = mutableSetOf<Assessment>()
+
+    private val showSheetReportSet = mutableSetOf<Assessment>()
+
+    private var changeCallBack: ((sheet: Set<Assessment>, report: Set<Assessment>) -> Unit)? = null
+
+    init {
+        sheetSelectSet.addAll(sheetSelectedSet)
+        showSheetReportSet.addAll(showSheetReportSelectedSet)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,25 +87,30 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
         dataBinding.apply {
 
             viewmodel = vm
-            item = entity
 
             closeBtn.setOnClickListener {
 
-                vm.saveToDB(entity)
+                //                vm.saveToDB(entity)
+
+                if (changeCallBack == null) {
+//                    vm.saveToDB(entity)
+                } else {
+                    changeCallBack?.invoke(sheetSelectSet, showSheetReportSet)
+                }
+
+                Timber.d(" selectedSheets $sheetSelectSet, $showSheetReportSet")
 
                 dismiss()
-
-                Timber.d(" selectedSheets ${entity.sheetList.size}")
             }
 
-            adapter = AssessmentListAdapter(vm, entity)
+            adapter = AssessmentListAdapter(vm)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(cxt)
         }
 
         vm.items.observe(this, Observer {
             Timber.d("observer value $it")
-            adapter = AssessmentListAdapter(vm, entity)
+            adapter = AssessmentListAdapter(vm)
             adapter.submitList(it)
         })
 
@@ -99,11 +118,15 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
 
     }
 
-    inner class AssessmentListAdapter(val vm: ExamSheetViewModel, val entity: ClassEntity) :
+    fun setCallBack(callback: ((sheet: Set<Assessment>, report: Set<Assessment>) -> Unit)?) {
+        this.changeCallBack = callback
+    }
+
+    inner class AssessmentListAdapter(val vm: ExamSheetViewModel) :
         BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm, Diff()) {
 
         init {
-            Timber.d("init $entity")
+            Timber.d("init ")
         }
 
         override fun doBindViewHolder(
@@ -111,32 +134,24 @@ class AssessmentSheetDialog(val cxt: Context, val entity: ClassEntity) : DialogF
             item: Assessment,
             viewModel: ExamSheetViewModel
         ) {
-            entity.sheetList.forEach {
-                if ((item.id.toString() == it))
-                    binding.checkSheet.isChecked = true
-            }
-
-            entity.showSheetReportList.forEach {
-                if ((item.id.toString() == it))
-                    binding.showReportSheet.isChecked = true
-            }
+            binding.checkSheet.isChecked = sheetSelectSet.contains(item)
+            binding.showReportSheet.isChecked = showSheetReportSet.contains(item)
 
             binding.item = item
 
             binding.checkSheet.setOnCheckedChangeListener { buttonView, isChecked ->
-                val sheetList = entity.sheetList
                 if (!isChecked) {
-                    sheetList.remove(item.id.toString())
+                    sheetSelectSet.remove(item)
                 } else {
-                    sheetList.add(item.id.toString())
+                    sheetSelectSet.add(item)
                 }
             }
 
             binding.showReportSheet.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (!isChecked) {
-                    entity.showSheetReportList.remove(item.id.toString())
+                    showSheetReportSet.remove(item)
                 } else {
-                    entity.showSheetReportList.add(item.id.toString())
+                    showSheetReportSet.add(item)
                 }
             }
         }

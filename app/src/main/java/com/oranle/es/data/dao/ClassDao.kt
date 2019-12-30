@@ -15,6 +15,9 @@ interface ClassDao {
     @Query("select * from class where class_name = :className")
     suspend fun getClassByName(className: String): List<ClassEntity>
 
+    @Query("select * from class where id = :id")
+    suspend fun getClassById(id: Int): ClassEntity
+
     @Update
     suspend fun updateClass(classEntity: ClassEntity): Int
 
