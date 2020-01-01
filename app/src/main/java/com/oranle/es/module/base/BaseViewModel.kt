@@ -2,9 +2,13 @@ package com.oranle.es.module.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.oranle.es.data.repository.DBRepository
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 abstract class BaseViewModel : ViewModel() {
@@ -36,5 +40,14 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun getDB() = DBRepository.getDB()
+
+    fun <T> asyncCall(asyncBlock: suspend CoroutineScope.() -> T, uiBlock: CoroutineScope.(T) -> Unit) {
+        viewModelScope.launch(UI) {
+            val result = withContext(IO) {
+                asyncBlock()
+            }
+            uiBlock(result)
+        }
+    }
 
 }

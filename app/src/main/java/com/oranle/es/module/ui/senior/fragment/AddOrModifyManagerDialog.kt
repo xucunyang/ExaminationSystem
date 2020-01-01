@@ -1,6 +1,7 @@
 package com.oranle.es.module.ui.senior.fragment
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.ClassEntity
+import com.oranle.es.data.entity.User
 import com.oranle.es.data.repository.DBRepository
 import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.FragmentManagerAddBinding
@@ -24,8 +26,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-
-class AddManagerDialog(val cxt: Context) : DialogFragment() {
+/**
+ *  添加或者修改管理员信息
+ */
+class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
 
     lateinit var dataBinding: FragmentManagerAddBinding
 
@@ -34,6 +38,8 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
     private lateinit var adapter: MultiSelectClassAdapter
 
     lateinit var classSelectData: Array<ClassSelect?>
+
+    private var originUser: User? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,11 +63,21 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
         setStyle(STYLE_NO_FRAME, R.style.dialogStyle)
 
         viewModel = ViewModelProviders.of(this).get(DialogClassViewModel::class.java)
+
+        originUser = arguments?.getSerializable("user") as? User
+
+        Timber.d("oncreate originUser ${originUser == null}")
     }
+
+    var mListener: DialogInterface.OnDismissListener? = null
 
     override fun onStart() {
         super.onStart()
         initWindow()
+        dialog.setCanceledOnTouchOutside(false)
+
+        if (mListener != null)
+            dialog.setOnDismissListener(mListener)
     }
 
     private fun initView() {
@@ -79,16 +95,25 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
                 adapter.submitList(it)
             })
 
-            closeBtn.setOnClickListener{
+            closeBtn.setOnClickListener {
                 dismiss()
             }
+
+            if (originUser != null) {
+                title.text = "修改管理员信息"
+                addManager.text = "修改"
+            } else {
+                title.text = "添加管理员"
+                addManager.text = "添加"
+            }
+            initOriginAdminData(originUser)
 
             GlobalScope.launchWithLifecycle(viewLifecycleOwner, UI) {
 
                 val classes = withContext(IO) {
                     DBRepository.getDB().getClassDao().getAllClass()
                 }
-                Timber.d("get from db $classes")
+                Timber.d("get from db getAllClass ${classes.size}")
 
                 if (classes.isEmpty()) {
                     toast("请先创建班级！")
@@ -97,17 +122,21 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
 
                 classSelectData = arrayOfNulls(classes.size)
 
-
                 val array = arrayOfNulls<String>(classes.size)
+                var currentSelect = 0
                 classes.forEachIndexed { index, entity ->
                     array[index] = entity.className
                     classSelectData[index]?.className = entity.className
+                    if (originUser != null && originUser?.classId == entity.id) {
+                        currentSelect = index
+                    }
                 }
 
                 val classAdapter =
                     ArrayAdapter<String>(context!!, android.R.layout.simple_list_item_1, array)
                 var selectClassEntity: ClassEntity? = classes[0]
                 spinnerClass.adapter = classAdapter
+                spinnerClass.setSelection(currentSelect)
                 spinnerClass.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -132,19 +161,30 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
                 schoolSpinner.adapter = schoolAdapter
 
                 addManager.setOnClickListener {
-                    val result = viewModel.saveToDB(selectClassEntity, schoolName)
+                    val result =
+                        if (originUser == null) {
+                            viewModel.saveToDB(selectClassEntity, schoolName)
+                        } else {
+                            viewModel.updateUser(originUser!!)
+                        }
 
                     if (result) {
                         dismiss()
+                    } else {
+                        toast("出错")
                     }
 
                     Timber.d("vm data select ${viewModel.items.value}")
                 }
-
             }
         }
 
-        viewModel.load()
+        val selectClassList = originUser?.classIncharge?.split(",")
+        viewModel.load(selectClassList ?: emptyList())
+    }
+
+    private fun initOriginAdminData(user: User?) {
+        viewModel.initOriginData(user)
     }
 
     private fun initWindow() {
@@ -154,6 +194,10 @@ class AddManagerDialog(val cxt: Context) : DialogFragment() {
         lp.width = 1024
         lp.height = 700
         dialogWindow.attributes = lp
+    }
+
+    fun setDismissListener(listener: DialogInterface.OnDismissListener?) {
+        this.mListener = listener
     }
 
     inner class MultiSelectClassAdapter(vm: DialogClassViewModel) :

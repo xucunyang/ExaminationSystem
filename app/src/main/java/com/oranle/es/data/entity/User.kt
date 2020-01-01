@@ -27,5 +27,9 @@ data class User @JvmOverloads constructor(
     /**
      *  管理员所管辖班级
      */
-    @ColumnInfo(name = "class_incharge") val classIncharge: String = ""
+    @ColumnInfo(name = "class_incharge") val classIncharge: String = "",
+    /**
+     * 是否可以登录
+     */
+    @ColumnInfo(name = "can_login") val canLogin: Boolean = true
 ) : Serializable

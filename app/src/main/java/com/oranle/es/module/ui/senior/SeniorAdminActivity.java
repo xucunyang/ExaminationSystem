@@ -74,22 +74,22 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
     }
 
     public void showChangeClass(ClassEntity entity) {
+
         AddClassFragment frag = (AddClassFragment) fragList.get(4);
-//
+        fragList.remove(frag);
+
+        AddClassFragment newFrag = new AddClassFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(AddClassFragmentKt.CLASS_ENTITY, entity);
-//
-        AddClassFragment newFrag = new AddClassFragment();
         newFrag.setArguments(bundle);
 
-        fragList.remove(frag);
         fragList.add(newFrag);
 
-//        Fragment findFrag = supportFragmentManager.findFragmentByTag("" + 4);
-//        if (findFrag != null)
-//            supportFragmentManager.beginTransaction().remove(findFrag).commit();
-
         initViewpager(4);
+    }
+
+    public Fragment getFragment(int index) {
+        return fragList.get(index);
     }
 
     private void initViewpager(int tag) {

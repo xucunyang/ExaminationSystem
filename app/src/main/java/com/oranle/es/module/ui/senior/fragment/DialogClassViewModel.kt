@@ -6,13 +6,11 @@ import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.BaseRecycleViewModel
-import com.oranle.es.module.base.IO
-import com.oranle.es.module.base.UI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>() {
+class DialogClassViewModel : BaseRecycleViewModel<AddOrModifyManagerDialog.ClassSelect>() {
 
     val userName = MutableLiveData<String>()
 
@@ -22,21 +20,19 @@ class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>(
 
     val name = MutableLiveData<String>()
 
-    fun load() {
+    fun load(selectClassList: List<String> = emptyList()) {
         viewModelScope.launch(UI) {
             val list = withContext(IO) {
                 getDB().getClassDao().getAllClass()
             }
-            Timber.d("ExamSheetOperateViewModel load $list")
+            Timber.d("load from db getAllClass ${list.size}")
 
-            val mutableListOf = mutableListOf<AddManagerDialog.ClassSelect>()
+            val mutableListOf = mutableListOf<AddOrModifyManagerDialog.ClassSelect>()
 
             list.forEachIndexed { index, entity ->
-                mutableListOf.add(AddManagerDialog.ClassSelect(entity.className))
+                val contains = selectClassList.contains(entity.className)
+                mutableListOf.add(AddOrModifyManagerDialog.ClassSelect(entity.className, contains))
             }
-
-
-            Timber.d("ExamSheetOperateViewModel wrap load $mutableListOf")
 
             notifyItem(mutableListOf)
         }
@@ -53,49 +49,6 @@ class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>(
 
         notifyItem(items.value)
     }
-//
-//    fun unselectAllSheet(entity: ClassEntity) {
-//        items.value?.forEach {
-//            entity.sheetList.remove(it.id.toString())
-//        }
-//
-//        items.value?.forEach {
-//            Timber.d("select all sheet ${it.id}  ${it.isSelect}")
-//        }
-//
-//        notifyItem(items.value)
-//    }
-//
-//    fun selectAllShowReportSheet() {
-//        items.value?.forEach {
-//            it.showReportSheet.value = true
-//        }
-//        notifyItem(items.value)
-//    }
-//
-//    fun unselectAllShowReportSheet() {
-//        items.value?.forEach {
-//            it.showReportSheet.value = false
-//        }
-//
-//        notifyItem(items.value)
-//    }
-//
-//    private fun updateEntity(entity: ClassEntity) {
-//        items.value?.forEach {
-//            Timber.d("on click ${it.id}  + ${it.isSelect} + ${it.showReportSheet}")
-//            if (it.isSelect.value == true) {
-//                entity.sheetList.add(it.id.toString())
-//            } else {
-//                entity.sheetList.remove(it.id.toString())
-//            }
-//            if (it.showReportSheet.value == true) {
-//                entity.showSheetReportList.add(it.id.toString())
-//            } else {
-//                entity.showSheetReportList.remove(it.id.toString())
-//            }
-//        }
-//    }
 
     fun saveToDB(classEntity: ClassEntity?, schoolName: String?): Boolean {
 
@@ -142,7 +95,7 @@ class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>(
                         role = Role.Manager.value,
                         psw = psw.value!!,
                         classId = classEntity!!.id,
-                        className = classEntity!!.className,
+                        className = classEntity.className,
                         classIncharge = classIncharge.joinToString(",")
                     )
                 )
@@ -151,6 +104,44 @@ class DialogClassViewModel : BaseRecycleViewModel<AddManagerDialog.ClassSelect>(
             toast("已录入")
         }
         return true
+    }
+
+    fun updateUser(origin: User): Boolean {
+
+        val classIncharge = mutableListOf<String>()
+        items.value?.forEach {
+            if (it.isSelect) {
+                classIncharge.add(it.className)
+            }
+        }
+
+        val copy = origin.copy(
+            userName = userName.value!!,
+            alias = name.value!!,
+            role = Role.Manager.value,
+            psw = psw.value!!,
+            classIncharge = classIncharge.joinToString(",")
+        )
+        asyncCall({
+            getDB().getUserDao().updateUser(copy)
+        }, {
+            toast("已修改")
+        })
+        return true
+    }
+
+    fun initOriginData(user: User?) {
+        if (user != null) {
+            userName.value = user.userName
+            psw.value = user.psw
+            pswConfirm.value = user.psw
+            name.value = user.alias
+        } else {
+            userName.value = ""
+            psw.value = ""
+            pswConfirm.value = ""
+            name.value = ""
+        }
     }
 
 }

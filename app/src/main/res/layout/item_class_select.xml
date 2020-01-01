@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.oranle.es.module.ui.senior.fragment.AddManagerDialog.ClassSelect" />
+            type="com.oranle.es.module.ui.senior.fragment.AddOrModifyManagerDialog.ClassSelect" />
     </data>
 
     <LinearLayout
