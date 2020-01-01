@@ -97,6 +97,7 @@
             android:layout_marginTop="28dp"
             android:orientation="vertical"
             android:scrollbars="vertical"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/radioGroup"
             app:layout_constraintTop_toBottomOf="@+id/radioGroup">
 

@@ -8,7 +8,7 @@ import timber.log.Timber
 @BindingAdapter("app:items")
 fun <E> setItems(listView: RecyclerView, items: List<E>) {
 
-    Timber.d("set items $items ${listView.adapter}")
+    Timber.d("set items size ${items.size} adapter is null?${listView.adapter == null}")
 
     (listView.adapter as ListAdapter<E, *>).submitList(items)
 }

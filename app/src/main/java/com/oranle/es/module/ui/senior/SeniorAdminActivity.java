@@ -48,10 +48,6 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         fragList.add(new TableFragment());
         fragList.add(new ModifyPwdFragment());
         fragList.add(new AddClassFragment());
-        fragList.add(new ModifyClassFragment());
-
-        EditText editText = new EditText(this);
-        editText.setText("xxx");
 
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragList.get(0), "0").commit();
@@ -74,34 +70,33 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
     }
 
     public void showAddClassFrag() {
-        initViewpager(4);
+        showChangeClass(null);
     }
 
     public void showChangeClass(ClassEntity entity) {
         AddClassFragment frag = (AddClassFragment) fragList.get(4);
-
+//
         Bundle bundle = new Bundle();
         bundle.putSerializable(AddClassFragmentKt.CLASS_ENTITY, entity);
-        frag.setArguments(bundle);
+//
+        AddClassFragment newFrag = new AddClassFragment();
+        newFrag.setArguments(bundle);
+
+        fragList.remove(frag);
+        fragList.add(newFrag);
+
+//        Fragment findFrag = supportFragmentManager.findFragmentByTag("" + 4);
+//        if (findFrag != null)
+//            supportFragmentManager.beginTransaction().remove(findFrag).commit();
 
         initViewpager(4);
     }
 
     private void initViewpager(int tag) {
         try {
-            Fragment frag = supportFragmentManager.findFragmentByTag("" + tag);
-            if (frag == null) {
-                supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList.get(tag), tag + "").commit();
-            }
             FragmentTransaction ft = supportFragmentManager.beginTransaction();
-            for (int i = 0; i < fragList.size(); i++) {
-                if (i == tag) {
-                    ft.show(fragList.get(i));
 
-                } else {
-                    ft.hide(fragList.get(i));
-                }
-            }
+            ft.replace(R.id.frameLayout, fragList.get(tag), tag + "");
             ft.commit();
         } catch (Exception e) {
             e.printStackTrace();

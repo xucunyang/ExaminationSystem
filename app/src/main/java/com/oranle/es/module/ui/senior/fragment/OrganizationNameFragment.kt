@@ -32,7 +32,7 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
         var classAdapter = ClassAdapter(viewmodel)
         viewmodel.items.observe(this, Observer {
 
-            Timber.d("observe $it")
+            Timber.d("observe ${it?.size}")
             classAdapter = ClassAdapter(viewmodel)
             classAdapter.notifyDataSetChanged()
         })
