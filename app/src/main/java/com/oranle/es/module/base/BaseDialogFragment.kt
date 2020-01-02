@@ -2,36 +2,37 @@ package com.oranle.es.module.base
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
+import com.oranle.es.R
 
 /**
  * @Description:
  * @author: Created by martin on 2017/3/23.
  */
-abstract class BaseFragment<ViewBinding : ViewDataBinding> : Fragment() {
+abstract class BaseDialogFragment<ViewBinding : ViewDataBinding> : DialogFragment() {
 
-    protected var dataBinding: ViewBinding? = null
+    protected lateinit var dataBinding: ViewBinding
 
     @get:LayoutRes
     abstract val layoutId: Int
 
     var isViewDataBinding = true
 
-    private var mContext: BaseActivity<ViewBinding>? = null
+    private lateinit var mContext: BaseActivity<ViewDataBinding>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mContext = activity as BaseActivity<ViewBinding>
+
+        setStyle(STYLE_NO_FRAME, R.style.dialogStyle)
+
+        mContext = activity as BaseActivity<ViewDataBinding>
 
         if (activity != null && this.activity!!.isFinishing) {
             hideSoftInput(activity!!)
@@ -45,7 +46,7 @@ abstract class BaseFragment<ViewBinding : ViewDataBinding> : Fragment() {
     ): View? {
         if (isViewDataBinding) {
             dataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-            dataBinding?.setLifecycleOwner(viewLifecycleOwner)
+            dataBinding.setLifecycleOwner(viewLifecycleOwner)
             initView()
             return dataBinding?.root
         } else {
@@ -54,6 +55,21 @@ abstract class BaseFragment<ViewBinding : ViewDataBinding> : Fragment() {
             return view
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        initWindow()
+    }
+
+    private fun initWindow() {
+        val dialogWindow = dialog.window
+        dialogWindow!!.setGravity(Gravity.CENTER)
+        val lp = dialogWindow.attributes
+        lp.width = 1024
+        lp.height = 700
+        dialogWindow.attributes = lp
+    }
+
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
@@ -83,7 +99,7 @@ abstract class BaseFragment<ViewBinding : ViewDataBinding> : Fragment() {
                     && event.getY() > top && event.getY() < bottom)
         }
         // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditView上，和用户用轨迹球选择其他的焦点
-        return false;
+        return false
     }
 
     private fun hideSoftInput(activity: Activity) {

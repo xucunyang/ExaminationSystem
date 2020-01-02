@@ -1,32 +1,23 @@
-package com.oranle.es.module.base.examsheetdialog
+package com.oranle.es.module.examination
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
 import com.oranle.es.databinding.DialogExamSheetSelectBinding
 import com.oranle.es.databinding.ItemExamSheetBinding
 import com.oranle.es.module.base.BaseAdapter
+import com.oranle.es.module.base.BaseDialogFragment
+import com.oranle.es.module.base.examsheetdialog.ExamSheetViewModel
 import timber.log.Timber
 
+class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSelectBinding>() {
 
-class AssessmentSheetDialog(
-    val cxt: Context,
-    val sheetSelectedSet: Set<Assessment> = setOf(),
-    val showSheetReportSelectedSet: Set<Assessment> = setOf()
-) : DialogFragment() {
-
-    lateinit var dataBinding: DialogExamSheetSelectBinding
+    override val layoutId: Int
+        get() = R.layout.dialog_exam_sheet_select
 
     lateinit var vm: ExamSheetViewModel
 
@@ -38,51 +29,13 @@ class AssessmentSheetDialog(
 
     private var changeCallBack: ((sheet: Set<Assessment>, report: Set<Assessment>) -> Unit)? = null
 
-    init {
-        sheetSelectSet.addAll(sheetSelectedSet)
-        showSheetReportSet.addAll(showSheetReportSelectedSet)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        dataBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.dialog_exam_sheet_select, container, false
-        )
-        dataBinding.setLifecycleOwner(viewLifecycleOwner)
-
-        initView()
-
-        return dataBinding.root
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setStyle(STYLE_NO_FRAME, R.style.dialogStyle)
 
         vm = ViewModelProviders.of(this).get(ExamSheetViewModel::class.java)
     }
 
-    override fun onStart() {
-        super.onStart()
-        initWindow()
-    }
-
-    private fun initWindow() {
-        val dialogWindow = dialog.window
-        dialogWindow!!.setGravity(Gravity.CENTER)
-        val lp = dialogWindow.attributes
-        lp.width = 1024
-        lp.height = 700
-        dialogWindow.attributes = lp
-    }
-
-    private fun initView() {
+    override fun initView() {
 
         dataBinding.apply {
 
@@ -112,12 +65,9 @@ class AssessmentSheetDialog(
 
     }
 
-    fun setCallBack(callback: ((sheet: Set<Assessment>, report: Set<Assessment>) -> Unit)?) {
-        this.changeCallBack = callback
-    }
 
     inner class AssessmentListAdapter(val vm: ExamSheetViewModel) :
-        BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm, Diff()) {
+        BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm) {
 
         init {
             Timber.d("init ")
@@ -154,12 +104,4 @@ class AssessmentSheetDialog(
             get() = R.layout.item_exam_sheet
     }
 
-    inner class Diff : DiffUtil.ItemCallback<Assessment>() {
-        override fun areItemsTheSame(oldItem: Assessment, newItem: Assessment) =
-            (oldItem.id == newItem.id)
-
-        override fun areContentsTheSame(oldItem: Assessment, newItem: Assessment) =
-            (oldItem.id == newItem.id)
-
-    }
 }

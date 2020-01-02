@@ -10,18 +10,18 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import timber.log.Timber
 
 
 abstract class BaseActivity<ViewBinding : ViewDataBinding> :
-    AppCompatActivity() {
+    FragmentActivity() {
 
     private val PERMISSON_REQ_CODE = 100
 
