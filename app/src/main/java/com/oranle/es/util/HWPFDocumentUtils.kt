@@ -1,25 +1,15 @@
 package com.oranle.es.util
 
-import android.util.Log
-import com.oranle.es.module.examination.ExamSheet
+import com.oranle.es.data.entity.ReportRule
 import com.oranle.es.data.entity.SingleChoice
-
+import com.oranle.es.module.examination.ExamSheet
 import org.apache.poi.hwpf.HWPFDocument
-import org.apache.poi.hwpf.usermodel.Bookmark
-import org.apache.poi.hwpf.usermodel.Bookmarks
-import org.apache.poi.hwpf.usermodel.Paragraph
-import org.apache.poi.hwpf.usermodel.Range
-import org.apache.poi.hwpf.usermodel.Section
-import org.apache.poi.hwpf.usermodel.Table
-import org.apache.poi.hwpf.usermodel.TableCell
-import org.apache.poi.hwpf.usermodel.TableIterator
-import org.apache.poi.hwpf.usermodel.TableRow
-
+import org.apache.poi.hwpf.usermodel.*
+import timber.log.Timber
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
-
-import timber.log.Timber
+import java.lang.NumberFormatException
 
 /**
  *  使用HWPFDocument读文件
@@ -137,6 +127,7 @@ class HWPFDocumentUtils {
         var intro = ""
         val questionList: MutableList<SingleChoice> = ArrayList()
         var answerList: List<String?>? = mutableListOf()
+        val reportRules = mutableListOf<ReportRule>()
 
         while (tableIter.hasNext()) {
             table = tableIter.next()
@@ -148,17 +139,23 @@ class HWPFDocumentUtils {
             var question = ""
             var imgUrls = ""
             var mediaUrl = ""
-            var options = ""
-            for (rowIndex in 0 until rowNum) {
+            var options: String
+
+            outloop@ for (rowIndex in 0 until rowNum) {
                 row = table.getRow(rowIndex)
                 val cellNum = row.numCells()
 
-                for (cellIndex in 0 until cellNum) {
+                // 报告规则所用变量
+                var ruleStr = ""
+                var size = ""
+                var singleScore: String? = ""
+                var wholeScore: String?
+                var readRule = false
+                loop@ for (cellIndex in 0 until cellNum) {
 
                     val cellContent = row.getCell(cellIndex).text().trim { it <= ' ' }
 
                     content.append(cellContent)
-
                     log("第" + rowIndex + "行，第" + cellIndex + "列：" + cellContent)
 
                     when {
@@ -170,9 +167,35 @@ class HWPFDocumentUtils {
                         }
                         rowIndex > 3 -> {
 
-                            if (rowIndex == (rowNum - 1) && (cellIndex == 0)) {
+                            if (isAnswer(cellContent) && (cellIndex == 0)) {
                                 Timber.d("end index $cellContent")
                                 answerList = getAnswerList(cellContent)
+                                continue@outloop
+                            }
+
+                            if (isRule(cellContent) || readRule) {
+                                Timber.d("rule index $cellContent")
+                                readRule = cellIndex != 4
+
+                                when (cellIndex) {
+                                    0 -> Timber.d("rule begin $cellContent")
+                                    1 -> ruleStr = cellContent
+                                    2 -> size = cellContent
+                                    3 -> singleScore = cellContent
+                                    4 -> {
+                                        wholeScore = cellContent
+                                        val reportRule = ReportRule(
+                                            sheetId = examSheetId,
+                                            typeStr = ruleStr,
+                                            size = size.toInt(),
+                                            singleScore = parseNum(singleScore),
+                                            wholeScore = parseNum(wholeScore)
+                                        )
+                                        reportRules.add(reportRule)
+                                        Timber.d("rule end $reportRule")
+                                    }
+                                }
+                                continue@loop
                             }
 
                             if (!questionReadComplete) {
@@ -217,12 +240,13 @@ class HWPFDocumentUtils {
             showIntroduction = true,
             showTip = true,
             singleChoiceList = questionList,
-            answerList = answerList
+            answerList = answerList,
+            reportRuleList = reportRules
         )
     }
 
     private fun getAnswerList(cellContent: String): List<String?>? =
-        if (cellContent.contains("答案：")) {
+        if (isAnswer(cellContent)) {
             val indexOf = cellContent.indexOf("：")
             val substring = cellContent.substring(indexOf + 1).replace(" ", "").toCharArray()
             val stringList = arrayOfNulls<String>(substring.size)
@@ -233,6 +257,27 @@ class HWPFDocumentUtils {
         } else {
             null
         }
+
+    private fun isAnswer(cellContent: String) = cellContent.startsWith("答案：")
+
+    private fun isRule(cellContent: String) = cellContent.startsWith("规则：")
+
+    private fun parseNum(sizeStr: String?): Float {
+
+        if (sizeStr == null || sizeStr.isBlank()) {
+            return 0F
+        } else {
+            var size: Float
+            try {
+                size = sizeStr.toFloat()
+            } catch (e: NumberFormatException) {
+                size = 0F
+                e.printStackTrace()
+                Timber.w(e)
+            }
+            return size
+        }
+    }
 
     /**
      * 读列表

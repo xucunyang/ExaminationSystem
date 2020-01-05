@@ -1,6 +1,7 @@
 package com.oranle.es.module.examination
 
 import com.oranle.es.data.entity.Assessment
+import com.oranle.es.data.entity.ReportRule
 import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.repository.DBRepository
 import timber.log.Timber
@@ -28,9 +29,13 @@ data class ExamSheet @JvmOverloads constructor(
      */
     val singleChoiceList: List<SingleChoice>,
     /**
-     *
+     * 答案列表
      */
-    val answerList: List<String?>?
+    val answerList: List<String?>?,
+    /**
+     * 报告规则列表
+     */
+    val reportRuleList: List<ReportRule>?
 ) {
     suspend fun saveToDB(): String {
         val msg: String

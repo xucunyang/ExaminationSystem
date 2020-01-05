@@ -38,5 +38,5 @@ data class SingleChoice(
         questionImgUrls.split(",")
 
     fun optionList(): List<String> =
-        options.split("   ")
+        options.split("  ")
 }

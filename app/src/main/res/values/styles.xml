@@ -55,7 +55,7 @@
 
     <style name="dialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
         <!-- 窗口背景色 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
         <!--是否有覆盖-->
         <item name="android:windowContentOverlay">@null</item>
         <!-- 浮于Activity之上 -->

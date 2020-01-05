@@ -12,7 +12,7 @@ interface SingleChoiceDao {
     @Insert
     suspend fun addSingleChoices(singleChoices: List<SingleChoice>)
 
-    @Query("select * from single_choice where id =:assessmentId")
+    @Query("select * from single_choice where examSheetId =:assessmentId")
     suspend fun getSingleChoicesBySheetId(assessmentId: Int): List<SingleChoice>
 
     @Update

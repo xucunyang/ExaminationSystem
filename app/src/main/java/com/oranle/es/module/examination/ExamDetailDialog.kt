@@ -1,9 +1,11 @@
 package com.oranle.es.module.examination
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
@@ -61,17 +63,15 @@ class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSel
             adapter.submitList(it)
         })
 
-        vm.load()
-
+        viewModel.load(assessment)
     }
 
+    override fun getDialogWidth() = 1280
 
-    inner class AssessmentListAdapter(val vm: ExamSheetViewModel) :
-        BaseAdapter<Assessment, ItemExamSheetBinding, ExamSheetViewModel>(vm) {
+    override fun getDialogHeight() = 720
 
-        init {
-            Timber.d("init ")
-        }
+    inner class SingleChoiceAdapter(viewModel: ExamDetailViewModel) :
+        BaseAdapter<SingleChoice, ItemQuestionLayoutBinding, ExamDetailViewModel>(viewModel) {
 
         override fun doBindViewHolder(
             binding: ItemExamSheetBinding,
@@ -101,7 +101,7 @@ class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSel
         }
 
         override val layoutRes: Int
-            get() = R.layout.item_exam_sheet
+            get() = R.layout.item_question_layout
     }
 
 }

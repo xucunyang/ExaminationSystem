@@ -18,7 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.2"
-            android:text="@string/question_template"
+            android:text="@{item.question}"
+            android:textSize="@dimen/sp_22"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -42,26 +44,29 @@
                     android:id="@+id/iv_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/line_complex" />
+                    android:visibility="@{vm.firstPicVisibility(item)}"
+                    app:img="@{vm.getFirstImage(item)}" />
 
                 <ImageView
                     android:id="@+id/iv_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/line_complex" />
+                    android:visibility="@{vm.secondPicVisibility(item)}"
+                    app:img="@{vm.getSecondImage(item)}" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/media_ctrl"
                 android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.mediaPlayVisibility(item)}">
 
                 <com.oranle.es.module.base.view.JzvdStdMp3
                     android:id="@+id/mp3_view"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
+                    android:layout_height="150dp"
+                    app:jz_init="@{item.mediaUrl}" />
 
             </LinearLayout>
 
@@ -74,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            app:bind_options="@{item}"
             app:layout_constraintTop_toBottomOf="@+id/question_media_layout"
             tools:layout_editor_absoluteX="15dp">
 
@@ -82,45 +88,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="35dp"
-                android:checked="true"
-                android:text="A 1"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="194dp" />
+                android:textSize="@dimen/sp_22" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/option_b"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="35dp"
-                android:text="B 1"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="194dp" />
+                android:textSize="@dimen/sp_22" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/option_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="35dp"
-                android:text="C 1"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="194dp" />
+                android:textSize="@dimen/sp_22"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/option_d"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="35dp"
-                android:text="D 1"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="194dp" />
+                android:textSize="@dimen/sp_22"
+                android:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/option_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D 1"
-                tools:layout_editor_absoluteX="34dp"
-                tools:layout_editor_absoluteY="194dp" />
+                android:textSize="@dimen/sp_22"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/option_f"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_22"
+                android:visibility="gone" />
 
         </RadioGroup>
 

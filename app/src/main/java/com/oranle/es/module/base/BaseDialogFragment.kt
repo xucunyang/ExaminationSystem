@@ -48,7 +48,7 @@ abstract class BaseDialogFragment<ViewBinding : ViewDataBinding> : DialogFragmen
             dataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
             dataBinding.setLifecycleOwner(viewLifecycleOwner)
             initView()
-            return dataBinding?.root
+            return dataBinding.root
         } else {
             val view = super.onCreateView(inflater, container, savedInstanceState)
             initView()
@@ -65,11 +65,14 @@ abstract class BaseDialogFragment<ViewBinding : ViewDataBinding> : DialogFragmen
         val dialogWindow = dialog.window
         dialogWindow!!.setGravity(Gravity.CENTER)
         val lp = dialogWindow.attributes
-        lp.width = 1024
-        lp.height = 700
+        lp.width = getDialogWidth()
+        lp.height = getDialogHeight()
         dialogWindow.attributes = lp
     }
 
+    open fun getDialogWidth() = 1024
+
+    open fun getDialogHeight() = 700
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
