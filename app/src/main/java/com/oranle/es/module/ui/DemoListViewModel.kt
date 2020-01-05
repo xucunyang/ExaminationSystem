@@ -1,9 +1,7 @@
-package com.oranle.es.module
+package com.oranle.es.module.ui
 
 import androidx.lifecycle.viewModelScope
 import com.oranle.es.module.base.BaseRecycleViewModel
-import com.oranle.es.module.base.IO
-import com.oranle.es.module.base.UI
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.databinding.ActivityListBinding
 import com.oranle.es.databinding.ListItemDetailBinding
-import com.oranle.es.module.DemoListViewModel
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.BaseAdapter
 import timber.log.Timber

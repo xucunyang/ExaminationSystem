@@ -9,21 +9,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
-import com.oranle.es.databinding.DialogExamSheetSelectBinding
-import com.oranle.es.databinding.ItemExamSheetBinding
+import com.oranle.es.data.entity.SingleChoice
+import com.oranle.es.databinding.DialogExamDetailBinding
+import com.oranle.es.databinding.ItemQuestionLayoutBinding
 import com.oranle.es.module.base.BaseAdapter
 import com.oranle.es.module.base.BaseDialogFragment
-import com.oranle.es.module.base.examsheetdialog.ExamSheetViewModel
+import com.oranle.es.module.examination.viewmodel.ExamDetailViewModel
 import timber.log.Timber
 
-class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSelectBinding>() {
+class ExamDetailDialog(val cxt: Context, val assessment: Assessment) :
+    BaseDialogFragment<DialogExamDetailBinding>() {
 
     override val layoutId: Int
-        get() = R.layout.dialog_exam_sheet_select
+        get() = R.layout.dialog_exam_detail
 
-    lateinit var vm: ExamSheetViewModel
+    lateinit var viewModel: ExamDetailViewModel
 
-    private lateinit var adapter: AssessmentListAdapter
+    private lateinit var adapter: SingleChoiceAdapter
 
     private val sheetSelectSet = mutableSetOf<Assessment>()
 
@@ -34,14 +36,13 @@ class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vm = ViewModelProviders.of(this).get(ExamSheetViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(ExamDetailViewModel::class.java)
     }
 
     override fun initView() {
 
         dataBinding.apply {
-
-            viewmodel = vm
+            vm = viewModel
 
             closeBtn.setOnClickListener {
 
@@ -52,14 +53,14 @@ class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSel
                 dismiss()
             }
 
-            adapter = AssessmentListAdapter(vm)
+            adapter = SingleChoiceAdapter(viewModel)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(cxt)
         }
 
-        vm.items.observe(this, Observer {
-            Timber.d("observer value $it")
-            adapter = AssessmentListAdapter(vm)
+        viewModel.items.observe(this, Observer {
+            Timber.d("observer value ${it.size}")
+            adapter = SingleChoiceAdapter(viewModel)
             adapter.submitList(it)
         })
 
@@ -74,30 +75,12 @@ class ExamDetailDialog(val cxt: Context) : BaseDialogFragment<DialogExamSheetSel
         BaseAdapter<SingleChoice, ItemQuestionLayoutBinding, ExamDetailViewModel>(viewModel) {
 
         override fun doBindViewHolder(
-            binding: ItemExamSheetBinding,
-            item: Assessment,
-            viewModel: ExamSheetViewModel
+            binding: ItemQuestionLayoutBinding,
+            item: SingleChoice,
+            viewModel: ExamDetailViewModel
         ) {
-            binding.checkSheet.isChecked = sheetSelectSet.contains(item)
-            binding.showReportSheet.isChecked = showSheetReportSet.contains(item)
-
+            binding.vm = viewModel
             binding.item = item
-
-            binding.checkSheet.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (!isChecked) {
-                    sheetSelectSet.remove(item)
-                } else {
-                    sheetSelectSet.add(item)
-                }
-            }
-
-            binding.showReportSheet.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (!isChecked) {
-                    showSheetReportSet.remove(item)
-                } else {
-                    showSheetReportSet.add(item)
-                }
-            }
         }
 
         override val layoutRes: Int

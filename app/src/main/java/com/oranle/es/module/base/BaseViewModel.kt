@@ -41,7 +41,7 @@ abstract class BaseViewModel : ViewModel() {
 
     fun getDB() = DBRepository.getDB()
 
-    fun <T> asyncCall(asyncBlock: suspend CoroutineScope.() -> T, uiBlock: CoroutineScope.(T) -> Unit) {
+    fun <T> asyncCall(asyncBlock: suspend CoroutineScope.() -> T, uiBlock: (T) -> Unit) {
         viewModelScope.launch(UI) {
             val result = withContext(IO) {
                 asyncBlock()

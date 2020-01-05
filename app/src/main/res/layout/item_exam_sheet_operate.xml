@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
+            android:onClick="@{(v) -> vm.onViewDetail(v, item)}"
             android:padding="15dp">
 
             <TextView
