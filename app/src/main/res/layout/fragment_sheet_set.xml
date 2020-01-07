@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.oranle.es.module.ui.senior.viewmodel.SheetSetViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_back_normal"
+            android:drawablePadding="@dimen/dp_15"
+            android:padding="@dimen/dp_15"
+            android:text="返回"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title" />
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/dp_25"
+            android:text="量表设置"
+            android:textSize="@dimen/sp_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="量表原始名称："
+                    android:textSize="@dimen/sp_25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="量表别名："
+                    android:textSize="@dimen/sp_25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="测评用户能否查看此量表说明"
+                    android:textSize="@dimen/sp_25" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="测评用户能否查看此量表提示"
+                    android:textSize="@dimen/sp_25" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:orientation="vertical"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/sheet_origin_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{vm.sheetOriginName}"
+                    android:textSize="@dimen/sp_25" />
+
+                <EditText
+                    android:id="@+id/class_name_et"
+                    android:layout_width="@dimen/dp_250"
+                    android:layout_height="wrap_content"
+                    android:hint="测试用户可看到的量表名称"
+                    android:padding="@dimen/dp_10"
+                    android:text="@={vm.sheetAlias}" />
+
+                <RadioGroup
+                    android:id="@+id/show_desc_rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintStart_toEndOf="@+id/allow_register"
+                    app:layout_constraintTop_toTopOf="@+id/allow_register">
+
+                    <RadioButton
+                        android:id="@+id/permit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:checked="@={vm.showDesc}"
+                        android:text="是"
+                        android:textSize="@dimen/sp_25" />
+
+                    <RadioButton
+                        android:id="@+id/not_permit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:checked="@={!vm.showDesc}"
+                        android:text="否"
+                        android:textSize="@dimen/sp_25"
+                        tools:layout_editor_absoluteX="121dp"
+                        tools:layout_editor_absoluteY="387dp" />
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/show_tip_rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintStart_toEndOf="@+id/allow_register"
+                    app:layout_constraintTop_toTopOf="@+id/allow_register">
+
+                    <RadioButton
+                        android:id="@+id/tip_permit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_20"
+                        android:checked="@={vm.showTip}"
+                        android:text="是"
+                        android:textSize="@dimen/sp_25" />
+
+                    <RadioButton
+                        android:id="@+id/tip_not_permit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@={!vm.showTip}"
+                        android:text="否"
+                        android:textSize="@dimen/sp_25"
+                        tools:layout_editor_absoluteX="121dp"
+                        tools:layout_editor_absoluteY="387dp" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.doChange()}"
+            android:text="修改"
+            app:layout_constraintEnd_toEndOf="@+id/title"
+            app:layout_constraintStart_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/content" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

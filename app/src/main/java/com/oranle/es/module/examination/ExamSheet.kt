@@ -40,7 +40,16 @@ data class ExamSheet @JvmOverloads constructor(
     suspend fun saveToDB(): String {
         val msg: String
         val answerStr = answerList?.joinToString(",") ?: ""
-        val assessment = Assessment(id, title, introduction, showIntroduction, showTip, answerStr)
+        val assessment =
+            Assessment(
+                id = id,
+                title = title,
+                alias = title,
+                introduction = introduction,
+                showIntroduction = showIntroduction,
+                showTip = showTip,
+                correctAnswer = answerStr
+            )
 
         val assessmentDao = DBRepository.getDB().getAssessmentDao()
         val assessmentByTitle = assessmentDao.getAssessmentByTitle(title)

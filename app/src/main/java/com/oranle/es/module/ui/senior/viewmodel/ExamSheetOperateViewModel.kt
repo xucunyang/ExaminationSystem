@@ -45,8 +45,9 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
         dialog.show(activity.supportFragmentManager, "")
     }
 
-    fun onChangeSet(entity: Assessment) {
-
+    fun onChangeSet(v: View, entity: Assessment) {
+        val activity = v.context as SeniorAdminActivity
+        activity.showChangeSheet(entity)
     }
 
 }

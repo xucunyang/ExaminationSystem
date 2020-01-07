@@ -1,11 +1,9 @@
 package com.oranle.es.module.examination
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment

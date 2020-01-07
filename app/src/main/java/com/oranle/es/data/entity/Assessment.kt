@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 /**
  *  测评量表
@@ -17,6 +18,10 @@ data class Assessment(
      *  标题
      */
     @ColumnInfo(name = "title") val title: String,
+    /**
+     *  别名
+     */
+    @ColumnInfo(name = "alias") val alias: String = title,
     /**
      *  量表介绍
      */
@@ -33,7 +38,7 @@ data class Assessment(
      *  正确答案  [A, B, C, D]
      */
     @ColumnInfo(name = "correctAnswer") val correctAnswer: String
-) {
+) : Serializable {
     @Ignore
     val correctAnswerList = correctAnswer.split(",").toList()
 
@@ -47,5 +52,5 @@ data class Assessment(
      *  是否可以直接看到报告的量表
      */
     @Ignore
-    var showReportSheet =  MutableLiveData(false)
+    var showReportSheet = MutableLiveData(false)
 }

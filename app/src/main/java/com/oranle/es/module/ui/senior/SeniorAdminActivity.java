@@ -2,22 +2,22 @@ package com.oranle.es.module.ui.senior;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oranle.es.R;
+import com.oranle.es.data.entity.Assessment;
 import com.oranle.es.data.entity.ClassEntity;
 import com.oranle.es.databinding.ActivitySeniorAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
 import com.oranle.es.module.ui.senior.fragment.AddClassFragment;
 import com.oranle.es.module.ui.senior.fragment.AddClassFragmentKt;
 import com.oranle.es.module.ui.senior.fragment.AdministratorFragment;
-import com.oranle.es.module.ui.senior.fragment.ModifyClassFragment;
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment;
 import com.oranle.es.module.ui.senior.fragment.OrganizationNameFragment;
+import com.oranle.es.module.ui.senior.fragment.SheetSetFragment;
 import com.oranle.es.module.ui.senior.fragment.TableFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +48,7 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         fragList.add(new TableFragment());
         fragList.add(new ModifyPwdFragment());
         fragList.add(new AddClassFragment());
+        fragList.add(new SheetSetFragment());
 
         supportFragmentManager = getSupportFragmentManager();
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, fragList.get(0), "0").commit();
@@ -86,6 +87,16 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         fragList.add(newFrag);
 
         initViewpager(4);
+    }
+
+    public void showChangeSheet(Assessment assessment) {
+        fragList.remove(5);
+        SheetSetFragment fragment = new SheetSetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("assessment", assessment);
+        fragment.setArguments(bundle);
+        fragList.add(fragment);
+        initViewpager(5);
     }
 
     public Fragment getFragment(int index) {

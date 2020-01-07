@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.lang.Exception
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -41,12 +42,21 @@ abstract class BaseViewModel : ViewModel() {
 
     fun getDB() = DBRepository.getDB()
 
-    fun <T> asyncCall(asyncBlock: suspend CoroutineScope.() -> T, uiBlock: (T) -> Unit) {
+    fun <T> asyncCall(
+        asyncBlock: suspend CoroutineScope.() -> T,
+        uiBlock: (T) -> Unit,
+        errBlock: ((e: Exception) -> Unit)? = null
+    ) {
         viewModelScope.launch(UI) {
-            val result = withContext(IO) {
-                asyncBlock()
+            try {
+                val result = withContext(IO) {
+                    asyncBlock()
+                }
+                uiBlock(result)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errBlock?.let { it(e) }
             }
-            uiBlock(result)
         }
     }
 
