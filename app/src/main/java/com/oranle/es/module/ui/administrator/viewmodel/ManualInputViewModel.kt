@@ -1,6 +1,7 @@
 package com.oranle.es.module.ui.administrator.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.BaseViewModel
 
@@ -8,13 +9,38 @@ class ManualInputViewModel : BaseViewModel() {
 
     val students = MutableLiveData<List<User>>().apply { emptyList<User>() }
 
-    fun loadStudent(user: User) {
+    fun loadStudentByManagerId(mamager: User) {
         asyncCall(
             {
-//                getDB().getUserDao().getUsersByRole()
+                getDB().getUserDao().getUserByManagerId(mamager.id)
             },
             {
 
+                val u1 = User(
+                    id = 101,
+                    userName = "101",
+                    alias = "101",
+                    role = Role.Examinee.value,
+                    psw = "101",
+
+                    classId = 1,
+                    managerId = mamager.id
+                )
+                val u2 = User(
+                    id = 102,
+                    userName = "102",
+                    alias = "102",
+                    role = Role.Examinee.value,
+                    psw = "102",
+
+                    classId = 1,
+                    managerId = mamager.id
+                )
+
+                val listOf = listOf(u1, u2)
+
+
+                students.value = listOf
             }
         )
     }

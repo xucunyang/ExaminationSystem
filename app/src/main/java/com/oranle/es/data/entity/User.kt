@@ -30,7 +30,11 @@ data class User @JvmOverloads constructor(
      */
     @ColumnInfo(name = "class_incharge") val classIncharge: String = "",
     /**
-     * 是否可以登录
+     *  管理员角色是否可以登录
      */
-    @ColumnInfo(name = "can_login") val canLogin: Boolean = true
+    @ColumnInfo(name = "can_login") val canLogin: Boolean = true,
+    /**
+     *  测评用户关联的管理员id
+     */
+    @ColumnInfo(name = "manager_id") val managerId: Int = -1
 ) : Serializable

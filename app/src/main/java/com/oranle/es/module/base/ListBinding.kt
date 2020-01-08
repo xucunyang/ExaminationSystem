@@ -1,14 +1,13 @@
 package com.oranle.es.module.base
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oranle.es.R
 import com.oranle.es.data.entity.SingleChoice
+import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.view.JzvdStdMp3
 import com.oranle.es.util.ImageUtil
 import timber.log.Timber
@@ -72,4 +71,23 @@ fun initOptionRadioGroup(radioGroup: RadioGroup, singleChoice: SingleChoice) {
             Timber.d("child is not type Radiobutton,index $childIndex ,$child")
         }
     }
+}
+
+@BindingAdapter("app:bind_spinner")
+fun bindSpinner(spinner: Spinner, students: List<User>?) {
+
+    Timber.d("bindSpinner ${students?.size}")
+
+    val studentName = mutableListOf<String>()
+
+    students?.forEach {
+        studentName.add(it.userName)
+    }
+
+    val schoolAdapter = ArrayAdapter<String>(
+        spinner.context,
+        android.R.layout.simple_list_item_1,
+        studentName.toTypedArray()
+    )
+    spinner.adapter = schoolAdapter
 }
