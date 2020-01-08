@@ -2,6 +2,7 @@ package com.oranle.es.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
@@ -25,7 +26,7 @@ data class User @JvmOverloads constructor(
      */
     @ColumnInfo(name = "class_name") val className: String = "",
     /**
-     *  管理员所管辖班级
+     *  管理员所管辖班级, 班级ID用<,>分割
      */
     @ColumnInfo(name = "class_incharge") val classIncharge: String = "",
     /**

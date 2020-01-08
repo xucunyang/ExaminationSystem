@@ -59,6 +59,10 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
     }
 
     public void onAdmin(View view) {
+        fragList.remove(1);
+        AdministratorFragment fragment = new AdministratorFragment();
+        fragList.add(1, fragment);
+
         initViewpager(1);
     }
 

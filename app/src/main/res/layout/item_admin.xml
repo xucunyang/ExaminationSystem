@@ -54,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@{item.classIncharge}"
+            android:text="@{vm.getClassInCharge(item.classIncharge)}"
             android:textColor="@color/black"
             android:textSize="22dp" />
 

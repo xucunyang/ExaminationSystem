@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class DialogClassViewModel : BaseRecycleViewModel<AddOrModifyManagerDialog.ClassSelect>() {
+class DialogClassViewModel : BaseRecycleViewModel<ClassSelect>() {
 
     val userName = MutableLiveData<String>()
 
@@ -27,11 +27,11 @@ class DialogClassViewModel : BaseRecycleViewModel<AddOrModifyManagerDialog.Class
             }
             Timber.d("load from db getAllClass ${list.size}")
 
-            val mutableListOf = mutableListOf<AddOrModifyManagerDialog.ClassSelect>()
+            val mutableListOf = mutableListOf<ClassSelect>()
 
-            list.forEachIndexed { index, entity ->
-                val contains = selectClassList.contains(entity.className)
-                mutableListOf.add(AddOrModifyManagerDialog.ClassSelect(entity.className, contains))
+            list.forEach { entity ->
+                val contains = selectClassList.contains(entity.id.toString())
+                mutableListOf.add(ClassSelect(entity.id, entity.className, contains))
             }
 
             notifyItem(mutableListOf)
@@ -84,7 +84,7 @@ class DialogClassViewModel : BaseRecycleViewModel<AddOrModifyManagerDialog.Class
                 val classIncharge = mutableListOf<String>()
                 items.value?.forEach {
                     if (it.isSelect) {
-                        classIncharge.add(it.className)
+                        classIncharge.add(it.classId.toString())
                     }
                 }
 
@@ -108,10 +108,10 @@ class DialogClassViewModel : BaseRecycleViewModel<AddOrModifyManagerDialog.Class
 
     fun updateUser(origin: User): Boolean {
 
-        val classIncharge = mutableListOf<String>()
+        val classIncharge = mutableListOf<Int>()
         items.value?.forEach {
             if (it.isSelect) {
-                classIncharge.add(it.className)
+                classIncharge.add(it.classId)
             }
         }
 

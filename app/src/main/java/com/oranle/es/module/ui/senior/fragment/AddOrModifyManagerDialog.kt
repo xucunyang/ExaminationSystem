@@ -37,8 +37,6 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
 
     private lateinit var adapter: MultiSelectClassAdapter
 
-    lateinit var classSelectData: Array<ClassSelect?>
-
     private var originUser: User? = null
 
     override fun onCreateView(
@@ -120,13 +118,10 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
                     return@launchWithLifecycle
                 }
 
-                classSelectData = arrayOfNulls(classes.size)
-
                 val array = arrayOfNulls<String>(classes.size)
                 var currentSelect = 0
                 classes.forEachIndexed { index, entity ->
                     array[index] = entity.className
-                    classSelectData[index]?.className = entity.className
                     if (originUser != null && originUser?.classId == entity.id) {
                         currentSelect = index
                     }
@@ -218,9 +213,10 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
 
     }
 
-    data class ClassSelect(
-        var className: String = "",
-        var isSelect: Boolean = false
-    )
-
 }
+
+data class ClassSelect(
+    var classId: Int = -1,
+    var className: String = "",
+    var isSelect: Boolean = false
+)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.BaseRecycleViewModel
@@ -13,17 +14,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class AdminViewModel: BaseRecycleViewModel<User>() {
+class AdminViewModel : BaseRecycleViewModel<User>() {
 
     val eidtLogin = "编辑登陆权限"
     val forbidenLogin = "已禁止登录"
     val operateTip = MutableLiveData<String>(eidtLogin)
 
-    val canLoginState = MutableLiveData<Boolean>(true)
+    var classes: List<ClassEntity>? = null
 
     fun load() {
         viewModelScope.launch(UI) {
             val adminList = withContext(IO) {
+                classes = getDB().getClassDao().getAllClass()
                 getDB().getUserDao().getUsersByRole(Role.Manager.value)
             }
             notifyItem(adminList)
@@ -52,6 +54,21 @@ class AdminViewModel: BaseRecycleViewModel<User>() {
             Timber.d("已更新")
             load()
         }
+    }
+
+    fun getClassInCharge(ids: String): String {
+
+        val idList = ids.split(",").toList()
+        val classInCharge = mutableListOf<String>()
+
+        Timber.d("getClassInCharge ${classes?.size}")
+
+        classes?.forEach {
+            if (idList.contains(it.id.toString())) {
+                classInCharge.add(it.className)
+            }
+        }
+        return classInCharge.joinToString(",")
     }
 
 }
