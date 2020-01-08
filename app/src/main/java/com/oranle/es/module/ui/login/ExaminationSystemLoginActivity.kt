@@ -29,9 +29,9 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
         super.onCreate(savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            user_name_ed.setText("admin")
-            psw_et.setText("admin")
-            spinner.setSelection(2)
+            user_name_ed.setText("lw")
+            psw_et.setText("1")
+            spinner.setSelection(1)
         }
 
         dataBinding.spinner.onItemSelectedListener = object : OnItemSelectedListener {

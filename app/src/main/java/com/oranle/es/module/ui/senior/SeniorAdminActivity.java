@@ -84,7 +84,7 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         bundle.putSerializable(AddClassFragmentKt.CLASS_ENTITY, entity);
         newFrag.setArguments(bundle);
 
-        fragList.add(newFrag);
+        fragList.add(4, newFrag);
 
         initViewpager(4);
     }
@@ -99,7 +99,7 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         Bundle bundle = new Bundle();
         bundle.putSerializable("assessment", assessment);
         fragment.setArguments(bundle);
-        fragList.add(fragment);
+        fragList.add(5, fragment);
         initViewpager(5);
     }
 

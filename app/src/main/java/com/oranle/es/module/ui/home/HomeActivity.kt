@@ -40,7 +40,6 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
 
 
     fun onMultiTest(view: View) {
-        toast("${view.id} xxxx")
 
 //            val intent = Intent(view.context, ListActivityDemo::class.java)
 //            val intent = Intent(view.context, FileImportActivity::class.java)
