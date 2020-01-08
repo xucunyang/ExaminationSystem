@@ -3,6 +3,10 @@ package com.oranle.es.data.sp
 import android.content.Context
 import android.content.SharedPreferences
 import com.oranle.es.app.SessionApp
+import com.oranle.es.data.entity.User
+import com.oranle.es.util.GsonUtil
+import timber.log.Timber
+import java.lang.Exception
 
 class SpUtil private constructor() {
 
@@ -17,6 +21,8 @@ class SpUtil private constructor() {
     private val ORGANIZATION_NAME = "organization_name"
 
     private val EXAM_SHEET_INDEX = "exam_sheet_index"
+
+    private val USER_BEAN = "user_bean"
 
     private val editor: SharedPreferences.Editor
     private val sp = SessionApp.instance!!.getSharedPreferences("sp", Context.MODE_PRIVATE)
@@ -52,5 +58,23 @@ class SpUtil private constructor() {
     }
 
     fun setExamSheetIndex(index: Int) = wrap { editor.putInt(EXAM_SHEET_INDEX, index) }
+
+    fun setCurrentUser(user: User) = wrap {
+        editor.putString(USER_BEAN,  GsonUtil.GsonString(user))
+    }
+
+    fun getCurrentUser(): User? {
+        val string = sp.getString(USER_BEAN, "")
+        var bean: User? = null
+        if (string != null && string.isNotBlank()) {
+            try {
+                bean = GsonUtil.GsonToBean(string, User::class.java)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Timber.e(e)
+            }
+        }
+        return bean
+    }
 
 }

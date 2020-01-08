@@ -89,6 +89,10 @@ public class SeniorAdminActivity extends BaseActivity<ActivitySeniorAdminBinding
         initViewpager(4);
     }
 
+    public void onExit(View view) {
+        finish();
+    }
+
     public void showChangeSheet(Assessment assessment) {
         fragList.remove(5);
         SheetSetFragment fragment = new SheetSetFragment();

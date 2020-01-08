@@ -8,6 +8,7 @@ import com.oranle.es.BuildConfig
 import com.oranle.es.R
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.repository.DBRepository
+import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.ActivityExamLoginBinding
 import com.oranle.es.module.base.*
 import com.oranle.es.module.ui.administrator.AdministratorActivity
@@ -77,11 +78,15 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
                 val bundle = Bundle()
                 bundle.putSerializable("user", user)
 
+                SpUtil.instance.setCurrentUser(user)
+
                 when (currentRole) {
                     Role.Examinee.value -> start<AdministratorActivity>(bundle)
                     Role.Manager.value -> start<AdministratorActivity>(bundle)
                     Role.Root.value -> start<SeniorAdminActivity>(bundle)
                 }
+
+                this@ExaminationSystemLoginActivity.finish()
 
             } else {
                 toast("用户名或密码错误")
