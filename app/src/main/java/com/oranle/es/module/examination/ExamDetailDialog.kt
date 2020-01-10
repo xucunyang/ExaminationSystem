@@ -15,7 +15,7 @@ import com.oranle.es.module.base.BaseDialogFragment
 import com.oranle.es.module.examination.viewmodel.ExamDetailViewModel
 import timber.log.Timber
 
-class ExamDetailDialog(val cxt: Context, val assessment: Assessment) :
+class ExamDetailDialog(private val cxt: Context, val assessment: Assessment) :
     BaseDialogFragment<DialogExamDetailBinding>() {
 
     override val layoutId: Int

@@ -29,8 +29,8 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
         super.onCreate(savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            user_name_ed.setText("lw")
-            psw_et.setText("1")
+            user_name_ed.setText("admin")
+            psw_et.setText("admin")
             spinner.setSelection(1)
         }
 

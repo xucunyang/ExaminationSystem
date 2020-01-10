@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.widget.LinearLayout" />
+
         <variable
             name="vm"
             type="com.oranle.es.module.examination.viewmodel.ExamDetailViewModel" />
@@ -45,7 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="@{vm.isVertical(item) ? LinearLayout.VERTICAL: LinearLayout.HORIZONTAL}">
 
                 <ImageView
                     android:id="@+id/iv_1"

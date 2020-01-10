@@ -40,6 +40,11 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoice>() {
         })
     }
 
+    fun isVertical(singleChoice: SingleChoice): Boolean {
+        val imgUrlsList = singleChoice.questionImgUrlsList()
+        return imgUrlsList.isNotEmpty() && imgUrlsList[0].isNotEmpty()
+    }
+
     fun firstPicVisibility(singleChoice: SingleChoice): Int {
         val imgUrlsList = singleChoice.questionImgUrlsList()
         return if (imgUrlsList.isNotEmpty() && imgUrlsList[0].isNotEmpty()) {

@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oranle.es.R
+import com.oranle.es.data.entity.Assessment
 import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.view.JzvdStdMp3
@@ -73,10 +74,10 @@ fun initOptionRadioGroup(radioGroup: RadioGroup, singleChoice: SingleChoice) {
     }
 }
 
-@BindingAdapter("app:bind_spinner")
-fun bindSpinner(spinner: Spinner, students: List<User>?) {
+@BindingAdapter("app:bind_user_spinner")
+fun bindUserSpinner(spinner: Spinner, students: List<User>?) {
 
-    Timber.d("bindSpinner ${students?.size}")
+    Timber.d("bindUserSpinner ${students?.size}")
 
     val studentName = mutableListOf<String>()
 
@@ -84,10 +85,36 @@ fun bindSpinner(spinner: Spinner, students: List<User>?) {
         studentName.add(it.userName)
     }
 
-    val schoolAdapter = ArrayAdapter<String>(
+    bindAdapter(spinner, studentName.toTypedArray())
+}
+
+@BindingAdapter("app:bind_assessment_spinner")
+fun bindAssessmentSpinner(spinner: Spinner, assessments: List<Assessment>?) {
+
+    Timber.d("bindAssessmentSpinner ${assessments?.size}")
+
+    val titleList = mutableListOf<String>()
+
+    assessments?.forEach {
+        titleList.add(it.title)
+    }
+
+    bindAdapter(spinner, titleList.toTypedArray())
+}
+
+fun <T> bindAdapter(spinner: Spinner, arrays: Array<T>) {
+    val schoolAdapter = ArrayAdapter<T>(
         spinner.context,
         android.R.layout.simple_list_item_1,
-        studentName.toTypedArray()
+        arrays
     )
     spinner.adapter = schoolAdapter
+}
+
+@BindingAdapter("app:setOrientation")
+fun setOrientation(linearLayout: LinearLayout, orientation: Int) {
+
+    Timber.d("setOrientation $orientation")
+
+    linearLayout.orientation = orientation
 }
