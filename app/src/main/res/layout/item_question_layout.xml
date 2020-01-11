@@ -14,6 +14,10 @@
         <variable
             name="item"
             type="com.oranle.es.data.entity.SingleChoice" />
+
+        <variable
+            name="wrapItem"
+            type="com.oranle.es.module.examination.viewmodel.SingleChoiceWrap" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

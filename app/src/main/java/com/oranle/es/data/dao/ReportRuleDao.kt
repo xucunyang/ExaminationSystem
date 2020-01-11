@@ -27,4 +27,7 @@ interface ReportRuleDao {
     @Delete
     suspend fun deleteRule(classEntity: ReportRule): Int
 
+    @Query("delete from report_rule where sheet_id = :sheetId")
+    suspend fun deleteReportRuleBySheetId(sheetId: Int)
+
 }

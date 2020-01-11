@@ -41,6 +41,7 @@
                 android:textSize="25dp" />
 
             <Spinner
+                android:id="@+id/student_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
@@ -66,6 +67,7 @@
                 android:textSize="25dp" />
 
             <Spinner
+                android:id="@+id/assessment_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="100dp"
@@ -78,6 +80,7 @@
             android:background="@color/green" />
 
         <TextView
+            android:id="@+id/next_step"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

@@ -51,18 +51,32 @@ data class ExamSheet @JvmOverloads constructor(
                 correctAnswer = answerStr
             )
 
-        val assessmentDao = DBRepository.getDB().getAssessmentDao()
+        val db = DBRepository.getDB()
+        val assessmentDao = db.getAssessmentDao()
         val assessmentByTitle = assessmentDao.getAssessmentByTitle(title)
 
-        if (answerList?.size != singleChoiceList.size) {
+        val singleChoiceSize = singleChoiceList.size
+        if (answerList?.size != singleChoiceSize) {
             return "量表解析错误：题目数量与答案不匹配"
         }
 
-        // TODO 规则解析
+        if (reportRuleList == null) {
+            return "量表解析错误：报告规则不存在，请检查"
+        } else {
+            var total = 0
+            for (rule in reportRuleList) {
+                total += rule.size
+            }
+            if (total != singleChoiceSize)
+                return "量表解析错误：报告规则与单选数量不一致"
+        }
+
+        // 规则解析
+        db.getRuleDao().addRules(reportRuleList)
 
         msg = if (assessmentByTitle == null) {
             assessmentDao.addAssessment(assessment)
-            DBRepository.getDB().getSingleChoiceDao().addSingleChoices(singleChoiceList)
+            db.getSingleChoiceDao().addSingleChoices(singleChoiceList)
             Timber.d("assessmentByTitle $assessmentByTitle")
             "量表《${assessment.title}》导入成功"
         } else {

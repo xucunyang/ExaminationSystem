@@ -59,6 +59,8 @@ abstract class BaseDialogFragment<ViewBinding : ViewDataBinding> : DialogFragmen
     override fun onStart() {
         super.onStart()
         initWindow()
+
+        dialog.setCanceledOnTouchOutside(false)
     }
 
     private fun initWindow() {
