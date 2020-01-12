@@ -74,6 +74,16 @@ fun initOptionRadioGroup(radioGroup: RadioGroup, singleChoice: SingleChoice) {
     }
 }
 
+
+@BindingAdapter("app:bind_spinner")
+fun bindSpinner(spinner: Spinner, selections: List<String>?) {
+
+    Timber.d("bindSpinner $selections")
+    selections?.apply {
+        bindAdapter(spinner, toTypedArray())
+    }
+}
+
 @BindingAdapter("app:bind_user_spinner")
 fun bindUserSpinner(spinner: Spinner, students: List<User>?) {
 
