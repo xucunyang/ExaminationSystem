@@ -71,7 +71,7 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        initWindow()
+//        initWindow()
         dialog.setCanceledOnTouchOutside(false)
 
         if (mListener != null)
@@ -182,14 +182,14 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
         viewModel.initOriginData(user)
     }
 
-    private fun initWindow() {
-        val dialogWindow = dialog.window
-        dialogWindow!!.setGravity(Gravity.CENTER)
-        val lp = dialogWindow.attributes
-        lp.width = 1024
-        lp.height = 700
-        dialogWindow.attributes = lp
-    }
+//    private fun initWindow() {
+//        val dialogWindow = dialog.window
+//        dialogWindow!!.setGravity(Gravity.CENTER)
+//        val lp = dialogWindow.attributes
+//        lp.width = 1024
+//        lp.height = 700
+//        dialogWindow.attributes = lp
+//    }
 
     fun setDismissListener(listener: DialogInterface.OnDismissListener?) {
         this.mListener = listener

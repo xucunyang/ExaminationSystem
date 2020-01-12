@@ -42,8 +42,6 @@ class SheetSetViewModel : BaseViewModel() {
                 } else {
                     toast("出错")
                 }
-            }, {
-                Timber.e("$it")
             }
         )
     }
