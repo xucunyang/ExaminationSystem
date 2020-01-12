@@ -10,6 +10,7 @@ import com.oranle.es.databinding.FragmentEntryBinding
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.base.toast
 import com.oranle.es.module.examination.ExamDetailDialog
+import com.oranle.es.module.examination.viewmodel.ExamShowMode
 import com.oranle.es.module.ui.administrator.viewmodel.ManualInputViewModel
 
 class ManualInputFragment : BaseFragment<FragmentEntryBinding>() {
@@ -62,7 +63,7 @@ class ManualInputFragment : BaseFragment<FragmentEntryBinding>() {
 
             }
 
-            nextStep.setOnClickListener{
+            nextStep.setOnClickListener {
                 if (currentStudent == null) {
                     toast("请选择测评用户")
                     return@setOnClickListener
@@ -77,7 +78,7 @@ class ManualInputFragment : BaseFragment<FragmentEntryBinding>() {
                     return@setOnClickListener
                 }
 
-                val dialog = ExamDetailDialog(activity!!, currentAssessment!!)
+                val dialog = ExamDetailDialog(activity!!, currentAssessment!!, ExamShowMode.ManagerInput, currentStudent)
                 dialog.show(activity!!.supportFragmentManager, "")
             }
         }

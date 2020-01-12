@@ -127,7 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:onClick="@{(v) -> vm.submitAnswer(v)}"
-                    android:text="提交答案" />
+                    android:text="提交答案"
+                    android:visibility="@{vm.isManualInputMode ? View.VISIBLE: View.GONE}" />
 
             </LinearLayout>
 

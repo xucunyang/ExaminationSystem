@@ -1,6 +1,10 @@
 package com.oranle.es.module;
 
+import com.google.gson.reflect.TypeToken;
+
 import org.junit.Test;
+
+import java.util.List;
 
 public class TestJava {
 
@@ -21,6 +25,11 @@ public class TestJava {
         char aCast = (char)(65);
 
         System.out.println("xxxx aCast " + aCast);
+
+    }
+
+    class Person {
+        int Id;
     }
 
 }

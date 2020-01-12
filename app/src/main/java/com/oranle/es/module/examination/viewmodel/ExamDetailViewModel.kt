@@ -1,17 +1,14 @@
 package com.oranle.es.module.examination.viewmodel
 
 import android.content.ContextWrapper
-import android.view.ContextThemeWrapper
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
-import com.oranle.es.data.entity.Assessment
-import com.oranle.es.data.entity.ReportRule
-import com.oranle.es.data.entity.SingleChoice
+import com.oranle.es.data.entity.*
 import com.oranle.es.module.base.BaseRecycleViewModel
 import com.oranle.es.module.base.CommDialog
+import com.oranle.es.util.GsonUtil
 import timber.log.Timber
-import java.lang.IllegalArgumentException
 
 enum class ExamShowMode {
     /**
@@ -46,14 +43,21 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
 
     val sheetIntroduce = MutableLiveData<String>()
 
-    val isManualInputMode = MutableLiveData<Boolean>(false)
+    val isManualInputMode = MutableLiveData<Boolean>(true)
 
     val loading = MutableLiveData<Boolean>(false)
 
-    val singleChoiceWraps = mutableListOf<SingleChoiceWrap>()
+    val dismissFlag = MutableLiveData<Boolean>(false)
 
-    fun load(assessment: Assessment, manualModel: Boolean = false) {
-        isManualInputMode.value = manualModel
+    var mUser: User? = null
+    lateinit var mAssessment: Assessment
+
+    private val singleChoiceWraps = mutableListOf<SingleChoiceWrap>()
+
+    fun load(assessment: Assessment, examShowMode: ExamShowMode, user: User?) {
+        isManualInputMode.value = (examShowMode == ExamShowMode.ManagerInput)
+        mUser = user
+        mAssessment = assessment
 
         asyncCall({
             loading.postValue(true)
@@ -84,22 +88,71 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
 
         val undoList = mutableListOf<Int>()
 
-        items.value?.forEachIndexed { index, it ->
+        val answerDetail = mutableListOf<TypedScore>()
 
+        items.value?.forEachIndexed { index, it ->
             if (it.selectOption == null) {
                 undoList.add(index + 1)
+            } else {
+                answerDetail.add(
+                    TypedScore(
+                        index,
+                        it.rule.id,
+                        it.selectOption!!,
+                        it.rule.singleScore
+                    )
+                )
             }
         }
 
-        CommDialog()
-            .setTitle("提示哦")
-            .setContent("this is not complete $undoList")
-            .setOKListener {
-                Timber.d("setOKListener $it")
-            }.show(getContext(v)?.supportFragmentManager, "")
+        if (undoList.isNotEmpty()) {
+            CommDialog()
+                .setTitle("提示")
+                .setContent("请全部回答完毕后，再提交答案！${System.lineSeparator()} 未回答的题号：$undoList")
+                .setOKListener {
+                    Timber.d("setOKListener $it")
+                }.show(getContext(v)?.supportFragmentManager, "")
+        } else {
+            if (mUser == null) {
+                toast("用户信息为空，请检查")
+                dismissDialog()
+                return
+            }
+
+            val gsonString = GsonUtil.GsonString(answerDetail)
+
+            Timber.d("sub mit answer $gsonString")
+            val bean = GsonUtil.GsonToList<TypedScore>(gsonString)
+            Timber.d("sub mit xxx $bean")
+
+            asyncCall(
+                {
+                    getDB().getReportDao().addReport(
+                        SheetReport(
+                            userId = mUser!!.id,
+                            sheetId = mAssessment.id,
+                            testTime = System.currentTimeMillis(),
+                            detailString = gsonString
+                        )
+                    )
+
+                    val reportsByUserId = getDB().getReportDao().getReportsByUserId(mUser!!.id)
+                    reportsByUserId
+                },
+                {
+                    Timber.d("submit reportsByUserId $it")
+                    dismissDialog()
+                }
+            )
+        }
+
 
         Timber.d("submitAnswer $undoList")
 
+    }
+
+    private fun dismissDialog() {
+        dismissFlag.value = true
     }
 
     private fun getContext(v: View): FragmentActivity? {
@@ -181,5 +234,11 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
         }
     }
 
+    inner class TypedScore(
+        val index: Int,
+        val ruleId: Int,
+        val select: String,
+        val score: Float
+    )
 
 }

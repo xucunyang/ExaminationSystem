@@ -148,10 +148,9 @@ public class GsonUtil {
      * 泛型在编译期类型被擦除导致报错
      *
      * @param gsonString
-     * @param cls
      * @return
      */
-    public static <T> List<T> GsonToList(String gsonString, Class<T> cls) {
+    public static <T> List<T> GsonToList(String gsonString) {
         List<T> list = null;
         if (gson != null) {
             list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
