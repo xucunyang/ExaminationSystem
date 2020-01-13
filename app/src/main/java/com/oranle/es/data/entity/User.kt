@@ -37,4 +37,7 @@ data class User @JvmOverloads constructor(
      *  测评用户关联的管理员id
      */
     @ColumnInfo(name = "manager_id") val managerId: Int = -1
-) : Serializable
+) : Serializable {
+    @Ignore
+    val classInChargeList = classIncharge.split(",").toList()
+}

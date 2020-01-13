@@ -5,7 +5,7 @@
     <data>
         <variable
             name="vm"
-            type="com.oranle.es.module.base.BaseRecycleViewModel" />
+            type="com.oranle.es.module.ui.administrator.fragment.model.LoginManagerViewModel" />
 
     </data>
 
@@ -78,7 +78,8 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="增加评测人"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:onClick="@{(v) -> vm.onAddPersonal()}"/>
 
             </LinearLayout>
         </RelativeLayout>

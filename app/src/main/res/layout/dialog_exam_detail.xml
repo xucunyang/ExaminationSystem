@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.oranle.es.module.examination.viewmodel.ExamDetailViewModel" />
@@ -53,10 +55,25 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray_cc"
+                    android:gravity="center"
+                    android:visibility="@{vm.loading ? View.VISIBLE: View.GONE}">
+
+                    <ProgressBar
+                        style="@style/Widget.AppCompat.ProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="@dimen/dp_10">
+                    android:padding="@dimen/dp_10"
+                    android:visibility="@{vm.loading ? View.GONE : View.VISIBLE}">
 
                     <TextView
                         android:id="@+id/title"
@@ -104,6 +121,14 @@
                         app:items="@{vm.items}" />
 
                 </LinearLayout>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="@{(v) -> vm.submitAnswer(v)}"
+                    android:text="提交答案"
+                    android:visibility="@{vm.isManualInputMode ? View.VISIBLE: View.GONE}" />
 
             </LinearLayout>
 

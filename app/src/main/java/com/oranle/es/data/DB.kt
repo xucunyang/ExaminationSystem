@@ -8,7 +8,8 @@ import com.oranle.es.data.entity.*
 @Database(
     entities =
     [
-        User::class, Assessment::class, SingleChoice::class, ClassEntity::class, ReportRule::class
+        User::class, Assessment::class, SingleChoice::class,
+        ClassEntity::class, ReportRule::class, SheetReport::class
     ],
     version = 1, exportSchema = false
 )
@@ -23,5 +24,7 @@ abstract class DB : RoomDatabase() {
     abstract fun getClassDao(): ClassDao
 
     abstract fun getRuleDao(): ReportRuleDao
+
+    abstract fun getReportDao(): ReportDao
 
 }

@@ -11,6 +11,7 @@ import com.oranle.es.R;
 import com.oranle.es.databinding.ActivityAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
 import com.oranle.es.module.ui.administrator.fragment.AdminPwdFragment;
+import com.oranle.es.module.ui.administrator.fragment.GroupStatisticFragment;
 import com.oranle.es.module.ui.administrator.fragment.ManualInputFragment;
 import com.oranle.es.module.ui.administrator.fragment.ExportFragment;
 import com.oranle.es.module.ui.administrator.fragment.GroupFragment;
@@ -48,7 +49,7 @@ public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
         fragList.add(new LoginManagerFragment());
         fragList.add(new ReportFragment());
         fragList.add(new ManualInputFragment());
-        fragList.add(new GroupFragment());
+        fragList.add(new GroupStatisticFragment());
         fragList.add(new PersonalFragment());
         fragList.add(new ExportFragment());
         fragList.add(new AdminPwdFragment());
