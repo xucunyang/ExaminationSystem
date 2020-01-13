@@ -55,7 +55,7 @@ class AddPersonalViewModel : BaseViewModel() {
                     User(
                         userName = userLoginName.value!!,
                         alias = name.value!!,
-                        role = Role.Manager.value,
+                        role = Role.Examinee.value,
                         psw = pwd.value!!,
                         classId = classId.value!!,
                         className = className.value!!,

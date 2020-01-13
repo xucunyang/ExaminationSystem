@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                app:bind_spinner="@{vm.classeNameList}" />
+                app:bind_spinner="@{vm.classNameList}" />
         </LinearLayout>
 
         <View

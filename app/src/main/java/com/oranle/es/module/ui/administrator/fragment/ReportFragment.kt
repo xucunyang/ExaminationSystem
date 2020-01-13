@@ -1,11 +1,11 @@
 package com.oranle.es.module.ui.administrator.fragment
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oranle.es.R
-import com.oranle.es.data.entity.Assessment
-import com.oranle.es.data.entity.SheetReport
+import com.oranle.es.data.entity.*
 import com.oranle.es.databinding.FragmentReportBinding
 import com.oranle.es.databinding.ItemReportBinding
 import com.oranle.es.module.base.BaseAdapter
@@ -37,27 +37,38 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
         mViewModel = getViewModel()
 
+        var reportAdapter = ReportAdapter(mViewModel)
+
         dataBinding?.apply {
             vm = mViewModel
 
-            recyclerView.adapter = ReportAdapter(mViewModel)
-            recyclerView.layoutManager = LinearLayoutManager(activity) as RecyclerView.LayoutManager?
+
+            recyclerView.adapter = reportAdapter
+            recyclerView.layoutManager =
+                LinearLayoutManager(activity) as RecyclerView.LayoutManager?
         }
 
+        mViewModel.items.observe(this, Observer {
+            reportAdapter = ReportAdapter(mViewModel)
+            reportAdapter.submitList(it)
+        })
+
         assessment?.apply {
-            mViewModel.loadReportByAssessment(assessment.id)
+            mViewModel.loadReportByAssessment(assessment)
         }
     }
 
     inner class ReportAdapter(vm: GroupStatisticViewModel) :
-        BaseAdapter<SheetReport, ItemReportBinding, GroupStatisticViewModel>(vm) {
+        BaseAdapter<WrapReportBean, ItemReportBinding, GroupStatisticViewModel>(vm) {
         override fun doBindViewHolder(
             binding: ItemReportBinding,
-            item: SheetReport,
+            item: WrapReportBean,
             viewModel: GroupStatisticViewModel
         ) {
             binding.apply {
                 vm = viewModel
+                bean = item
+                position = position
             }
         }
 
@@ -67,3 +78,15 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
     }
 
 }
+
+/**
+ *  显示listview用的包装bean
+ */
+data class WrapReportBean(
+    val index: Int,
+    val user: User,
+    val clazz: ClassEntity,
+    val time: Long,
+    val assessment: Assessment,
+    val rules: List<ReportRule>
+)

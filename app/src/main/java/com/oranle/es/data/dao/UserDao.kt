@@ -19,6 +19,12 @@ interface UserDao {
     @Query("select * from user where manager_id = :managerId")
     suspend fun getUserByManagerId(managerId: Int): List<User>
 
+    @Query("select * from user where class_id = :classId")
+    suspend fun getUserByClassId(classId: Int): List<User>
+
+    @Query("SELECT * FROM user WHERE class_id IN (:classIds) AND role = :role")
+    suspend fun getUserByClassIdsAndRole(classIds: List<Int>, role: Int): List<User>
+
     @Update
     suspend fun updateUser(user: User): Int
 
