@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.oranle.es.module.examination.viewmodel.ExamDetailViewModel
+import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.util.GsonUtil
 
 @Entity(tableName = "sheet_report")
@@ -26,5 +26,7 @@ data class SheetReport(
     @ColumnInfo(name = "detailString") val detailString: String
 ) {
     @Ignore
-    val getTypedScore =  GsonUtil.GsonToList<ExamDetailViewModel.TypedScore>(detailString)
+    val getTypedScore = GsonUtil.jsonToList<TypedScore>(
+        detailString, TypedScore::class.java
+    )
 }

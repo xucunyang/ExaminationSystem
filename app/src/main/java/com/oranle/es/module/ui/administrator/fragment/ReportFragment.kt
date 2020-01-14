@@ -5,11 +5,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.oranle.es.R
-import com.oranle.es.data.entity.*
+import com.oranle.es.data.entity.Assessment
+import com.oranle.es.data.entity.ClassEntity
+import com.oranle.es.data.entity.ReportRule
+import com.oranle.es.data.entity.User
 import com.oranle.es.databinding.FragmentReportBinding
 import com.oranle.es.databinding.ItemReportBinding
 import com.oranle.es.module.base.BaseAdapter
 import com.oranle.es.module.base.BaseFragment
+import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
 
 class ReportFragment : BaseFragment<FragmentReportBinding>() {
@@ -41,7 +45,6 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
         dataBinding?.apply {
             vm = mViewModel
-
 
             recyclerView.adapter = reportAdapter
             recyclerView.layoutManager =
@@ -88,5 +91,6 @@ data class WrapReportBean(
     val clazz: ClassEntity,
     val time: Long,
     val assessment: Assessment,
+    val typedScore: List<TypedScore>,
     val rules: List<ReportRule>
 )

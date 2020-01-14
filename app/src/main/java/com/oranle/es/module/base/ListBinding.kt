@@ -1,5 +1,7 @@
 package com.oranle.es.module.base
 
+import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.databinding.BindingAdapter
@@ -7,9 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
+import com.oranle.es.data.entity.ReportRule
 import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.view.JzvdStdMp3
+import com.oranle.es.module.examination.viewmodel.TypedScore
+import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import com.oranle.es.util.ImageUtil
 import timber.log.Timber
 
@@ -127,4 +132,67 @@ fun setOrientation(linearLayout: LinearLayout, orientation: Int) {
     Timber.d("setOrientation $orientation")
 
     linearLayout.orientation = orientation
+}
+
+@BindingAdapter("app:bindDynamicScoreDetail")
+fun bindDynamicScoreDetail(linearLayout: LinearLayout, bean: WrapReportBean) {
+
+    Timber.d("bindDynamicScoreDetail $bean")
+
+    val context = linearLayout.context
+
+    val titleLinearLayout = linearLayout.findViewById<LinearLayout>(R.id.title_detail)
+    val detailLinearLayout = linearLayout.findViewById<LinearLayout>(R.id.score_detail)
+
+    val rules = bean.rules.sortedBy { it.id }
+    val scoreList = bean.typedScore.sortedBy { it.ruleId }
+
+    val lp = linearLayout.layoutParams as LinearLayout.LayoutParams
+    rules.forEach {
+        val textView = getTextView(it.typeStr, context)
+        lp.weight = 1F
+        titleLinearLayout.addView(textView, lp)
+    }
+
+    val classifyScore = classify(rules, scoreList)
+
+    classifyScore.forEach { typedScore ->
+        val textView = getTextView(typedScore.score.toString(), context)
+        lp.weight = 1F
+        detailLinearLayout.addView(textView, lp)
+    }
+
+}
+
+fun classify(rules: List<ReportRule>, scoreList: List<TypedScore>)
+        : Set<TypedScore> {
+    val classifyList = mutableSetOf<TypedScore>()
+
+    rules.forEachIndexed() { index, rule ->
+        var scoreTotal = 0F
+        scoreList.forEach { detail ->
+            if (rule.id == detail.ruleId) {
+                scoreTotal += detail.score
+            }
+        }
+        classifyList.add(
+            TypedScore(
+                index = index,
+                ruleId = rule.id,
+                select = "none",
+                score = scoreTotal
+            )
+        )
+    }
+
+
+    return classifyList
+}
+
+fun getTextView(text: String, context: Context): TextView {
+    val tv = TextView(context)
+    tv.text = text
+    tv.gravity = Gravity.CENTER
+    tv.setPadding(0, 10, 0, 10)
+    return tv
 }

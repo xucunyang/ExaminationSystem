@@ -111,6 +111,7 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
             val classEntity = getClassById(classesInCharge, student.classId)
+            val scoreList = it.getTypedScore
             wrapReportBeans.add(
                 WrapReportBean(
                     index = index,
@@ -118,6 +119,7 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     clazz = classEntity,
                     time = it.testTime,
                     assessment = assessment,
+                    typedScore = scoreList,
                     rules = rules
                 )
             )

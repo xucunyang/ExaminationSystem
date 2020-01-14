@@ -96,10 +96,10 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
             } else {
                 answerDetail.add(
                     TypedScore(
-                        index,
-                        it.rule.id,
-                        it.selectOption!!,
-                        it.rule.singleScore
+                        index = index,
+                        ruleId = it.rule.id,
+                        select = it.selectOption!!,
+                        score = if (it.rightAnswer == it.selectOption!!) it.rule.singleScore else 0F
                     )
                 )
             }
@@ -234,11 +234,11 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
         }
     }
 
-    inner class TypedScore(
-        val index: Int,
-        val ruleId: Int,
-        val select: String,
-        val score: Float
-    )
-
 }
+
+data class TypedScore(
+    val index: Int,
+    val ruleId: Int,
+    val select: String,
+    val score: Float
+)
