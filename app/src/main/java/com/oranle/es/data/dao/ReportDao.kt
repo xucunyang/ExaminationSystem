@@ -21,6 +21,9 @@ interface ReportDao {
     @Query("select * from sheet_report where sheetId = :sheetId")
     suspend fun getReportsBySheetId(sheetId: Int): List<SheetReport>
 
+    @Query("SELECT * FROM sheet_report WHERE userId IN (:userIds) AND sheetId = :sheetId")
+    suspend fun getReportsByUserIdAndSheetId(sheetId: Int, userIds: List<Int>): List<SheetReport>
+
     @Update
     suspend fun updateReport(report: SheetReport): Int
 

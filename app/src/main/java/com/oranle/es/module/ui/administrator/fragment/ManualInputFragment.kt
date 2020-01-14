@@ -41,7 +41,8 @@ class ManualInputFragment : BaseFragment<FragmentEntryBinding>() {
                     id: Long
                 ) {
                     viewModel.students.value?.apply {
-                        currentStudent = get(position)
+                        if (this.isNotEmpty())
+                            currentStudent = get(position)
                     }
                 }
             }
@@ -78,7 +79,12 @@ class ManualInputFragment : BaseFragment<FragmentEntryBinding>() {
                     return@setOnClickListener
                 }
 
-                val dialog = ExamDetailDialog(activity!!, currentAssessment!!, ExamShowMode.ManagerInput, currentStudent)
+                val dialog = ExamDetailDialog(
+                    activity!!,
+                    currentAssessment!!,
+                    ExamShowMode.ManagerInput,
+                    currentStudent
+                )
                 dialog.show(activity!!.supportFragmentManager, "")
             }
         }

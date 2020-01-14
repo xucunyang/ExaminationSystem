@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="com.oranle.es.util.DateUtil" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.oranle.es.module.ui.administrator.fragment.WrapReportBean" />
+
         <variable
             name="vm"
             type="com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel" />
@@ -36,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/round"
                         android:drawablePadding="@dimen/dp_10"
-                        android:text="用户名"
+                        android:text="编号"
                         android:textColor="@color/gray_cc"
                         android:textSize="@dimen/sp_13" />
 
@@ -45,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="小王吧"
+                        android:text="@{bean.index + ``}"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -71,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="小王吧"
+                        android:text="@{bean.user.userName}"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -97,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="小王吧"
+                        android:text="@{bean.user.alias}"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -123,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="小王吧"
+                        android:text="@{bean.user.sex ? `man`: `woman`}"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -149,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:text="宇宙最上方1班贼长"
+                        android:text="@{bean.clazz.className}"
                         android:textSize="@dimen/sp_12" />
 
                 </LinearLayout>
@@ -214,91 +226,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/dp_20">
+            android:padding="@dimen/dp_20"
+            app:bindDynamicScoreDetail="@{bean}">
 
             <LinearLayout
                 android:id="@+id/title_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="音乐常识" />
-
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="音乐常识" />
-
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="音乐常识" />
-
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="音乐常识" />
-
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="音乐常识" />
-
-
-            </LinearLayout>
+                android:orientation="horizontal" />
 
             <LinearLayout
                 android:id="@+id/score_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0.5" />
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0.5" />
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0.5" />
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0.5" />
-
-                <TextView
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0.5" />
-
-            </LinearLayout>
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_10"
+            android:background="@color/whitesmoke" />
 
     </LinearLayout>
 

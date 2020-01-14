@@ -18,6 +18,14 @@ data class User @JvmOverloads constructor(
     @ColumnInfo(name = "role") val role: Int,
     @ColumnInfo(name = "psw") val psw: String,
     /**
+     *  姓名
+     */
+    @ColumnInfo(name = "name") val name: String = userName,
+    /**
+     *  true man, false female
+     */
+    @ColumnInfo(name = "sex") val sex: Boolean = true,
+    /**
      *  测评用户/管理员 所属班级id
      */
     @ColumnInfo(name = "class_id") val classId: Int = -1,
