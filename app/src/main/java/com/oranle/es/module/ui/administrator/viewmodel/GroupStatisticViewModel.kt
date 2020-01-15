@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.oranle.es.data.entity.*
 import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.module.base.BaseRecycleViewModel
+import com.oranle.es.module.examination.ExamDetailDialog
+import com.oranle.es.module.examination.viewmodel.ExamShowMode
 import com.oranle.es.module.ui.administrator.dialog.ReportDetailDialog
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import timber.log.Timber
@@ -91,6 +93,22 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         val activity = v.context as FragmentActivity
 
         ReportDetailDialog.showDialog(activity, bean)
+    }
+
+    fun showSelfAnswer(v: View, bean: WrapReportBean) {
+        Timber.d("show detail ${bean}")
+
+        val activity = v.context as FragmentActivity
+
+        ReportDetailDialog.showDialog(activity, bean)
+
+        val examDetailDialog = ExamDetailDialog(
+            activity,
+            bean.assessment,
+            ExamShowMode.AnswerShow,
+            reportId = bean.reportId
+        )
+        examDetailDialog.show(activity.supportFragmentManager, "")
     }
 
     fun delete(bean: WrapReportBean) {

@@ -15,6 +15,9 @@ interface ReportDao {
     @Query("select * from sheet_report order by testTime desc")
     suspend fun getAllReport(): List<SheetReport>
 
+    @Query("select * from sheet_report where id = :id")
+    suspend fun getReportById(id: Int): SheetReport
+
     @Query("select * from sheet_report where userId = :userId")
     suspend fun getReportsByUserId(userId: Int): List<SheetReport>
 

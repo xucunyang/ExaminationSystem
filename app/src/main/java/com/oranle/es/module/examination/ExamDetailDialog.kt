@@ -1,7 +1,9 @@
 package com.oranle.es.module.examination
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.RadioButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,11 +22,15 @@ import timber.log.Timber
 
 const val FIRST_LETTER = 65
 
+/**
+ * 展示测量表的具体内容：介绍，题目
+ */
 class ExamDetailDialog(
     private val cxt: Context,
     val assessment: Assessment,
     private val examShowMode: ExamShowMode,
-    val user: User? = null
+    val user: User? = null,
+    val reportId: Int = -1
 ) : BaseDialogFragment<DialogExamDetailBinding>() {
 
     override val layoutId: Int
@@ -71,7 +77,7 @@ class ExamDetailDialog(
             adapter.submitList(it)
         })
 
-        viewModel.load(assessment, examShowMode, user)
+        viewModel.load(assessment, examShowMode, user, reportId)
 
         viewModel.dismissFlag.observe(this, Observer {
             Timber.d("observer dismissFlag $it")
@@ -88,20 +94,32 @@ class ExamDetailDialog(
     inner class SingleChoiceAdapter(viewModel: ExamDetailViewModel) :
         BaseAdapter<SingleChoiceWrap, ItemQuestionLayoutBinding, ExamDetailViewModel>(viewModel) {
 
+        @SuppressLint("SetTextI18n")
         override fun doBindViewHolder(
             binding: ItemQuestionLayoutBinding,
-            item: SingleChoiceWrap,
+            bean: SingleChoiceWrap,
             viewModel: ExamDetailViewModel
         ) {
-            binding.vm = viewModel
-            binding.item = item.singleChoice
 
-            binding.choose.setOnCheckedChangeListener { radioGroup, _ ->
-                val childCount = radioGroup.childCount
-                for (index in 0..childCount) {
-                    val view = radioGroup.getChildAt(index)
-                    if (view is RadioButton && view.isChecked) {
-                        item.selectOption = (index + FIRST_LETTER).toChar().toString()
+            binding.apply {
+                vm = viewModel
+                item = bean.singleChoice
+
+                if (examShowMode == ExamShowMode.AnswerShow) {
+                    answerLayout.visibility = View.VISIBLE
+                    rightAnswer.text = "正确答案：${bean.rightAnswer}"
+                    yourAnswer.text = "所选答案：${bean.selectOption}"
+                } else {
+                    answerLayout.visibility = View.GONE
+                }
+
+                choose.setOnCheckedChangeListener { radioGroup, _ ->
+                    val childCount = radioGroup.childCount
+                    for (index in 0..childCount) {
+                        val view = radioGroup.getChildAt(index)
+                        if (view is RadioButton && view.isChecked) {
+                            bean.selectOption = (index + FIRST_LETTER).toChar().toString()
+                        }
                     }
                 }
             }

@@ -15,9 +15,6 @@
             name="item"
             type="com.oranle.es.data.entity.SingleChoice" />
 
-        <variable
-            name="wrapItem"
-            type="com.oranle.es.module.examination.viewmodel.SingleChoiceWrap" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +80,6 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
         <RadioGroup
@@ -142,6 +138,35 @@
 
         </RadioGroup>
 
+        <LinearLayout
+            android:id="@+id/answer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_10"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/choose">
+
+            <TextView
+                android:id="@+id/right_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_22"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/your_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:textSize="@dimen/sp_22" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
