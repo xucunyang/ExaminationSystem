@@ -149,7 +149,7 @@ fun bindDynamicScoreDetail(linearLayout: LinearLayout, bean: WrapReportBean) {
 
     val lp = linearLayout.layoutParams as LinearLayout.LayoutParams
     rules.forEach {
-        val textView = getTextView(it.typeStr, context)
+        val textView = getTextView(it.typeStr, 15f, context)
         lp.weight = 1F
         titleLinearLayout.addView(textView, lp)
     }
@@ -157,7 +157,7 @@ fun bindDynamicScoreDetail(linearLayout: LinearLayout, bean: WrapReportBean) {
     val classifyScore = classify(rules, scoreList)
 
     classifyScore.forEach { typedScore ->
-        val textView = getTextView(typedScore.score.toString(), context)
+        val textView = getTextView(typedScore.score.toString(), 22f, context)
         lp.weight = 1F
         detailLinearLayout.addView(textView, lp)
     }
@@ -189,10 +189,11 @@ fun classify(rules: List<ReportRule>, scoreList: List<TypedScore>)
     return classifyList
 }
 
-fun getTextView(text: String, context: Context): TextView {
+fun getTextView(text: String, textSize: Float, context: Context): TextView {
     val tv = TextView(context)
     tv.text = text
     tv.gravity = Gravity.CENTER
+    tv.textSize = textSize
     tv.setPadding(0, 10, 0, 10)
     return tv
 }

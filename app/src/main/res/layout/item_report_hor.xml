@@ -119,32 +119,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/round"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:text="性别"
-                        android:textColor="@color/black_77"
-                        android:textSize="@dimen/sp_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:text="@{bean.user.sexStr}"
-                        android:textSize="@dimen/sp_22" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
                     android:layout_weight="2"
                     android:orientation="vertical">
 
@@ -176,9 +150,7 @@
                 android:textColor="@color/black_77"
                 android:textSize="@dimen/sp_22" />
 
-
         </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"
@@ -220,35 +192,33 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:background="@color/black_77" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:padding="@dimen/dp_5"
-            app:bindDynamicScoreDetail="@{bean}">
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_5">
 
-            <LinearLayout
-                android:id="@+id/title_detail"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/showDetail"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:layout_toStartOf="@+id/delete"
+                android:onClick="@{() -> vm.showDetail(bean.reportId)}"
+                android:text="查看" />
 
-            <LinearLayout
-                android:id="@+id/score_detail"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:orientation="horizontal" />
+                android:layout_alignParentEnd="true"
+                android:onClick="@{() -> vm.delete(bean.reportId)}"
+                android:text="删除" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
-
 
 </layout>

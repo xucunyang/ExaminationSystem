@@ -48,4 +48,7 @@ data class User @JvmOverloads constructor(
 ) : Serializable {
     @Ignore
     val classInChargeList = classIncharge.split(",").toList()
+
+    @Ignore
+    val sexStr = if (sex) "男" else "女"
 }

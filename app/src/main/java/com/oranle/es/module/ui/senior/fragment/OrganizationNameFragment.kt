@@ -40,8 +40,6 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
         dataBinding?.apply {
             vm = viewmodel
             recyclerView.adapter = classAdapter
-            recyclerView.layoutManager = LinearLayoutManager(activity)
-
             recyclerView.itemAnimator = DefaultItemAnimator()
             recyclerView.layoutManager = LinearLayoutManager(activity)
             recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))

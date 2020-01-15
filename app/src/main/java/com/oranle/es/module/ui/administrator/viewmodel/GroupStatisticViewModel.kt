@@ -66,9 +66,91 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 notifyItem(it)
             }
         )
-
     }
 
+    fun loadAllReport() {
+        asyncCall(
+            {
+                val currentUser = SpUtil.instance.getCurrentUser()
+
+                if (currentUser == null) {
+                    toast("当前登录用户为空，请检查")
+                }
+
+                getAllWrapReportBeanByClassIdInCharge()
+
+            },
+            {
+                notifyItem(it)
+            }
+        )
+    }
+
+    fun showDetail(reportId: Int) {
+        Timber.d("show detail ${reportId}")
+    }
+
+    fun delete(reportId: Int) {
+        Timber.d("delete ${reportId}")
+    }
+
+    private suspend fun getAllWrapReportBeanByClassIdInCharge(): List<WrapReportBean> {
+
+        val currentUser = SpUtil.instance.getCurrentUser()
+
+        if (currentUser == null) {
+            toast("当前登录用户为空，请检查")
+            return emptyList()
+        }
+
+        val classesInCharge = getAllClassesInCharge(currentUser)
+
+        val classesIdInCharge = mutableListOf<Int>()
+        classesInCharge.forEach {
+            classesIdInCharge.add(it.id)
+        }
+
+        val allStudents = getAllStudentByClassIds(classesIdInCharge)
+
+        val stuIds = mutableListOf<Int>()
+        allStudents.forEach {
+            stuIds.add(it.id)
+        }
+
+        val reports = getDB().getReportDao().getReportsByUserIds(stuIds)
+
+        val wrapReportBeans = mutableListOf<WrapReportBean>()
+
+        val allAssessments = getDB().getAssessmentDao().getAllAssessments()
+
+        val allRuleList = mutableListOf<List<ReportRule>>()
+        allAssessments.forEach {
+            val rules = getDB().getRuleDao().getRulesBySheetId(it.id)
+            allRuleList.add(rules)
+        }
+
+        reports.forEachIndexed { index, it ->
+            val student = getStudentById(allStudents, it.userId)
+            val classEntity = getClassById(classesInCharge, student.classId)
+            val scoreList = it.getTypedScore
+            val assessment = getAssessmentById(allAssessments, it.sheetId)
+            val rules = getRulesById(allRuleList, it.sheetId)
+            wrapReportBeans.add(
+                WrapReportBean(
+                    reportId = it.id,
+                    index = index + 1,
+                    user = student,
+                    clazz = classEntity,
+                    time = it.testTime,
+                    assessment = assessment,
+                    typedScore = scoreList,
+                    rules = rules
+                )
+            )
+        }
+
+        return wrapReportBeans
+    }
 
     private suspend fun getWrapReportBean(assessment: Assessment): List<WrapReportBean> {
 
@@ -81,18 +163,12 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
         val classesInCharge = getAllClassesInCharge(currentUser)
 
-        Timber.d("111111 $classesInCharge")
-
         val classesIdInCharge = mutableListOf<Int>()
         classesInCharge.forEach {
             classesIdInCharge.add(it.id)
         }
 
-        Timber.d("2222 $classesIdInCharge")
-
         val allStudents = getAllStudentByClassIds(classesIdInCharge)
-
-        Timber.d("3333 $allStudents")
 
         val stuIds = mutableListOf<Int>()
         allStudents.forEach {
@@ -101,8 +177,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
         val reports =
             getAllSpecifySheetIdReportByStudentId(assessment.id, stuIds)
-
-        Timber.d("4444 $reports")
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
 
@@ -114,7 +188,8 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             val scoreList = it.getTypedScore
             wrapReportBeans.add(
                 WrapReportBean(
-                    index = index,
+                    reportId = it.id,
+                    index = index + 1,
                     user = student,
                     clazz = classEntity,
                     time = it.testTime,
@@ -124,8 +199,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 )
             )
         }
-
-        Timber.d("555555 $wrapReportBeans")
 
         return wrapReportBeans
     }
@@ -148,6 +221,26 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         throw IllegalArgumentException("can not find ClassEntity with id: $specifyId")
     }
 
+    private fun getAssessmentById(assessments: List<Assessment>, specifyId: Int): Assessment {
+        assessments.forEach {
+            if (it.id == specifyId) {
+                return it
+            }
+        }
+        throw IllegalArgumentException("can not find Assessment with id: $specifyId")
+    }
+
+    private fun getRulesById(allRules: List<List<ReportRule>>, specifyId: Int): List<ReportRule> {
+        allRules.forEach { typeRules ->
+            typeRules.forEach {
+                if (it.sheetId == specifyId) {
+                    return typeRules
+                }
+            }
+        }
+        throw IllegalArgumentException("can not find Rules with id: $specifyId")
+    }
+
     /**
      * 根据班级id查出所有的学生
      */
@@ -163,7 +256,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
     ): List<SheetReport> {
         return getDB().getReportDao().getReportsByUserIdAndSheetId(sheetId, stuIds)
     }
-
 
     suspend fun getAllClassesInCharge(manager: User): List<ClassEntity> {
         val classList = mutableListOf<ClassEntity>()

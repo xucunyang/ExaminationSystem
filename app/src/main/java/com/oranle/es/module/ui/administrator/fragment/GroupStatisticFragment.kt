@@ -9,6 +9,7 @@ import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.FragmentGroupBinding
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.base.toast
+import com.oranle.es.module.ui.administrator.AdministratorActivity
 import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
 import timber.log.Timber
 
@@ -108,13 +109,15 @@ class GroupStatisticFragment : BaseFragment<FragmentGroupBinding>() {
 
 
     private fun toReportFrag(currentAssessment: Assessment) {
-        fragmentManager?.apply {
-            val transaction = beginTransaction()
-            transaction.replace(
-                R.id.frameLayout,
-                ReportFragment.newInstance(currentAssessment), ""
-            ).commit()
-        }
+//        fragmentManager?.apply {
+//            val transaction = beginTransaction()
+//            transaction.replace(
+//                R.id.frameLayout,
+//                ReportFragment.newInstance(currentAssessment), ""
+//            ).commit()
+//        }
+        val activity = activity as AdministratorActivity
+        activity.showGroupStatistic(currentAssessment)
 
     }
 
