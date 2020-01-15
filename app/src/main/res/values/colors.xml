@@ -284,6 +284,8 @@
     <color name="black">#000000</color><!--黑色 -->
 
     <color name="black_77">#77000000</color><!--黑色 -->
+
+    <color name="black_30">#4D000000</color><!--黑色 -->
       
     <color name="grassgreen">#99cc33</color><!--草绿色 -->
      
@@ -294,5 +296,9 @@
     <color name="light_green">#6af256</color>
 
     <color name="bg_666666">#666666</color>
+
+    <color name="gray_69">#696969</color>
+
+    <color name="item_yellow_e3">#e38457</color>
 
 </resources>

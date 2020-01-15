@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.oranle.es.util.DateUtil" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.oranle.es.module.ui.administrator.fragment.WrapReportBean" />
+
+        <variable
+            name="vm"
+            type="com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_shadow"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/round"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="编号"
+                        android:textColor="@color/black_77"
+                        android:textSize="@dimen/sp_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="@{bean.index + ``}"
+                        android:textSize="@dimen/sp_22" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/round"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="用户名"
+                        android:textColor="@color/black_77"
+                        android:textSize="@dimen/sp_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="@{bean.user.userName}"
+                        android:textSize="@dimen/sp_22" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/round"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="姓名"
+                        android:textColor="@color/black_77"
+                        android:textSize="@dimen/sp_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="@{bean.user.alias}"
+                        android:textSize="@dimen/sp_22" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/round"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:text="班级名称"
+                        android:textColor="@color/black_77"
+                        android:textSize="@dimen/sp_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:text="@{bean.clazz.className}"
+                        android:textSize="@dimen/sp_22" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{DateUtil.dateToMMddHHmmStr(bean.time)}"
+                android:textColor="@color/black_77"
+                android:textSize="@dimen/sp_22" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/black_77" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="表名："
+                android:textSize="@dimen/sp_22" />
+
+            <TextView
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{bean.assessment.title}"
+                android:textSize="@dimen/sp_22" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总分：" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bean.totalScore() + ``}"
+                android:textSize="@dimen/sp_24" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_5">
+
+            <Button
+                android:id="@+id/showDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/delete"
+                android:onClick="@{(v) -> vm.showDetail(v, bean)}"
+                android:text="查看" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:onClick="@{() -> vm.delete(bean)}"
+                android:text="删除" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

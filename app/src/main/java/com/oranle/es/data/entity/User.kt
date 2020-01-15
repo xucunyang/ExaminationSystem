@@ -19,6 +19,18 @@ data class User @JvmOverloads constructor(
     @ColumnInfo(name = "role") val role: Int,
     @ColumnInfo(name = "psw") val psw: String,
     /**
+     *  姓名
+     */
+    @ColumnInfo(name = "name") val name: String = userName,
+    /**
+     *  true man, false female
+     */
+    @ColumnInfo(name = "sex") val sex: Boolean = true,
+    /**
+     * birth day
+     */
+    @ColumnInfo(name = "birth_day") val birthDay: Long = 0L,
+    /**
      *  测评用户/管理员 所属班级id
      */
     @ColumnInfo(name = "class_id") val classId: Int = -1,
@@ -42,4 +54,10 @@ data class User @JvmOverloads constructor(
      *  测评用户关联的管理员id
      */
     @ColumnInfo(name = "manager_id") val managerId: Int = -1
-) : Serializable
+) : Serializable {
+    @Ignore
+    val classInChargeList = classIncharge.split(",").toList()
+
+    @Ignore
+    val sexStr = if (sex) "男" else "女"
+}

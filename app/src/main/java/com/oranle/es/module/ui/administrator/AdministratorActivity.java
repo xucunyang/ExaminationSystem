@@ -8,13 +8,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.oranle.es.R;
+import com.oranle.es.data.entity.Assessment;
 import com.oranle.es.databinding.ActivityAdminBinding;
 import com.oranle.es.module.base.BaseActivity;
 import com.oranle.es.module.ui.administrator.fragment.AdminPwdFragment;
-import com.oranle.es.module.ui.administrator.fragment.ManualInputFragment;
 import com.oranle.es.module.ui.administrator.fragment.ExportFragment;
-import com.oranle.es.module.ui.administrator.fragment.GroupFragment;
+import com.oranle.es.module.ui.administrator.fragment.GroupStatisticFragment;
 import com.oranle.es.module.ui.administrator.fragment.LoginManagerFragment;
+import com.oranle.es.module.ui.administrator.fragment.ManualInputFragment;
 import com.oranle.es.module.ui.administrator.fragment.PersonalFragment;
 import com.oranle.es.module.ui.administrator.fragment.ReportFragment;
 
@@ -46,9 +47,9 @@ public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
     private void initView() {
         fragList = new ArrayList<>();
         fragList.add(new LoginManagerFragment());
-        fragList.add(new ReportFragment());
+        fragList.add(ReportFragment.Companion.newInstance(null, true));
         fragList.add(new ManualInputFragment());
-        fragList.add(new GroupFragment());
+        fragList.add(new GroupStatisticFragment());
         fragList.add(new PersonalFragment());
         fragList.add(new ExportFragment());
         fragList.add(new AdminPwdFragment());
@@ -81,21 +82,20 @@ public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
         initViewpager(5);
     }
 
+    public void showGroupStatistic(Assessment assessment) {
+        if (fragList.size() > 7) {
+            fragList.remove(7);
+        }
+        ReportFragment fragment = ReportFragment.Companion.newInstance(assessment, false);
+        fragList.add(7, fragment);
+        initViewpager(7);
+    }
+
     private void initViewpager(int tag) {
         try {
-            Fragment frag = supportFragmentManager.findFragmentByTag("" + tag);
-            if (frag == null) {
-                supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragList.get(tag), tag + "").commit();
-            }
             FragmentTransaction ft = supportFragmentManager.beginTransaction();
-            for (int i = 0; i < fragList.size(); i++) {
-                if (i == tag) {
-                    ft.show(fragList.get(i));
 
-                } else {
-                    ft.hide(fragList.get(i));
-                }
-            }
+            ft.replace(R.id.frameLayout, fragList.get(tag), tag + "");
             ft.commit();
         } catch (Exception e) {
             e.printStackTrace();

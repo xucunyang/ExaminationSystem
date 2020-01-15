@@ -15,6 +15,9 @@ interface SingleChoiceDao {
     @Query("select * from single_choice where examSheetId =:assessmentId")
     suspend fun getSingleChoicesBySheetId(assessmentId: Int): List<SingleChoice>
 
+    @Query("delete from single_choice where examSheetId =:assessmentId")
+    suspend fun deleteSingleChoicesBySheetId(assessmentId: Int)
+
     @Update
     suspend fun updateSingleChoice(singleChoice: SingleChoice): Int
 
