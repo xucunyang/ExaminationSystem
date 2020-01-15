@@ -44,7 +44,7 @@ abstract class BaseViewModel : ViewModel() {
 
     fun <T> asyncCall(
         asyncBlock: suspend CoroutineScope.() -> T,
-        uiBlock: (T) -> Unit,
+        uiBlock: ((T) -> Unit)? = null,
         errBlock: ((e: Exception) -> Unit)? = null
     ) {
         viewModelScope.launch(UI) {
@@ -52,7 +52,7 @@ abstract class BaseViewModel : ViewModel() {
                 val result = withContext(IO) {
                     asyncBlock()
                 }
-                uiBlock(result)
+                uiBlock?.let { it.invoke(result) }
             } catch (e: Exception) {
                 e.printStackTrace()
                 errBlock?.let { it(e) }

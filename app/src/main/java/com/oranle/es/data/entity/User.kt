@@ -26,6 +26,10 @@ data class User @JvmOverloads constructor(
      */
     @ColumnInfo(name = "sex") val sex: Boolean = true,
     /**
+     * birth day
+     */
+    @ColumnInfo(name = "birth_day") val birthDay: Long = 0L,
+    /**
      *  测评用户/管理员 所属班级id
      */
     @ColumnInfo(name = "class_id") val classId: Int = -1,

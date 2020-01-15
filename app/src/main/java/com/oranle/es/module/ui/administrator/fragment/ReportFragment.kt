@@ -17,6 +17,7 @@ import com.oranle.es.module.base.BaseAdapter
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
+import java.io.Serializable
 
 class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
@@ -134,7 +135,7 @@ data class WrapReportBean(
     val assessment: Assessment,
     val typedScore: List<TypedScore>,
     val rules: List<ReportRule>
-) {
+) : Serializable{
     fun totalScore(): Float {
         var total = 0F
         typedScore.forEach {

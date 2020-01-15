@@ -31,7 +31,10 @@ interface ReportDao {
     suspend fun updateReport(report: SheetReport): Int
 
     @Delete
-    suspend fun deleteRule(report: SheetReport): Int
+    suspend fun deleteReport(report: SheetReport): Int
+
+    @Query("DELETE FROM sheet_report WHERE id = :reportId")
+    suspend fun deleteReportById(reportId: Int)
 
     @Query("delete from sheet_report where userId = :userId")
     suspend fun deleteReportByUserId(userId: Int)

@@ -146,9 +146,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
             )
         }
 
-
         Timber.d("submitAnswer $undoList")
-
     }
 
     private fun dismissDialog() {

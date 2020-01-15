@@ -1,12 +1,14 @@
 package com.oranle.es.module.ui.administrator.viewmodel
 
+import android.view.View
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import com.oranle.es.data.entity.*
 import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.module.base.BaseRecycleViewModel
+import com.oranle.es.module.ui.administrator.dialog.ReportDetailDialog
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import timber.log.Timber
-import java.lang.IllegalArgumentException
 
 class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
@@ -44,8 +46,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
                 classNameList.postValue(tempClassNameList)
                 classesInCharge.postValue(classList)
-            },
-            {
             }
         )
     }
@@ -78,7 +78,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 }
 
                 getAllWrapReportBeanByClassIdInCharge()
-
             },
             {
                 notifyItem(it)
@@ -86,12 +85,25 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         )
     }
 
-    fun showDetail(reportId: Int) {
-        Timber.d("show detail ${reportId}")
+    fun showDetail(v: View, bean: WrapReportBean) {
+        Timber.d("show detail ${bean}")
+
+        val activity = v.context as FragmentActivity
+
+        ReportDetailDialog.showDialog(activity, bean)
     }
 
-    fun delete(reportId: Int) {
-        Timber.d("delete ${reportId}")
+    fun delete(bean: WrapReportBean) {
+        Timber.d("delete ${bean}")
+
+        asyncCall(
+            {
+                getDB().getReportDao().deleteReportById(bean.reportId)
+            }, {
+                toast("已删除")
+                loadAllReport()
+            }
+        )
     }
 
     private suspend fun getAllWrapReportBeanByClassIdInCharge(): List<WrapReportBean> {

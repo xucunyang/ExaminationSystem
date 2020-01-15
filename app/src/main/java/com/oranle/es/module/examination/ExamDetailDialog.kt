@@ -96,7 +96,7 @@ class ExamDetailDialog(
             binding.vm = viewModel
             binding.item = item.singleChoice
 
-            binding.choose.setOnCheckedChangeListener { radioGroup, i ->
+            binding.choose.setOnCheckedChangeListener { radioGroup, _ ->
                 val childCount = radioGroup.childCount
                 for (index in 0..childCount) {
                     val view = radioGroup.getChildAt(index)
