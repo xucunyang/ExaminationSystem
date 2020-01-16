@@ -16,7 +16,7 @@ import com.oranle.es.module.ui.administrator.fragment.ExportFragment;
 import com.oranle.es.module.ui.administrator.fragment.GroupStatisticFragment;
 import com.oranle.es.module.ui.administrator.fragment.LoginManagerFragment;
 import com.oranle.es.module.ui.administrator.fragment.ManualInputFragment;
-import com.oranle.es.module.ui.administrator.fragment.PersonalFragment;
+import com.oranle.es.module.ui.administrator.fragment.PersonalStatisticFragment;
 import com.oranle.es.module.ui.administrator.fragment.ReportFragment;
 
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +50,7 @@ public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
         fragList.add(ReportFragment.Companion.newInstance(null, true));
         fragList.add(new ManualInputFragment());
         fragList.add(new GroupStatisticFragment());
-        fragList.add(new PersonalFragment());
+        fragList.add(new PersonalStatisticFragment());
         fragList.add(new ExportFragment());
         fragList.add(new AdminPwdFragment());
 
@@ -74,7 +74,7 @@ public class AdministratorActivity extends BaseActivity<ActivityAdminBinding> {
         initViewpager(3);
     }
 
-    public void onPerson(View view) {
+    public void onPersonStatistic(View view) {
         initViewpager(4);
     }
 

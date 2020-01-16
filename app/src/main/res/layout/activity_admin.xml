@@ -123,7 +123,7 @@
                         style="@style/menu_item"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="onPerson"
+                        android:onClick="onPersonStatistic"
                         android:paddingTop="@dimen/dp_10"
                         android:paddingBottom="@dimen/dp_10"
                         android:text="个人统计"

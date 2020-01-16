@@ -43,7 +43,6 @@ class LoginManagerFragment : BaseFragment<FragmentLoginManagerBinding>() {
 
         dataBinding?.apply {
             vm = loginManagerViewModel
-            lifecycleOwner = activity
 
             recyclerView.adapter = LoginManagerAdapter(loginManagerViewModel!!)
             recyclerView.layoutManager = LinearLayoutManager(activity) as RecyclerView.LayoutManager?

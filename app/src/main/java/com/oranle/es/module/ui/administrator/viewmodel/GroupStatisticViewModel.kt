@@ -124,6 +124,10 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         )
     }
 
+    fun onNextStep() {
+
+    }
+
     private suspend fun getAllWrapReportBeanByClassIdInCharge(): List<WrapReportBean> {
 
         val currentUser = SpUtil.instance.getCurrentUser()
