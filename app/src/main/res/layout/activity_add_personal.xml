@@ -334,7 +334,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_60"
                 android:gravity="center"
-                android:onClick="@{(v) -> ViewModel.onAddPersonal()}"
+                android:onClick="onCommit"
                 android:text="增加"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_18" />

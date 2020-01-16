@@ -1,7 +1,9 @@
 package com.oranle.es.module.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.databinding.BindingAdapter
@@ -184,8 +186,6 @@ fun classify(rules: List<ReportRule>, scoreList: List<TypedScore>)
             )
         )
     }
-
-
     return classifyList
 }
 
@@ -196,4 +196,30 @@ fun getTextView(text: String, textSize: Float, context: Context): TextView {
     tv.textSize = textSize
     tv.setPadding(0, 10, 0, 10)
     return tv
+}
+
+@BindingAdapter("app:bind_classify_detail")
+fun bindClassifyDetail(layout: LinearLayout, bean: WrapReportBean) {
+    val context = layout.context
+
+    val rules = bean.rules.sortedBy { it.id }
+    val scoreList = bean.typedScore.sortedBy { it.ruleId }
+    val classifyScore = classify(rules, scoreList)
+
+    // title
+    layout.addView(getLayout(context, bean.assessment.title, bean.totalScore()))
+    // add children
+    classifyScore.forEachIndexed() { index, typedScore ->
+        layout.addView(getLayout(context, rules[index].typeStr, typedScore.score))
+    }
+}
+
+@SuppressLint("SetTextI18n")
+fun getLayout(context: Context, typeStr: String, score: Float): View {
+    val child = LayoutInflater.from(context).inflate(R.layout.item_reporrt_detail, null, false)
+    val titleTv = child.findViewById<TextView>(R.id.type)
+    val scoreTv = child.findViewById<TextView>(R.id.score)
+    titleTv.text = "【$typeStr】"
+    scoreTv.text = "得分：$score"
+    return child
 }

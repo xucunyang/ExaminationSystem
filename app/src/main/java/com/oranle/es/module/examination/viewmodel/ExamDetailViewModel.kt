@@ -22,7 +22,11 @@ enum class ExamShowMode {
     /**
      *  测评人员测试
      */
-    Test
+    Test,
+    /**
+     *  查看报告答题情况
+     */
+    AnswerShow
 }
 
 /**
@@ -54,7 +58,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
 
     private val singleChoiceWraps = mutableListOf<SingleChoiceWrap>()
 
-    fun load(assessment: Assessment, examShowMode: ExamShowMode, user: User?) {
+    fun load(assessment: Assessment, examShowMode: ExamShowMode, user: User?, reportId: Int = -1) {
         isManualInputMode.value = (examShowMode == ExamShowMode.ManagerInput)
         mUser = user
         mAssessment = assessment
@@ -63,6 +67,11 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
             loading.postValue(true)
             val rules = getDB().getRuleDao().getRulesBySheetId(assessment.id)
 
+            var sheetReport: SheetReport? = null
+            if (examShowMode == ExamShowMode.AnswerShow && reportId != -1) {
+                sheetReport = getDB().getReportDao().getReportById(reportId)
+            }
+
             val singleChoiceList =
                 getDB().getSingleChoiceDao().getSingleChoicesBySheetId(assessment.id)
             singleChoiceList.forEachIndexed { index, origin ->
@@ -70,13 +79,14 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
                     SingleChoiceWrap(
                         singleChoice = origin,
                         rightAnswer = assessment.correctAnswerList[index],
-                        selectOption = null,
+                        selectOption = if (sheetReport != null) sheetReport.getTypedScore[index].select else null,
                         rule = getRuleByIndex(rules, index)
                     )
                 )
             }
             sheetTitle.postValue(assessment.title)
             sheetIntroduce.postValue(assessment.introduction)
+
             singleChoiceWraps
         }, {
             loading.value = false
@@ -146,9 +156,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
             )
         }
 
-
         Timber.d("submitAnswer $undoList")
-
     }
 
     private fun dismissDialog() {

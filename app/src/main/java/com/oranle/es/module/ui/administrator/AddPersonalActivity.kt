@@ -18,14 +18,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import androidx.core.content.ContextCompat.getSystemService
 import com.oranle.es.data.entity.ClassEntity
+import com.oranle.es.data.entity.User
 import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.module.ui.senior.fragment.AddOrModifyManagerDialog
+import com.oranle.es.module.ui.senior.fragment.DialogClassViewModel
 import java.util.ArrayList
 
 
 class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
     lateinit var classSelectData: Array<String?>
     val sexArray = mutableListOf<String>()
+    private var originUser: User? = null
+    lateinit var viewModel: AddPersonalViewModel
     override val layoutId: Int
         get() = R.layout.activity_add_personal
 
@@ -35,9 +39,19 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
     }
 
     private fun initView() {
-        var viewModel = ViewModelProviders.of(this).get(AddPersonalViewModel::class.java)
+        originUser = intent.getSerializableExtra("user")as? User
+        viewModel = ViewModelProviders.of(this).get(AddPersonalViewModel::class.java)
         dataBinding.viewModel = viewModel
         dataBinding.lifecycleOwner = this
+        if(originUser!=null){
+            viewModel.userLoginName.value = originUser!!.userName
+            viewModel.name.value = originUser!!.alias
+            viewModel.pwd.value = originUser!!.psw
+            viewModel.comfirmPwd.value = originUser!!.psw
+            viewModel.classId.value = originUser!!.classId
+            viewModel.className.value = originUser!!.className
+            viewModel.schoolName.value = originUser!!.schoolName
+        }
         GlobalScope.launchWithLifecycle(this, UI){
             val classes = withContext(IO) {
                 getDB().getClassDao().getAllClass()
@@ -106,6 +120,14 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
             ) {
                 viewModel.sex.value = sexArray[position]
             }
+        }
+    }
+
+    fun onCommit(view: View){
+        if (originUser == null){
+            viewModel.onAddPersonal()
+        }else{
+            viewModel.updateUser(originUser!!)
         }
     }
 }

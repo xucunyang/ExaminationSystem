@@ -12,6 +12,7 @@ data class User @JvmOverloads constructor(
     @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "user_name") val userName: String = "",
     @ColumnInfo(name = "alias") val alias: String = userName,
+    @ColumnInfo(name = "selected") var selected: Boolean = false,
     /**
      *  @see Role
      */
@@ -26,6 +27,10 @@ data class User @JvmOverloads constructor(
      */
     @ColumnInfo(name = "sex") val sex: Boolean = true,
     /**
+     * birth day
+     */
+    @ColumnInfo(name = "birth_day") val birthDay: Long = 0L,
+    /**
      *  测评用户/管理员 所属班级id
      */
     @ColumnInfo(name = "class_id") val classId: Int = -1,
@@ -33,6 +38,10 @@ data class User @JvmOverloads constructor(
      *  测评用户/管理员 所属班级名称
      */
     @ColumnInfo(name = "class_name") val className: String = "",
+    /**
+     * 所属学校名称
+     */
+    @ColumnInfo(name = "school_name") val schoolName: String = "",
     /**
      *  管理员所管辖班级, 班级ID用<,>分割
      */

@@ -59,6 +59,7 @@ class AddPersonalViewModel : BaseViewModel() {
                         psw = pwd.value!!,
                         classId = classId.value!!,
                         className = className.value!!,
+                        schoolName = schoolName.value!!,
                         classIncharge = classIncharge.joinToString(",")
                     )
                 )
@@ -67,5 +68,25 @@ class AddPersonalViewModel : BaseViewModel() {
                 toast("已录入")
             }
         )
+    }
+
+
+    fun updateUser(origin: User): Boolean {
+
+        val copy = origin.copy(
+            userName = userLoginName.value!!,
+            alias = name.value!!,
+            role = Role.Examinee.value,
+            psw = pwd.value!!,
+            classId = classId.value!!,
+            className = className.value!!,
+            schoolName = schoolName.value!!
+        )
+        asyncCall({
+            getDB().getUserDao().updateUser(copy)
+        }, {
+            toast("已修改")
+        })
+        return true
     }
 }

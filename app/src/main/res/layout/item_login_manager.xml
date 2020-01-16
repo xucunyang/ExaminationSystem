@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="user"
+            type="com.oranle.es.data.entity.User" />
+        <variable
+            name="ViewModel"
+            type="com.oranle.es.module.ui.administrator.fragment.model.LoginManagerViewModel" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -10,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="用户名"
+            android:text="@{user.userName}"
             android:textColor="@color/black"
             android:textSize="22dp" />
 
@@ -18,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="密码"
+            android:text="@{user.psw}"
             android:textColor="@color/black"
             android:textSize="22dp" />
 
@@ -26,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="姓名"
+            android:text="@{user.alias}"
             android:textColor="@color/black"
             android:textSize="22dp" />
 
@@ -34,11 +42,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="学校名称"
+            android:text="@{user.schoolName}"
             android:textColor="@color/black"
             android:textSize="22dp" />
 
         <TextView
+            android:id="@+id/tv_delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -46,6 +55,7 @@
             android:textColor="@color/black"
             android:textSize="22dp" />
         <TextView
+            android:id="@+id/tv_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -53,6 +63,7 @@
             android:textColor="@color/black"
             android:textSize="22dp" />
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

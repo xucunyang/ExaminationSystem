@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="question_template">1 请问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？</string>
+    <string name="title_report">[%s]个人报告</string>
 </resources>
