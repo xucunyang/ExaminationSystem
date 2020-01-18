@@ -52,17 +52,10 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         )
     }
 
-    fun loadReportByAssessment(assessment: Assessment) {
-
+    fun loadReport(assessment: Assessment?, clazz: ClassEntity?) {
         asyncCall(
             {
-                val currentUser = SpUtil.instance.getCurrentUser()
-
-                if (currentUser == null) {
-                    toast("当前登录用户为空，请检查")
-                }
-
-                getWrapReportBean(assessment)
+                getWrapReportBean(assessment, clazz)
             },
             {
                 notifyItem(it)
@@ -70,15 +63,12 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         )
     }
 
+    /**
+     *  加载所有的报告不过滤
+     */
     fun loadAllReport() {
         asyncCall(
             {
-                val currentUser = SpUtil.instance.getCurrentUser()
-
-                if (currentUser == null) {
-                    toast("当前登录用户为空，请检查")
-                }
-
                 getAllWrapReportBeanByClassIdInCharge()
             },
             {
@@ -151,6 +141,14 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             stuIds.add(it.id)
         }
 
+        return generateWrapReportBean(stuIds, allStudents, classesInCharge)
+    }
+
+    private suspend fun generateWrapReportBean(
+        stuIds: MutableList<Int>,
+        allStudents: List<User>,
+        classesInCharge: List<ClassEntity>
+    ): MutableList<WrapReportBean> {
         val reports = getDB().getReportDao().getReportsByUserIds(stuIds)
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
@@ -182,11 +180,13 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 )
             )
         }
-
         return wrapReportBeans
     }
 
-    private suspend fun getWrapReportBean(assessment: Assessment): List<WrapReportBean> {
+    private suspend fun getWrapReportBean(
+        assessment: Assessment?,
+        clazz: ClassEntity?
+    ): List<WrapReportBean> {
 
         val currentUser = SpUtil.instance.getCurrentUser()
 
@@ -195,31 +195,30 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             return emptyList()
         }
 
-        val classesInCharge = getAllClassesInCharge(currentUser)
+        val (classesInCharge, allStudents, stuIds) = getTripleData(clazz, currentUser)
 
-        val classesIdInCharge = mutableListOf<Int>()
-        classesInCharge.forEach {
-            classesIdInCharge.add(it.id)
-        }
-
-        val allStudents = getAllStudentByClassIds(classesIdInCharge)
-
-        val stuIds = mutableListOf<Int>()
-        allStudents.forEach {
-            stuIds.add(it.id)
-        }
-
+        // get report from db
         val reports =
-            getAllSpecifySheetIdReportByStudentId(assessment.id, stuIds)
+            if (assessment != null)
+                getDB().getReportDao().getReportsByUserIdAndSheetId(assessment.id, stuIds)
+            else
+                getDB().getReportDao().getReportsByUserIds(stuIds)
+
+        // get rule from db
+        val rules =
+            if (assessment == null)
+                getDB().getRuleDao().getRules()
+            else
+                getDB().getRuleDao().getRulesBySheetId(assessment.id)
+
+        val allAssessments = getDB().getAssessmentDao().getAllAssessments()
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
-
-        val rules = getDB().getRuleDao().getRulesBySheetId(assessment.id)
-
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
             val classEntity = getClassById(classesInCharge, student.classId)
             val scoreList = it.getTypedScore
+            val tempAssessment = getAssessmentById(allAssessments, it.sheetId)
             wrapReportBeans.add(
                 WrapReportBean(
                     reportId = it.id,
@@ -227,7 +226,7 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     user = student,
                     clazz = classEntity,
                     time = it.testTime,
-                    assessment = assessment,
+                    assessment = tempAssessment,
                     typedScore = scoreList,
                     rules = rules
                 )
@@ -235,6 +234,42 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         }
 
         return wrapReportBeans
+    }
+
+    private suspend fun getTripleData(
+        clazz: ClassEntity?,
+        currentUser: User
+    ): Triple<MutableList<ClassEntity>, List<User>, MutableList<Int>> {
+
+        val allStudents = mutableListOf<User>()
+        val stuIds = mutableListOf<Int>()
+        val classesInCharge = mutableListOf<ClassEntity>()
+
+        if (currentUser.role == Role.Manager.value) {
+            // 未指定班级信息则表示选择全部
+            if (clazz == null) {
+                classesInCharge.addAll(getAllClassesInCharge(currentUser))
+            } else {
+                classesInCharge.add(clazz)
+            }
+
+            val classesIdInCharge = mutableListOf<Int>()
+            classesInCharge.forEach {
+                classesIdInCharge.add(it.id)
+            }
+
+            val examinees = getAllStudentByClassIds(classesIdInCharge)
+            allStudents.addAll(examinees)
+
+            allStudents.forEach {
+                stuIds.add(it.id)
+            }
+        } else if (currentUser.role == Role.Examinee.value) {
+            classesInCharge.add(getDB().getClassDao().getClassById(currentUser.classId))
+            allStudents.add(currentUser)
+            stuIds.add(currentUser.id)
+        }
+        return Triple(classesInCharge, allStudents, stuIds)
     }
 
     private fun getStudentById(students: List<User>, specifyId: Int): User {
@@ -278,20 +313,14 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
     /**
      * 根据班级id查出所有的学生
      */
-    suspend fun getAllStudentByClassIds(classIds: List<Int>): List<User> =
+    private suspend fun getAllStudentByClassIds(classIds: List<Int>): List<User> =
         getDB().getUserDao().getUserByClassIdsAndRole(classIds, Role.Examinee.value)
 
     /**
      *  获取指定集合中的id的，且指定表id的报告
      */
-    private suspend fun getAllSpecifySheetIdReportByStudentId(
-        sheetId: Int,
-        stuIds: List<Int>
-    ): List<SheetReport> {
-        return getDB().getReportDao().getReportsByUserIdAndSheetId(sheetId, stuIds)
-    }
 
-    suspend fun getAllClassesInCharge(manager: User): List<ClassEntity> {
+    private suspend fun getAllClassesInCharge(manager: User): List<ClassEntity> {
         val classList = mutableListOf<ClassEntity>()
         manager.classInChargeList.forEach {
             if (it.isNotBlank()) {

@@ -66,6 +66,10 @@
             android:name=".module.ui.administrator.AddPersonalActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.ui.examinee.ExamineeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
         <receiver
             android:name=".module.receiver.MyReceiver"
             android:enabled="true"

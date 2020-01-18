@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.oranle.es.module.ui.examinee.viewmodel.AssessmentSelectViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="8dp"
+            android:text="请选择测试项目"
+            android:textSize="@dimen/sp_30"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/gray_cc" />
+
+        <Spinner
+            android:id="@+id/exam_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bind_assessment_spinner="@{vm.assessments}"
+            android:layout_marginStart="@dimen/dp_20" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@color/gray_cc" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:onClick="@{() -> vm.toExamineeFragment()}"
+            android:text="确定"
+            android:textSize="@dimen/sp_30" />
+
+
+    </LinearLayout>
+</layout>

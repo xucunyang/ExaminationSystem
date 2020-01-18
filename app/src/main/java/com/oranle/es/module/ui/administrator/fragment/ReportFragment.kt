@@ -34,7 +34,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
         }
     }
 
-    lateinit var mViewModel: GroupStatisticViewModel
+    private lateinit var mViewModel: GroupStatisticViewModel
 
     override val layoutId: Int
         get() = R.layout.fragment_report
@@ -77,9 +77,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
         if (isShowAll != null && isShowAll) {
             mViewModel.loadAllReport()
         } else {
-            assessment?.apply {
-                mViewModel.loadReportByAssessment(assessment)
-            }
+            mViewModel.loadReport(assessment, clazz)
         }
     }
 
@@ -124,7 +122,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 }
 
 /**
- *  显示listview用的包装bean
+ *  显示list view用的包装bean
  */
 data class WrapReportBean(
     val reportId: Int,

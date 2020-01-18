@@ -12,6 +12,7 @@ import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.ActivityExamLoginBinding
 import com.oranle.es.module.base.*
 import com.oranle.es.module.ui.administrator.AdministratorActivity
+import com.oranle.es.module.ui.examinee.ExamineeActivity
 import com.oranle.es.module.ui.senior.SeniorAdminActivity
 import kotlinx.android.synthetic.main.activity_exam_login.*
 import kotlinx.coroutines.GlobalScope
@@ -81,7 +82,7 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
                 SpUtil.instance.setCurrentUser(user)
 
                 when (currentRole) {
-                    Role.Examinee.value -> start<AdministratorActivity>(bundle)
+                    Role.Examinee.value -> start<ExamineeActivity>(bundle)
                     Role.Manager.value -> start<AdministratorActivity>(bundle)
                     Role.Root.value -> start<SeniorAdminActivity>(bundle)
                 }
