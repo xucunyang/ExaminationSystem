@@ -39,42 +39,7 @@ class ExamSheetViewModel : BaseRecycleViewModel<Assessment>() {
             entity.sheetList.remove(it.id.toString())
         }
 
-        items.value?.forEach {
-            Timber.d("select all sheet ${it.id}  ${it.isSelect}")
-        }
-
         notifyItem(items.value)
-    }
-
-    fun selectAllShowReportSheet() {
-        items.value?.forEach {
-            it.showReportSheet.value = true
-        }
-        notifyItem(items.value)
-    }
-
-    fun unselectAllShowReportSheet() {
-        items.value?.forEach {
-            it.showReportSheet.value = false
-        }
-
-        notifyItem(items.value)
-    }
-
-    private fun updateEntity(entity: ClassEntity) {
-        items.value?.forEach {
-            Timber.d("on click ${it.id}  + ${it.isSelect} + ${it.showReportSheet}")
-            if (it.isSelect.value == true) {
-                entity.sheetList.add(it.id.toString())
-            } else {
-                entity.sheetList.remove(it.id.toString())
-            }
-            if (it.showReportSheet.value == true) {
-                entity.showSheetReportList.add(it.id.toString())
-            } else {
-                entity.showSheetReportList.remove(it.id.toString())
-            }
-        }
     }
 
     fun saveToDB(entity: ClassEntity) {

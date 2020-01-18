@@ -8,6 +8,9 @@
             name="vm"
             type="com.oranle.es.module.ui.examinee.viewmodel.AssessmentSelectViewModel" />
 
+        <variable
+            name="asInLayout"
+            type="com.oranle.es.data.entity.Assessment" />
     </data>
 
     <LinearLayout
@@ -18,11 +21,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="8dp"
-            android:text="请选择测试项目"
-            android:textSize="@dimen/sp_30"
+            android:text="@{asInLayout.title}"
+            android:textAlignment="center"
+            android:textSize="@dimen/sp_25"
             android:textStyle="bold" />
 
         <View
@@ -32,12 +34,15 @@
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@color/gray_cc" />
 
-        <Spinner
-            android:id="@+id/exam_spinner"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:bind_assessment_spinner="@{vm.assessments}"
-            android:layout_marginStart="@dimen/dp_20" />
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_40"
+            android:paddingEnd="@dimen/dp_40"
+            android:text="@{asInLayout.introduction}"
+            android:textAlignment="textStart"
+            android:textSize="@dimen/sp_22" />
 
         <View
             android:layout_width="match_parent"
@@ -46,14 +51,26 @@
             android:layout_marginBottom="@dimen/dp_20"
             android:background="@color/gray_cc" />
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_40"
+            android:paddingEnd="@dimen/dp_40"
+            android:text="请仔细阅读题目要求，选择正确的选项"
+            android:textAlignment="textStart"
+            android:textSize="@dimen/sp_22" />
+
         <Button
-            android:id="@+id/confirm"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_20"
-            android:onClick="@{(v) -> vm.toExamineeFragment(v)}"
-            android:text="确定"
-            android:textSize="@dimen/sp_30" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="@{(v) -> vm.onStartExam(v, asInLayout)}"
+            android:text="开始测试"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18" />
 
 
     </LinearLayout>

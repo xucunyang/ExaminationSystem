@@ -60,16 +60,23 @@
         <activity
             android:name=".module.ui.senior.SeniorAdminActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".module.ui.administrator.AddPersonalActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+
+        <!--测评用户-->
         <activity
             android:name=".module.ui.examinee.ExamineeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.ui.examinee.ExamActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+
         <receiver
             android:name=".module.receiver.MyReceiver"
             android:enabled="true"

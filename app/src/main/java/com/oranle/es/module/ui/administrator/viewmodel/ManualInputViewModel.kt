@@ -22,8 +22,6 @@ class ManualInputViewModel : BaseViewModel() {
                 val studentByManager = getAllStudentByManager()
 
                 students.postValue(studentByManager)
-            },
-            {
             }
         )
     }
@@ -51,9 +49,7 @@ class ManualInputViewModel : BaseViewModel() {
         }
 
         return allStudents
-
     }
-
 
     /**
      * 根据班级id查出所有的学生
@@ -70,7 +66,6 @@ class ManualInputViewModel : BaseViewModel() {
     ): List<SheetReport> {
         return getDB().getReportDao().getReportsByUserIdAndSheetId(sheetId, stuIds)
     }
-
 
     suspend fun getAllClassesInCharge(manager: User): List<ClassEntity> {
         val classList = mutableListOf<ClassEntity>()

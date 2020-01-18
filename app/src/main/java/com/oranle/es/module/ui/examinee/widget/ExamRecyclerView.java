@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 视频播放上下滑动切换控件
  */
-public class VideoPlayRecyclerView extends FrameLayout {
+public class ExamRecyclerView extends FrameLayout {
     private static final int COLOR_BG = Color.BLACK; // 背景色
     private static final float DRAG_RATE = 2.5f; // 下拉上拉的粘性（数值越大越难下拉）
     private static final int TEXT_COLOR = 0xff999999; // 提示文字颜色
@@ -32,17 +32,17 @@ public class VideoPlayRecyclerView extends FrameLayout {
     private float mLastY = -1;
     private boolean isPulling;
 
-    public VideoPlayRecyclerView(Context context) {
+    public ExamRecyclerView(Context context) {
         super(context);
         init();
     }
 
-    public VideoPlayRecyclerView(Context context, @Nullable AttributeSet attrs) {
+    public ExamRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public VideoPlayRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+    public ExamRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

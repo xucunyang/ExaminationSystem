@@ -3,10 +3,12 @@ package com.oranle.es.module.ui.examinee
 import android.os.Bundle
 import android.view.View
 import com.oranle.es.R
+import com.oranle.es.data.entity.Assessment
 import com.oranle.es.databinding.ActivityExamineeBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.ui.administrator.fragment.ReportFragment
+import com.oranle.es.module.ui.examinee.fragment.ExamStartFragment
 import com.oranle.es.module.ui.examinee.fragment.ObjectiveTestSelectFragment
 import com.oranle.es.module.ui.examinee.fragment.SubjectiveTestSelectFragment
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment
@@ -48,6 +50,10 @@ class ExamineeActivity : BaseActivity<ActivityExamineeBinding>() {
 
     fun showModifyInfo(v: View) {
         showFragment(modifyPwdFragment)
+    }
+
+    fun showExamStartFragment(assessment: Assessment) {
+        showFragment(ExamStartFragment.newInstance(assessment))
     }
 
     fun onFinish(v: View) {

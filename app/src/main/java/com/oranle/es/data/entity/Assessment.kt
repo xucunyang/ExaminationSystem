@@ -41,16 +41,4 @@ data class Assessment(
 ) : Serializable {
     @Ignore
     val correctAnswerList = correctAnswer.split(",").toList()
-
-    /**
-     *  展示列表时是否选中
-     */
-    @Ignore
-    var isSelect = MutableLiveData(false)
-
-    /**
-     *  是否可以直接看到报告的量表
-     */
-    @Ignore
-    var showReportSheet = MutableLiveData(false)
 }
