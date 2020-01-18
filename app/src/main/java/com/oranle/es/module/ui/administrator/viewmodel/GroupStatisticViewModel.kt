@@ -26,6 +26,9 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         asyncCall(
             {
                 val assessmentList = getDB().getAssessmentDao().getAllAssessments()
+                val temp = mutableListOf<Assessment?>()
+                temp.add(null)
+                temp.addAll(assessmentList)
                 assessments.postValue(assessmentList)
 
                 val schoolName = SpUtil.instance.getOrganizationName()

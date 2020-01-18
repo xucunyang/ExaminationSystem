@@ -100,7 +100,7 @@ class GroupStatisticFragment : BaseFragment<FragmentGroupBinding>() {
                     return@setOnClickListener
                 }
 
-                toReportFrag(currentAssessment!!)
+                toReportFrag(currentAssessment, currentClass)
             }
         }
 
@@ -108,7 +108,7 @@ class GroupStatisticFragment : BaseFragment<FragmentGroupBinding>() {
     }
 
 
-    private fun toReportFrag(currentAssessment: Assessment) {
+    private fun toReportFrag(currentAssessment: Assessment?, currClass: ClassEntity?) {
 //        fragmentManager?.apply {
 //            val transaction = beginTransaction()
 //            transaction.replace(
@@ -117,7 +117,7 @@ class GroupStatisticFragment : BaseFragment<FragmentGroupBinding>() {
 //            ).commit()
 //        }
         val activity = activity as AdministratorActivity
-        activity.showGroupStatistic(currentAssessment)
+        activity.showGroupStatistic(currentAssessment, currClass)
 
     }
 

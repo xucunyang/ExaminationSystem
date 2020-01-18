@@ -106,14 +106,18 @@ fun bindUserSpinner(spinner: Spinner, students: List<User>?) {
 }
 
 @BindingAdapter("app:bind_assessment_spinner")
-fun bindAssessmentSpinner(spinner: Spinner, assessments: List<Assessment>?) {
+fun bindAssessmentSpinner(spinner: Spinner, assessments: List<Assessment?>?) {
 
     Timber.d("bindAssessmentSpinner ${assessments?.size}")
 
     val titleList = mutableListOf<String>()
 
     assessments?.forEach {
-        titleList.add(it.title)
+        if (it == null) {
+            titleList.add("未选择...")
+        } else {
+            titleList.add(it.title)
+        }
     }
 
     bindAdapter(spinner, titleList.toTypedArray())

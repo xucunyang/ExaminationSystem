@@ -22,12 +22,18 @@ import java.io.Serializable
 class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
     companion object {
-        fun newInstance(assessment: Assessment? = null, isShowAll: Boolean): ReportFragment {
+        fun newInstance(
+            assessment: Assessment? = null,
+            clazz: ClassEntity? = null,
+            isShowAll: Boolean = false
+        ): ReportFragment {
             val fragment = ReportFragment()
             val args = Bundle()
             assessment?.apply {
                 args.putSerializable("assessment", assessment)
             }
+            args.putSerializable("clazz", clazz)
+            // 所有班级所有表
             args.putBoolean("isShowAll", isShowAll)
             fragment.arguments = args
             return fragment
@@ -43,6 +49,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
         val assessment = arguments?.getSerializable("assessment") as? Assessment
         val isShowAll = arguments?.getBoolean("isShowAll", false)
+        val clazz = arguments?.getSerializable("clazz") as? ClassEntity
 
         mViewModel = getViewModel()
 
@@ -133,7 +140,7 @@ data class WrapReportBean(
     val assessment: Assessment,
     val typedScore: List<TypedScore>,
     val rules: List<ReportRule>
-) : Serializable{
+) : Serializable {
     fun totalScore(): Float {
         var total = 0F
         typedScore.forEach {
