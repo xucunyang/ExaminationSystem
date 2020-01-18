@@ -8,6 +8,7 @@ import com.oranle.es.databinding.ActivityMainBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.WebViewActivity
 import com.oranle.es.module.base.toast
+import com.oranle.es.module.ui.innovation.InnovationActivity
 import com.oranle.es.module.ui.login.ExaminationSystemLoginActivity
 
 const val SD_WEB_PATH = "sdcard/es-web/web"
@@ -27,15 +28,8 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     fun onInnovationAbility(view: View) {
-
-        val intent = Intent(view.context, WebViewActivity::class.java)
-        val bundle = Bundle()
-//        bundle.putString("url", "file:///$SD_WEB_PATH/language/language_smart.html")
-        bundle.putString("url", "file:///android_asset/language/language-two.html")
-        bundle.putString("title", "用户协议")
-        intent.putExtras(bundle)
+        val intent = Intent(view.context, InnovationActivity::class.java)
         view.context.startActivity(intent)
-
     }
 
 
