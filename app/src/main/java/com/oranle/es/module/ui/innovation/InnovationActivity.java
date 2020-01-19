@@ -35,4 +35,32 @@ public class InnovationActivity extends BaseActivity {
     public void onDialectical(View view) {
         startActivity(new Intent(this, DigitalActivity.class));
     }
+
+    public void onWarm(View view) {
+        startActivity(new Intent(this, WarmActivity.class));
+    }
+
+    public void onStrain(View view) {
+        startActivity(new Intent(this, StrainActivity.class));
+    }
+
+    public void onReverse(View view) {
+        startActivity(new Intent(this, ReverseActivity.class));
+    }
+
+    public void onLogicThink(View view) {
+        startActivity(new Intent(this, LogicThinkActivity.class));
+    }
+
+    public void onLenovo(View view) {
+        startActivity(new Intent(this, LenovoActivity.class));
+    }
+
+    public void onDivergentThink(View view) {
+        startActivity(new Intent(this, DivergentThinkActivity.class));
+    }
+
+    public void onImage(View view) {
+        startActivity(new Intent(this, ImageActivity.class));
+    }
 }

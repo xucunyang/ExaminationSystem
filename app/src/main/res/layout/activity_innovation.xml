@@ -17,9 +17,9 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onLanguage"
                 android:text="语言力思维能力"
-                android:textSize="@dimen/sp_18"
-                android:onClick="onLanguage"/>
+                android:textSize="@dimen/sp_18" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -27,8 +27,8 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
-                android:text="数字推理"
                 android:onClick="onDigital"
+                android:text="数字推理"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
@@ -47,8 +47,8 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
-                android:text="辩证思维训练"
                 android:onClick="onDialectical"
+                android:text="辩证思维训练"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
@@ -58,6 +58,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="应变思维训练"
+                android:onClick="onStrain"
                 android:textSize="@dimen/sp_18" />
 
             <TextView
@@ -66,6 +67,7 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onReverse"
                 android:text="逆向思维训练"
                 android:textSize="@dimen/sp_18" />
 
@@ -75,6 +77,7 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onLogicThink"
                 android:text="逻辑思维训练"
                 android:textSize="@dimen/sp_18" />
 
@@ -84,6 +87,7 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onLenovo"
                 android:text="联想思维训练"
                 android:textSize="@dimen/sp_18" />
 
@@ -93,6 +97,7 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onDivergentThink"
                 android:text="发散思维训练"
                 android:textSize="@dimen/sp_18" />
 
@@ -102,8 +107,19 @@
                 android:layout_marginBottom="@dimen/dp_1"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="onImage"
                 android:text="形象思维训练"
                 android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="基础热身训练"
+                android:textSize="@dimen/sp_18"
+                android:onClick="onWarm"/>
         </LinearLayout>
     </ScrollView>
 </layout>
