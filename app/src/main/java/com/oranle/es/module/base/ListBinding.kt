@@ -71,6 +71,7 @@ fun initOptionRadioGroup(radioGroup: RadioGroup, singleChoice: SingleChoice) {
             if (childIndex < options.size) {
                 child.visibility = View.VISIBLE
                 child.text = options[childIndex]
+                child.isChecked = false
             } else {
                 child.visibility = View.GONE
                 child.text = null
@@ -149,6 +150,8 @@ fun bindDynamicScoreDetail(linearLayout: LinearLayout, bean: WrapReportBean) {
 
     val titleLinearLayout = linearLayout.findViewById<LinearLayout>(R.id.title_detail)
     val detailLinearLayout = linearLayout.findViewById<LinearLayout>(R.id.score_detail)
+
+    if (titleLinearLayout.childCount > 0) return
 
     val rules = bean.rules.sortedBy { it.id }
     val scoreList = bean.typedScore.sortedBy { it.ruleId }

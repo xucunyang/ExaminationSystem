@@ -1,9 +1,11 @@
 package com.oranle.es.module.ui.examinee
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
+import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.ActivityExamineeBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.BaseFragment
@@ -32,7 +34,16 @@ class ExamineeActivity : BaseActivity<ActivityExamineeBinding>() {
         initView()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
+
+        dataBinding.apply {
+            val currentUser = SpUtil.instance.getCurrentUser()
+            currentUser?.apply {
+                userInfo.text = "${currentUser.alias},  ${currentUser!!.getRoleStr()}"
+            }
+        }
+
         showSubSelectFragment(null)
     }
 

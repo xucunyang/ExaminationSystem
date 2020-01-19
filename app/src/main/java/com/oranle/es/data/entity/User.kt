@@ -60,4 +60,12 @@ data class User @JvmOverloads constructor(
 
     @Ignore
     val sexStr = if (sex) "男" else "女"
+
+    fun getRoleStr() = if (role == Role.Examinee.value) {
+        "测评用户"
+    } else if (role == Role.Root.value) {
+        "高级管理员"
+    } else {
+        "管理员"
+    }
 }

@@ -1,20 +1,20 @@
 package com.oranle.es.module.ui.administrator.fragment.model
 
-import android.app.Activity
-import android.content.Intent
+import android.view.View
 import androidx.lifecycle.viewModelScope
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
-
 import com.oranle.es.module.base.BaseRecycleViewModel
+import com.oranle.es.module.base.start
 import com.oranle.es.module.ui.administrator.AddPersonalActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginManagerViewModel(private val activity: Activity) : BaseRecycleViewModel<User>() {
+class LoginManagerViewModel : BaseRecycleViewModel<User>() {
 
-    fun onAddPersonal() {
-        activity.startActivity(Intent(activity, AddPersonalActivity::class.java))
+    fun onAddPersonal(v: View) {
+        val context = v.context
+        context.start<AddPersonalActivity>()
     }
 
     fun load() {

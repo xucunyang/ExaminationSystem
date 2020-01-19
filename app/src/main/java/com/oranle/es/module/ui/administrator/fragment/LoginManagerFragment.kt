@@ -3,34 +3,29 @@ package com.oranle.es.module.ui.administrator.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.oranle.es.R
-import com.oranle.es.data.dao.UserDao
 import com.oranle.es.data.entity.User
 import com.oranle.es.data.repository.DBRepository
 import com.oranle.es.databinding.FragmentLoginManagerBinding
-import com.oranle.es.databinding.ItemAdminBinding
 import com.oranle.es.databinding.ItemLoginManagerBinding
 import com.oranle.es.module.base.*
 import com.oranle.es.module.ui.administrator.AddPersonalActivity
-import com.oranle.es.module.ui.administrator.fragment.model.AddPersonalViewModel
 import com.oranle.es.module.ui.administrator.fragment.model.LoginManagerViewModel
-import com.oranle.es.module.ui.senior.viewmodel.AdminViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class LoginManagerFragment : BaseFragment<FragmentLoginManagerBinding>() {
+
     override val layoutId: Int
         get() = R.layout.fragment_login_manager
 
-    var loginManagerViewModel: LoginManagerViewModel? = null
-    var loginManagerAdapter: LoginManagerAdapter?=null
+    lateinit var viewModel: LoginManagerViewModel
+    lateinit var loginManagerAdapter: LoginManagerAdapter
     val userList = mutableListOf<User>()
     val screenUserList = mutableListOf<User>()
     override fun initView() {
@@ -39,63 +34,55 @@ class LoginManagerFragment : BaseFragment<FragmentLoginManagerBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginManagerViewModel = LoginManagerViewModel(activity!!)
+        viewModel = getViewModel()
+        loginManagerAdapter = LoginManagerAdapter(viewModel)
 
         dataBinding?.apply {
-            vm = loginManagerViewModel
-            lifecycleOwner = activity
+            vm = viewModel
+            recyclerView.adapter = loginManagerAdapter
+            recyclerView.layoutManager = LinearLayoutManager(activity)
 
-            recyclerView.adapter = LoginManagerAdapter(loginManagerViewModel!!)
-            recyclerView.layoutManager = LinearLayoutManager(activity) as RecyclerView.LayoutManager?
-
+            checkPerson.setOnClickListener { onCheckAll() }
+            tvDelete.setOnClickListener { delete() }
         }
 
-        loginManagerViewModel!!.items.observe(viewLifecycleOwner, Observer {
+        viewModel.items.observe(viewLifecycleOwner, Observer {
             Timber.d("observe ${it.size} -- $it")
-            loginManagerAdapter = LoginManagerAdapter(loginManagerViewModel!!)
-            userList.clear()
-            userList.addAll(it)
+            loginManagerAdapter = LoginManagerAdapter(viewModel!!)
             loginManagerAdapter!!.submitList(userList)
-            loginManagerAdapter!!.notifyDataSetChanged()
         })
 
-        loginManagerViewModel!!.load()
-
-
-        dataBinding!!.checkPerson.setOnClickListener { onCheckAll() }
-        dataBinding!!.tvDelete.setOnClickListener { delete() }
+        viewModel.load()
     }
 
 
     override fun onResume() {
         super.onResume()
-        loginManagerViewModel!!.load()
+        viewModel.load()
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         Timber.d("onHiddenChanged $hidden")
         if (!hidden) {
-            loginManagerViewModel!!.load()
+            viewModel.load()
         }
     }
 
     fun onCheckAll() {
-        loginManagerAdapter = LoginManagerAdapter(loginManagerViewModel!!)
-//        screenUserList.clear()
         if (dataBinding!!.checkPerson.isChecked) {
             screenUserList.addAll(userList)
-            for (i in screenUserList.indices){
+            for (i in screenUserList.indices) {
                 screenUserList[i].selected = true
             }
-            loginManagerAdapter!!.submitList(screenUserList)
-            loginManagerAdapter!!.notifyDataSetChanged()
+            loginManagerAdapter.submitList(screenUserList)
+            loginManagerAdapter.notifyDataSetChanged()
         } else {
-            for (i in screenUserList.indices){
+            for (i in screenUserList.indices) {
                 screenUserList[i].selected = false
             }
-            loginManagerAdapter!!.submitList(screenUserList)
-            loginManagerAdapter!!.notifyDataSetChanged()
+            loginManagerAdapter.submitList(screenUserList)
+            loginManagerAdapter.notifyDataSetChanged()
             screenUserList.clear()
         }
     }
@@ -108,7 +95,7 @@ class LoginManagerFragment : BaseFragment<FragmentLoginManagerBinding>() {
                 }
             }
 
-            loginManagerViewModel!!.load()
+            viewModel.load()
         }
     }
 
@@ -138,7 +125,7 @@ class LoginManagerFragment : BaseFragment<FragmentLoginManagerBinding>() {
                     }
 
                     if (size > 0) {
-                        loginManagerViewModel!!.load()
+                        this@LoginManagerFragment.viewModel!!.load()
                         toast("删除成功")
                     } else
                         toast("删除失败")

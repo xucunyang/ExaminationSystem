@@ -83,9 +83,9 @@ class AssessmentSelectViewModel : BaseViewModel() {
         val subList = mutableListOf<Assessment?>()
         assessments.forEach {
             if (it.title == "多元智能测评量表") {
-                objList.add(it)
-            } else {
                 subList.add(it)
+            } else {
+                objList.add(it)
             }
         }
         return Pair(objList, subList)

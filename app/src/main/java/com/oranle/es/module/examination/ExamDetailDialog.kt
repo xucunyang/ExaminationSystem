@@ -69,6 +69,7 @@ class ExamDetailDialog(
             adapter = SingleChoiceAdapter(viewModel)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(cxt)
+            recyclerView.isNestedScrollingEnabled = false;
         }
 
         viewModel.items.observe(this, Observer {
@@ -113,9 +114,11 @@ class ExamDetailDialog(
                     answerLayout.visibility = View.GONE
                 }
 
+                choose.clearCheck()
+
                 choose.setOnCheckedChangeListener { radioGroup, _ ->
                     val childCount = radioGroup.childCount
-                    for (index in 0..childCount) {
+                    for (index in 0 until childCount) {
                         val view = radioGroup.getChildAt(index)
                         if (view is RadioButton && view.isChecked) {
                             bean.selectOption = (index + FIRST_LETTER).toChar().toString()

@@ -208,13 +208,18 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 getDB().getReportDao().getReportsByUserIds(stuIds)
 
         // get rule from db
-        val rules =
-            if (assessment == null)
-                getDB().getRuleDao().getRules()
-            else
-                getDB().getRuleDao().getRulesBySheetId(assessment.id)
+        val ruleList = mutableListOf<List<ReportRule>>()
 
         val allAssessments = getDB().getAssessmentDao().getAllAssessments()
+        if (assessment == null) {
+            allAssessments.forEach {
+                val rules = getDB().getRuleDao().getRulesBySheetId(it.id)
+                ruleList.add(rules)
+            }
+        } else {
+            val list = getDB().getRuleDao().getRulesBySheetId(assessment.id)
+            ruleList.add(list)
+        }
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
         reports.forEachIndexed { index, it ->
@@ -222,6 +227,7 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             val classEntity = getClassById(classesInCharge, student.classId)
             val scoreList = it.getTypedScore
             val tempAssessment = getAssessmentById(allAssessments, it.sheetId)
+            val rule = getRulesById(ruleList, tempAssessment.id)
             wrapReportBeans.add(
                 WrapReportBean(
                     reportId = it.id,
@@ -231,7 +237,7 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     time = it.testTime,
                     assessment = tempAssessment,
                     typedScore = scoreList,
-                    rules = rules
+                    rules = rule
                 )
             )
         }
