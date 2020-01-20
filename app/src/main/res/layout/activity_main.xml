@@ -11,11 +11,12 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg"
         android:orientation="vertical"
-        android:paddingStart="120dp"
-        android:paddingTop="80dp"
-        android:paddingEnd="120dp"
-        android:paddingBottom="80dp">
+        android:paddingStart="@dimen/dp_80"
+        android:paddingTop="@dimen/dp_60"
+        android:paddingEnd="@dimen/dp_80"
+        android:paddingBottom="@dimen/dp_60">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,18 +31,19 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_8"
+                    android:layout_margin="@dimen/dp_16"
                     android:layout_weight="1"
-                    android:background="@drawable/ripple_rectangle_bg"
-                    android:onClick="toLanguageWise">
+                    android:onClick="toLanguageWise"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/language_bg" />
 
@@ -51,19 +53,21 @@
                         android:layout_height="wrap_content"
                         android:text="言语语言" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="onMathLogic">
+                    android:onClick="onMathLogic"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/math_logic_bg" />
 
@@ -73,19 +77,21 @@
                         android:layout_height="wrap_content"
                         android:text="数理逻辑" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toCommunication">
+                    android:onClick="toCommunication"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/communication_bg" />
 
@@ -95,19 +101,21 @@
                         android:layout_height="wrap_content"
                         android:text="人际交往" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toVision">
+                    android:onClick="toVision"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/vision_bg" />
 
@@ -117,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:text="视觉空间" />
 
-                </FrameLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -128,17 +136,19 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toMusic">
+                    android:onClick="toMusic"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/music_bg" />
 
@@ -148,19 +158,21 @@
                         android:layout_height="wrap_content"
                         android:text="音乐节奏" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toSelfAware">
+                    android:onClick="toSelfAware"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/self_aware_bg" />
 
@@ -170,19 +182,21 @@
                         android:layout_height="wrap_content"
                         android:text="自我意识" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toSports">
+                    android:onClick="toSports"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/sport_bg" />
 
@@ -192,19 +206,21 @@
                         android:layout_height="wrap_content"
                         android:text="身体运动" />
 
-                </FrameLayout>
+                </LinearLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/fun_padding"
                     android:layout_weight="1"
-                    android:onClick="toNatureObserve">
+                    android:onClick="toNatureObserve"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:scaleType="centerCrop"
                         android:src="@drawable/nature_observe_bg" />
 
@@ -214,7 +230,7 @@
                         android:layout_height="wrap_content"
                         android:text="自然观察" />
 
-                </FrameLayout>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -225,7 +241,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/fun_padding">
+            android:padding="@dimen/dp_24">
 
             <TextView
                 android:layout_width="0dp"
@@ -235,26 +251,26 @@
                 android:background="@drawable/shape_large_btn_bg"
                 android:gravity="center"
                 android:onClick="onInnovationAbility"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"
+                android:paddingTop="@dimen/dp_30"
+                android:paddingBottom="@dimen/dp_30"
                 android:text="创新能力"
                 android:textColor="@color/white"
-                android:textSize="45sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fun_padding"
+                android:layout_marginStart="26dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_large_btn_bg"
                 android:gravity="center"
                 android:onClick="onMultiTest"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"
+                android:paddingTop="@dimen/dp_30"
+                android:paddingBottom="@dimen/dp_30"
                 android:text="多元测评"
                 android:textColor="@color/white"
-                android:textSize="45sp"
+                android:textSize="40sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
