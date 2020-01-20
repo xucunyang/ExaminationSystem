@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="@{vm.isVertical(item) ? LinearLayout.VERTICAL: LinearLayout.HORIZONTAL}"
+            android:orientation="@{vm.isHorizontal(item) ? LinearLayout.HORIZONTAL: LinearLayout.VERTICAL}"
             app:bind_options="@{item}"
             app:layout_constraintTop_toBottomOf="@+id/question_media_layout"
             tools:layout_editor_absoluteX="15dp">

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="ViewModel"
+            type="com.oranle.es.module.ui.innovation.LogicThinkViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ivory">
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_700"
+            android:layout_height="@dimen/dp_300"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="@{ViewModel.title}"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/sp_18" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_20">
+
+                <TextView
+                    android:layout_width="@dimen/dp_500"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:text="@{ViewModel.topic}"
+                    android:visibility="@{ViewModel.isTopicShow?View.GONE:View.VISIBLE}"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_120"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@drawable/bg_btn"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> ViewModel.isShow()}"
+                    android:text="查看答案"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="@{ViewModel.isTopicShow?View.VISIBLE:View.GONE}" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_120"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@drawable/bg_btn"
+                    android:gravity="center"
+                    android:onClick="@{(v) -> ViewModel.onNext()}"
+                    android:text="@{ViewModel.NextText}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_18"
+                    android:visibility="@{ViewModel.isNextShow?View.VISIBLE:View.GONE}" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

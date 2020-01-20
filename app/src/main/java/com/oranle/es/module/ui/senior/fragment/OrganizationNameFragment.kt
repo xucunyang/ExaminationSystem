@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oranle.es.R
@@ -42,7 +41,12 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
             recyclerView.adapter = classAdapter
             recyclerView.itemAnimator = DefaultItemAnimator()
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            recyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+            recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    activity,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
         }
 
         val spUtil = SpUtil.instance
@@ -73,13 +77,13 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
             Toast.makeText(activity, tip, Toast.LENGTH_SHORT).show()
         }
 
-        dataBinding!!.addClass.setOnClickListener { view: View -> (activity as SeniorAdminActivity).showAddClassFrag() }
+        dataBinding!!.addClass.setOnClickListener { (activity as SeniorAdminActivity).showAddClassFrag() }
 
         viewmodel.start()
     }
 
     inner class ClassAdapter(viewModel: ClassViewModel) :
-        BaseAdapter<ClassEntity, ItemClassBinding, ClassViewModel>(viewModel, Diff()) {
+        BaseAdapter<ClassEntity, ItemClassBinding, ClassViewModel>(viewModel) {
         override fun doBindViewHolder(
             binding: ItemClassBinding,
             item: ClassEntity,
@@ -91,15 +95,6 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
 
         override val layoutRes: Int
             get() = R.layout.item_class
-
-    }
-
-    inner class Diff : DiffUtil.ItemCallback<ClassEntity>() {
-        override fun areItemsTheSame(oldItem: ClassEntity, newItem: ClassEntity) =
-            oldItem.className.equals(newItem.className)
-
-        override fun areContentsTheSame(oldItem: ClassEntity, newItem: ClassEntity) =
-            oldItem.className.equals(newItem.className)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -109,6 +104,5 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
             viewmodel.start()
         }
     }
-
 
 }

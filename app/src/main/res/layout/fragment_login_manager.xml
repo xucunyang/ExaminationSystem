@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="测评人列表"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <LinearLayout
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/bg_btn"
-                    android:onClick="@{(v) -> vm.onAddPersonal()}"
+                    android:onClick="@{(v) -> vm.onAddPersonal(v)}"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="增加评测人"
@@ -89,7 +89,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green"
+            android:background="@color/menu_blue"
             android:orientation="horizontal"
             android:padding="15dp">
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="用户名"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="密码"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="姓名"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
 
             <TextView
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="学校名称"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
 
             <TextView
@@ -130,13 +130,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="操作"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
 
             <CheckBox
                 android:id="@+id/check_person"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
 
             <TextView
                 android:id="@+id/tv_delete"
@@ -145,7 +146,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:text="删除选择"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:textSize="22dp" />
         </LinearLayout>
 

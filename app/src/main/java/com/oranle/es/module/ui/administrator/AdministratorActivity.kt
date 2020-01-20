@@ -1,15 +1,18 @@
 package com.oranle.es.module.ui.administrator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
 import com.oranle.es.data.entity.ClassEntity
+import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.ActivityAdminBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.ui.administrator.fragment.*
 import com.oranle.es.module.ui.administrator.fragment.ReportFragment
+import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment
 import timber.log.Timber
 
 class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
@@ -25,14 +28,22 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
         initView()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
+        dataBinding.apply {
+            val currentUser = SpUtil.instance.getCurrentUser()
+            currentUser?.apply {
+                userInfo.text = "${currentUser.alias},  ${currentUser!!.getRoleStr()}"
+            }
+        }
+
         fragList.add(LoginManagerFragment())
         fragList.add(ReportFragment.newInstance(isShowAll = true))
         fragList.add(ManualInputFragment())
         fragList.add(GroupStatisticFragment())
         fragList.add(PersonalStatisticFragment())
         fragList.add(ExportFragment())
-        fragList.add(AdminPwdFragment())
+        fragList.add(ModifyPwdFragment())
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, fragList.get(0), "0").commit()
     }
@@ -87,5 +98,9 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
 
     fun onAdminPwd(view: View?) {
         initViewpager(6)
+    }
+
+    fun onFinish(v: View) {
+        finish()
     }
 }

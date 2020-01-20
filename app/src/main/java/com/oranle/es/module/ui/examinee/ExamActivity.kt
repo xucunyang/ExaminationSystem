@@ -1,8 +1,8 @@
 package com.oranle.es.module.ui.examinee
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.Menu
 import androidx.lifecycle.Observer
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
@@ -20,6 +20,8 @@ class ExamActivity : BaseActivity<ActivityExamBinding>() {
     lateinit var viewModel: ExamDetailViewModel
 
     var countDown: CountDownTimer? = null
+
+    var isInForeGround = false
 
     override val layoutId: Int
         get() = R.layout.activity_exam
@@ -42,35 +44,64 @@ class ExamActivity : BaseActivity<ActivityExamBinding>() {
         val examAdapter = ExamAdapter(viewModel)
 
         dataBinding.apply {
+            title.text = assessment?.title
             examRecyclerView.setAdapter(examAdapter)
+            examAdapter.setRecyclerView(examRecyclerView.recyclerView)
+
+            closeBtn.setOnClickListener { v ->
+                viewModel.checkIfNeedTip({
+                    if (it)
+                        finish()
+                }, v)
+            }
         }
 
-        countDown = object : CountDownTimer(1000 * 1 * 60 * 60, 1000) {
+        var countTime = 0
+        countDown = object : CountDownTimer(Long.MAX_VALUE, 1000) {
             override fun onFinish() {
-                toast("时间到")
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
-                dataBinding.count.text = DateUtil.getTimeFromMillisecond(millisUntilFinished)
+                if (isInForeGround)
+                    dataBinding.count.text = "测试所用时间：${DateUtil.change(countTime++)}"
             }
         }
-        (countDown as CountDownTimer).start()
+        countDown?.start()
 
         viewModel.load(assessment!!, ExamShowMode.Test, SpUtil.instance.getCurrentUser())
 
         viewModel.items.observe(this, Observer {
-            Timber.d("observe xx $assessment")
             examAdapter.setData(it)
         })
 
+        viewModel.dismissFlag.observe(this, Observer {
+            if (it) {
+                toast("回答完毕")
+                finish()
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isInForeGround = true
     }
 
     override fun onStop() {
         super.onStop()
+        isInForeGround = false
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
         if (countDown != null) {
             countDown!!.cancel()
             countDown = null
+        }
+
+        viewModel.items.value?.forEach {
+            it.selectOption = null
         }
     }
 

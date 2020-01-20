@@ -131,10 +131,6 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
 
             val gsonString = GsonUtil.GsonString(answerDetail)
 
-            Timber.d("sub mit answer $gsonString")
-            val bean = GsonUtil.GsonToList<TypedScore>(gsonString)
-            Timber.d("sub mit xxx $bean")
-
             asyncCall(
                 {
                     getDB().getReportDao().addReport(
@@ -157,6 +153,29 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
         }
 
         Timber.d("submitAnswer $undoList")
+    }
+
+    fun checkIfNeedTip(call: (Boolean) -> Unit, v: View) {
+
+        val undoList = mutableListOf<Int>()
+
+        items.value?.forEachIndexed { index, it ->
+            if (it.selectOption == null) {
+                undoList.add(index + 1)
+            }
+        }
+
+        val msg = if (undoList.isNotEmpty()) {
+            "尚未回答完毕，确认离开吗？${System.lineSeparator()} 未回答的题号：$undoList"
+        } else {
+            "尚未提交答案，确认离开吗？"
+        }
+        CommDialog()
+            .setTitle("提示")
+            .setContent(msg)
+            .setOKListener(call)
+            .show(getContext(v)?.supportFragmentManager, "")
+
     }
 
     private fun dismissDialog() {
@@ -185,7 +204,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
         throw IllegalArgumentException("can not find rule match single choice index: $index")
     }
 
-    fun isVertical(singleChoice: SingleChoice): Boolean {
+    fun isHorizontal(singleChoice: SingleChoice): Boolean {
         val imgUrlsList = singleChoice.questionImgUrlsList()
         return imgUrlsList.isNotEmpty() && imgUrlsList[0].isNotEmpty()
     }
