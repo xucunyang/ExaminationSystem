@@ -99,4 +99,8 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
     fun onAdminPwd(view: View?) {
         initViewpager(6)
     }
+
+    fun onFinish(v: View) {
+        finish()
+    }
 }

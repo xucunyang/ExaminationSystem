@@ -29,11 +29,11 @@ class ExaminationSystemLoginActivity : BaseActivity<ActivityExamLoginBinding>() 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (BuildConfig.DEBUG) {
-            user_name_ed.setText("XCY")
-            psw_et.setText("1")
-            spinner.setSelection(0)
-        }
+//        if (BuildConfig.DEBUG) {
+//            user_name_ed.setText("XCY")
+//            psw_et.setText("1")
+//            spinner.setSelection(0)
+//        }
 
         dataBinding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
