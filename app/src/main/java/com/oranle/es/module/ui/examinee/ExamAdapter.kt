@@ -52,6 +52,8 @@ class ExamAdapter(val viewModel: ExamDetailViewModel) :
                 }
             }
 
+            choose.clearCheck()
+
             choose.setOnCheckedChangeListener { radioGroup, _ ->
                 val childCount = radioGroup.childCount
                 for (index in 0..childCount) {

@@ -8,7 +8,7 @@ import com.oranle.es.databinding.ActivitySplashBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.ui.home.HomeActivity
 
-class SplashActivity: BaseActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override val layoutId: Int
         get() = R.layout.activity_splash
@@ -16,8 +16,9 @@ class SplashActivity: BaseActivity<ActivitySplashBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Handler().postDelayed(Runnable {
+        Handler().postDelayed({
             startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            this@SplashActivity.finish()
         }, 200)
     }
 

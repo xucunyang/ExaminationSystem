@@ -74,6 +74,24 @@
             android:name=".module.ui.examinee.ExamineeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.ui.examinee.ExamActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".module.ui.innovation.AnalogyActivity" />
+        <activity android:name=".module.ui.innovation.DialecticalActivity" />
+        <activity android:name=".module.ui.innovation.DigitalActivity" />
+        <activity android:name=".module.ui.innovation.DivergentActivity" />
+        <activity android:name=".module.ui.innovation.DivergentThinkActivity" />
+        <activity android:name=".module.ui.innovation.ImageActivity" />
+        <activity android:name=".module.ui.innovation.LenovoActivity" />
+        <activity android:name=".module.ui.innovation.LogicActivity" />
+        <activity android:name=".module.ui.innovation.LogicThinkActivity" />
+        <activity android:name=".module.ui.innovation.MathematicalActivity" />
+        <activity android:name=".module.ui.innovation.ReverseActivity" />
+        <activity android:name=".module.ui.innovation.StrainActivity" />
+        <activity android:name=".module.ui.innovation.TopicActivity" />
+        <activity android:name=".module.ui.innovation.WarmActivity" />
 
         <receiver
             android:name=".module.receiver.MyReceiver"
