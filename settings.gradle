@@ -1,2 +1,2 @@
-include ':app', ':poilib'
+include ':app'
 rootProject.name='ExaminationSystem'
