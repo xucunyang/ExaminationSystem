@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel" />
+            type="com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel" />
 
     </data>
 
@@ -119,7 +119,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:onClick="@{() -> vm.onNextStep()}"
             android:padding="15dp"
             android:text="下一步"
             android:textColor="@color/black"

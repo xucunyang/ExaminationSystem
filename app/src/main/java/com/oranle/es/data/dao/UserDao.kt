@@ -13,6 +13,9 @@ interface UserDao {
     @Query("select * from user where role = :role")
     suspend fun getUsersByRole(role: Int): List<User>
 
+    @Query("SELECT * FROM user WHERE id = :userId")
+    suspend fun getUsersByUserId(userId: Int): List<User>
+
     @Query("select * from user where user_name = :userName and psw = :psw and role = :role")
     suspend fun getUserByAuth(userName: String, psw: String, role: Int): User?
 

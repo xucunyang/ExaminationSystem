@@ -3,6 +3,7 @@ package com.oranle.es.module.ui.administrator
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
 import com.oranle.es.data.entity.ClassEntity
@@ -72,6 +73,9 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
         initViewpager(5)
     }
 
+    /**
+     *  团队统计
+     */
     fun showGroupStatistic(assessment: Assessment?, clazz: ClassEntity?) {
         if (fragList.size > 7) {
             fragList.removeAt(7)
@@ -85,11 +89,47 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
         initViewpager(7)
     }
 
+    /**
+     *  个人统计
+     */
+    fun showPersonStatistic(studentUserId: Int, assessment: Assessment?) {
+        if (fragList.size > 7) {
+            fragList.removeAt(7)
+        }
+        val fragment =
+            ReportFragment.newInstance(
+                assessment = assessment,
+                studentId = studentUserId
+            )
+        fragList.add(7, fragment)
+        initViewpager(7)
+    }
+
+    fun showPersonSelect(classId: Int, assessment: Assessment?) {
+        showFragment(
+            PersonalSelectFragment.newInstance(
+                classId = classId,
+                assessment = assessment
+            )
+        )
+    }
+
     private fun initViewpager(tag: Int) {
         try {
             val ft =
                 supportFragmentManager!!.beginTransaction()
             ft.replace(R.id.frameLayout, fragList!![tag], tag.toString() + "")
+            ft.commit()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        try {
+            val ft =
+                supportFragmentManager!!.beginTransaction()
+            ft.replace(R.id.frameLayout, fragment, fragment.javaClass.simpleName)
             ft.commit()
         } catch (e: Exception) {
             e.printStackTrace()

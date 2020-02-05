@@ -12,7 +12,11 @@ import com.oranle.es.module.ui.administrator.dialog.ReportDetailDialog
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import timber.log.Timber
 
-class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
+/**
+ *  统计view model
+ *
+ */
+class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
     val school = MutableLiveData<List<String>>()
 
@@ -22,6 +26,9 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
 
     val assessments = MutableLiveData<List<Assessment>>().apply { emptyList<User>() }
 
+    /**
+     *  加载选择情况，测评人原来选择情况
+     */
     fun loadChoiceSuit(manager: User) {
         asyncCall(
             {
@@ -61,6 +68,16 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 getWrapReportBean(assessment, clazz)
             },
             {
+                notifyItem(it)
+            }
+        )
+    }
+
+    fun loadReportByStudentUserIdAndSheetId(studentId: Int, sheetId: Int = -1) {
+        asyncCall(
+            {
+                getWrapReportBeanByStudentIdAndSheetId(studentId, sheetId)
+            }, {
                 notifyItem(it)
             }
         )
@@ -115,10 +132,6 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                 loadAllReport()
             }
         )
-    }
-
-    fun onNextStep() {
-
     }
 
     private suspend fun getAllWrapReportBeanByClassIdInCharge(): List<WrapReportBean> {
@@ -225,6 +238,49 @@ class GroupStatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
             val classEntity = getClassById(classesInCharge, student.classId)
+            val scoreList = it.getTypedScore
+            val tempAssessment = getAssessmentById(allAssessments, it.sheetId)
+            val rule = getRulesById(ruleList, tempAssessment.id)
+            wrapReportBeans.add(
+                WrapReportBean(
+                    reportId = it.id,
+                    index = index + 1,
+                    user = student,
+                    clazz = classEntity,
+                    time = it.testTime,
+                    assessment = tempAssessment,
+                    typedScore = scoreList,
+                    rules = rule
+                )
+            )
+        }
+
+        return wrapReportBeans
+    }
+
+    private suspend fun getWrapReportBeanByStudentIdAndSheetId(
+        studentId: Int, sheetId: Int = -1
+    ): List<WrapReportBean> {
+        // get report from db
+        val reports = if (sheetId == -1) {
+            getDB().getReportDao().getReportsByUserId(studentId)
+        } else {
+            getDB().getReportDao().getReportsByUserIdAndSheetId(studentId, sheetId)
+        }
+
+        // get rule from db
+        val ruleList = mutableListOf<List<ReportRule>>()
+
+        val allAssessments = getDB().getAssessmentDao().getAllAssessments()
+        allAssessments.forEach {
+            val rules = getDB().getRuleDao().getRulesBySheetId(it.id)
+            ruleList.add(rules)
+        }
+
+        val wrapReportBeans = mutableListOf<WrapReportBean>()
+        reports.forEachIndexed { index, it ->
+            val student = getDB().getUserDao().getUsersByUserId(studentId)[0]
+            val classEntity = getDB().getClassDao().getClassById(student.classId)
             val scoreList = it.getTypedScore
             val tempAssessment = getAssessmentById(allAssessments, it.sheetId)
             val rule = getRulesById(ruleList, tempAssessment.id)

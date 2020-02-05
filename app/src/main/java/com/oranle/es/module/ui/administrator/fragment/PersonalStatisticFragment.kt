@@ -9,11 +9,11 @@ import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.FragmentPersonStatisticsBinding
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.ui.administrator.AdministratorActivity
-import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
+import com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel
 
 class PersonalStatisticFragment : BaseFragment<FragmentPersonStatisticsBinding>() {
 
-    lateinit var viewModel: GroupStatisticViewModel
+    lateinit var viewModel: StatisticViewModel
 
     var school: String? = null
     var currentClass: ClassEntity? = null
@@ -79,7 +79,7 @@ class PersonalStatisticFragment : BaseFragment<FragmentPersonStatisticsBinding>(
 
             nextStep.setOnClickListener {
                 val administratorActivity = activity as AdministratorActivity
-                administratorActivity.onReport(it)
+                administratorActivity.showPersonSelect(classId = currentClass!!.id, assessment = currentAssessment)
             }
 
         }
