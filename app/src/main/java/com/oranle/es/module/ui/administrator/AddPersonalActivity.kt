@@ -54,7 +54,7 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
         }
         GlobalScope.launchWithLifecycle(this, UI){
             val classes = withContext(IO) {
-                getDB().getClassDao().getAllClass()
+               viewModel.getAllStudentByManager()
             }
             viewModel.classes.value = classes
             classSelectData = arrayOfNulls(classes.size)

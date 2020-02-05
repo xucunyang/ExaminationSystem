@@ -1,18 +1,14 @@
 package com.oranle.es.module.ui.administrator.fragment.model
 
-import android.app.Activity
 import android.text.TextUtils
-import android.widget.Toast
-
 import androidx.lifecycle.MutableLiveData
-
-import com.oranle.es.app.SessionApp
 import com.oranle.es.data.entity.ClassEntity
 import com.oranle.es.data.entity.Role
 import com.oranle.es.data.entity.User
-import com.oranle.es.data.repository.DBRepository
+import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.module.base.BaseViewModel
 import com.oranle.es.module.base.toast
+import timber.log.Timber
 
 class AddPersonalViewModel : BaseViewModel() {
     var userLoginName = MutableLiveData<String>()
@@ -88,5 +84,29 @@ class AddPersonalViewModel : BaseViewModel() {
             toast("已修改")
         })
         return true
+    }
+
+    suspend fun getAllStudentByManager(): List<ClassEntity> {
+
+        val currentUser = SpUtil.instance.getCurrentUser()
+
+        if (currentUser == null) {
+            toast("当前登录用户为空，请检查")
+            return emptyList()
+        }
+        return getAllClassesInCharge(currentUser)
+    }
+
+    suspend fun getAllClassesInCharge(manager: User): List<ClassEntity> {
+        val classList = mutableListOf<ClassEntity>()
+        manager.classInChargeList.forEach {
+            if (it.isNotBlank()) {
+                val classEntity = getDB().getClassDao().getClassById(it.toInt())
+                classList.add(classEntity)
+            } else {
+                Timber.w("query class by id $it")
+            }
+        }
+        return classList
     }
 }
