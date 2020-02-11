@@ -81,7 +81,7 @@ class AssessmentSelectViewModel : BaseViewModel() {
         val objList = mutableListOf<Assessment?>()
         val subList = mutableListOf<Assessment?>()
         assessments.forEach {
-            if (it.title == "多元智能测评") {
+            if (it.title == MULTI_SMART_TEST) {
                 subList.add(it)
             } else {
                 objList.add(it)
@@ -91,3 +91,4 @@ class AssessmentSelectViewModel : BaseViewModel() {
     }
 
 }
+const val MULTI_SMART_TEST = "多元智能测评"

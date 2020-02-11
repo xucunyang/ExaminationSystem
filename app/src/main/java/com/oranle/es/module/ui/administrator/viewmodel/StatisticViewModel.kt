@@ -10,6 +10,7 @@ import com.oranle.es.module.examination.ExamDetailDialog
 import com.oranle.es.module.examination.viewmodel.ExamShowMode
 import com.oranle.es.module.ui.administrator.dialog.ReportDetailDialog
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
+import com.oranle.es.module.ui.examinee.viewmodel.MULTI_SMART_TEST
 import timber.log.Timber
 
 /**
@@ -98,7 +99,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
     }
 
     fun showDetail(v: View, bean: WrapReportBean) {
-        Timber.d("show detail ${bean}")
+        Timber.d("show detail $bean")
 
         val activity = v.context as FragmentActivity
 
@@ -106,11 +107,9 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
     }
 
     fun showSelfAnswer(v: View, bean: WrapReportBean) {
-        Timber.d("show detail ${bean}")
+        Timber.d("show detail $bean")
 
         val activity = v.context as FragmentActivity
-
-        ReportDetailDialog.showDialog(activity, bean)
 
         val examDetailDialog = ExamDetailDialog(
             activity,
@@ -122,7 +121,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
     }
 
     fun delete(bean: WrapReportBean) {
-        Timber.d("delete ${bean}")
+        Timber.d("delete $bean")
 
         asyncCall(
             {
@@ -170,6 +169,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         val wrapReportBeans = mutableListOf<WrapReportBean>()
 
         val allAssessments = getDB().getAssessmentDao().getAllAssessments()
+        val multiTestSheet = getDB().getAssessmentDao().getAssessmentByTitle(MULTI_SMART_TEST)
 
         val allRuleList = mutableListOf<List<ReportRule>>()
         allAssessments.forEach {
@@ -192,7 +192,8 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     time = it.testTime,
                     assessment = assessment,
                     typedScore = scoreList,
-                    rules = rules
+                    rules = rules,
+                    isMultiSmartSheet = multiTestSheet?.id == it.sheetId
                 )
             )
         }
@@ -234,6 +235,8 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             ruleList.add(list)
         }
 
+        val multiTestSheet = getDB().getAssessmentDao().getAssessmentByTitle(MULTI_SMART_TEST)
+
         val wrapReportBeans = mutableListOf<WrapReportBean>()
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
@@ -250,7 +253,8 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     time = it.testTime,
                     assessment = tempAssessment,
                     typedScore = scoreList,
-                    rules = rule
+                    rules = rule,
+                    isMultiSmartSheet = multiTestSheet?.id == it.sheetId
                 )
             )
         }
@@ -271,6 +275,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         // get rule from db
         val ruleList = mutableListOf<List<ReportRule>>()
 
+        val multiTestSheet = getDB().getAssessmentDao().getAssessmentByTitle(MULTI_SMART_TEST)
         val allAssessments = getDB().getAssessmentDao().getAllAssessments()
         allAssessments.forEach {
             val rules = getDB().getRuleDao().getRulesBySheetId(it.id)
@@ -293,7 +298,8 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
                     time = it.testTime,
                     assessment = tempAssessment,
                     typedScore = scoreList,
-                    rules = rule
+                    rules = rule,
+                    isMultiSmartSheet = multiTestSheet?.id == it.sheetId
                 )
             )
         }

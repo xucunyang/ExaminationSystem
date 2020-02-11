@@ -6,6 +6,8 @@
 
         <import type="com.oranle.es.util.DateUtil" />
 
+        <import type="android.view.View" />
+
         <variable
             name="school"
             type="String" />
@@ -167,6 +169,15 @@
                     android:text="[测评报告]"
                     android:textSize="@dimen/sp_22"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_600"
+                    android:layout_height="@dimen/dp_200"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="@dimen/dp_40"
+                    android:paddingBottom="@dimen/dp_40"
+                    android:src="@drawable/statistic"
+                    android:visibility="@{item.isMultiSmartSheet ? View.VISIBLE : View.GONE}" />
 
                 <TextView
                     android:layout_width="wrap_content"

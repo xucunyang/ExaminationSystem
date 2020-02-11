@@ -42,7 +42,6 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
     }
 
     fun onViewDetail(v: View, entity: Assessment) {
-        toast("onclick on change")
         val activity = v.context as SeniorAdminActivity
         val dialog = ExamDetailDialog(activity, entity, ExamShowMode.AdminView)
         dialog.show(activity.supportFragmentManager, "")

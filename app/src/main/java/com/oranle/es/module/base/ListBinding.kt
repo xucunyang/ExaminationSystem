@@ -18,6 +18,8 @@ import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.entity.User
 import com.oranle.es.module.base.view.JZMediaSystemAssertFolder
 import com.oranle.es.module.base.view.JzvdStdMp3
+import com.oranle.es.module.examination.GradeRule
+import com.oranle.es.module.examination.MultiSmartSheet
 import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import com.oranle.es.util.ImageUtil
@@ -228,10 +230,25 @@ fun bindClassifyDetail(layout: LinearLayout, bean: WrapReportBean) {
     val classifyScore = classify(rules, scoreList)
 
     // title
-    layout.addView(getLayout(context, bean.assessment.title, bean.totalScore()))
+    if (!bean.isMultiSmartSheet)
+        layout.addView(getLayout(context, bean.assessment.title, bean.totalScore()))
+
     // add children
     classifyScore.forEachIndexed() { index, typedScore ->
-        layout.addView(getLayout(context, rules[index].typeStr, typedScore.score))
+        val typeStr = rules[index].typeStr
+        val score = typedScore.score
+
+        layout.addView(
+            if (bean.isMultiSmartSheet)
+                getLayoutForMulti(
+                    context,
+                    GradeRule.getMultiSheet(typeStr, score),
+                    typedScore.score
+                )
+            else {
+                getLayout(context, typeStr, score)
+            }
+        )
     }
 }
 
@@ -242,5 +259,24 @@ fun getLayout(context: Context, typeStr: String, score: Float): View {
     val scoreTv = child.findViewById<TextView>(R.id.score)
     titleTv.text = "【$typeStr】"
     scoreTv.text = "得分：$score"
+    return child
+}
+
+@SuppressLint("SetTextI18n")
+fun getLayoutForMulti(context: Context, bean: MultiSmartSheet?, score: Float): View {
+    if (bean == null) {
+        toast("getLayoutForMulti bean is null")
+        return View(context)
+    }
+
+    val child = LayoutInflater.from(context).inflate(R.layout.item_report_multi_detail, null, false)
+    val titleTv = child.findViewById<TextView>(R.id.type)
+    val scoreTv = child.findViewById<TextView>(R.id.score)
+    val introTv = child.findViewById<TextView>(R.id.intro)
+    val adviceTv = child.findViewById<TextView>(R.id.advice)
+    titleTv.text = "【${bean.title}】"
+    scoreTv.text = "${bean.description} 得分：${score}"
+    introTv.text = bean.getIntroByScore(score)
+    adviceTv.text = bean.advice
     return child
 }

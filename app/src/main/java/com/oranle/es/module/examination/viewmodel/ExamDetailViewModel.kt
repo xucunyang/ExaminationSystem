@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.oranle.es.data.entity.*
 import com.oranle.es.module.base.BaseRecycleViewModel
 import com.oranle.es.module.base.CommDialog
+import com.oranle.es.module.examination.GradeRule
+import com.oranle.es.module.ui.examinee.viewmodel.MULTI_SMART_TEST
 import com.oranle.es.util.GsonUtil
 import timber.log.Timber
 
@@ -38,7 +40,9 @@ data class SingleChoiceWrap(
     val rightAnswer: String,
     // 所选的答案
     var selectOption: String?,
-    val rule: ReportRule
+    val rule: ReportRule,
+    // 是否为多元智能测评表
+    val isMultiSmartSheet: Boolean = false
 )
 
 class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
@@ -69,6 +73,9 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
         asyncCall({
             loading.postValue(true)
             val rules = getDB().getRuleDao().getRulesBySheetId(assessment.id)
+            val multiTestSheet = getDB().getAssessmentDao().getAssessmentByTitle(MULTI_SMART_TEST)
+
+            Timber.d("get multi smart sheet $multiTestSheet")
 
             var sheetReport: SheetReport? = null
             if (examShowMode == ExamShowMode.AnswerShow && reportId != -1) {
@@ -83,7 +90,8 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
                         singleChoice = origin,
                         rightAnswer = assessment.correctAnswerList[index],
                         selectOption = if (sheetReport != null) sheetReport.getTypedScore[index].select else null,
-                        rule = getRuleByIndex(rules, index)
+                        rule = getRuleByIndex(rules, index),
+                        isMultiSmartSheet = multiTestSheet?.id == assessment.id
                     )
                 )
             }
@@ -112,7 +120,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
                         index = index,
                         ruleId = it.rule.id,
                         select = it.selectOption!!,
-                        score = if (it.rightAnswer == it.selectOption!!) it.rule.singleScore else 0F
+                        score = GradeRule.gradeScore(it)
                     )
                 )
             }

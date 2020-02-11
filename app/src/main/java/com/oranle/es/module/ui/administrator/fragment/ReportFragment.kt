@@ -144,7 +144,8 @@ data class WrapReportBean(
     val time: Long,
     val assessment: Assessment,
     val typedScore: List<TypedScore>,
-    val rules: List<ReportRule>
+    val rules: List<ReportRule>,
+    val isMultiSmartSheet: Boolean
 ) : Serializable {
     fun totalScore(): Float {
         var total = 0F
