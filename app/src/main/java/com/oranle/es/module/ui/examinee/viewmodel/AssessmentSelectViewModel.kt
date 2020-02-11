@@ -1,6 +1,5 @@
 package com.oranle.es.module.ui.examinee.viewmodel
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -82,7 +81,7 @@ class AssessmentSelectViewModel : BaseViewModel() {
         val objList = mutableListOf<Assessment?>()
         val subList = mutableListOf<Assessment?>()
         assessments.forEach {
-            if (it.title == "多元智能测评量表") {
+            if (it.title == "多元智能测评") {
                 subList.add(it)
             } else {
                 objList.add(it)

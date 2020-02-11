@@ -9,16 +9,20 @@ import android.widget.*
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import cn.jzvd.JZDataSource
+import cn.jzvd.JzvdStd
 import com.oranle.es.R
 import com.oranle.es.data.entity.Assessment
 import com.oranle.es.data.entity.ReportRule
 import com.oranle.es.data.entity.SingleChoice
 import com.oranle.es.data.entity.User
+import com.oranle.es.module.base.view.JZMediaSystemAssertFolder
 import com.oranle.es.module.base.view.JzvdStdMp3
 import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import com.oranle.es.util.ImageUtil
 import timber.log.Timber
+import java.io.IOException
 
 @BindingAdapter("app:items")
 fun <E> setItems(listView: RecyclerView, items: List<E>) {
@@ -46,8 +50,18 @@ fun setJzPlayerUrl(mp3: JzvdStdMp3, url: String?) {
         return
     }
 
-    mp3.setUp(url, "音频播放")
-    mp3.thumbImageView.setImageResource(R.drawable.ic_launcher)
+    mp3.thumbImageView.setImageResource(R.drawable.bg_music)
+
+    try {
+        // E:\code\ExaminationSystem\app\src\main\assets\single_choice_music
+        val context = mp3.context
+        val jzDataSource = JZDataSource(context.assets.openFd("single_choice_music/$url"))
+        jzDataSource.title = "音频播放:$url"
+        mp3.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL, JZMediaSystemAssertFolder::class.java)
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Timber.d("jz init $e")
+    }
 
 //        val s =
 //            "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"

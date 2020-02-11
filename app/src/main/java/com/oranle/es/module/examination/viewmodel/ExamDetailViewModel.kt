@@ -56,10 +56,13 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
     var mUser: User? = null
     lateinit var mAssessment: Assessment
 
+    var currentExamShowMode = ExamShowMode.ManagerInput
+
     private val singleChoiceWraps = mutableListOf<SingleChoiceWrap>()
 
     fun load(assessment: Assessment, examShowMode: ExamShowMode, user: User?, reportId: Int = -1) {
         isManualInputMode.value = (examShowMode == ExamShowMode.ManagerInput)
+        currentExamShowMode = examShowMode
         mUser = user
         mAssessment = assessment
 
@@ -206,7 +209,8 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
 
     fun isHorizontal(singleChoice: SingleChoice): Boolean {
         val imgUrlsList = singleChoice.questionImgUrlsList()
-        return imgUrlsList.isNotEmpty() && imgUrlsList[0].isNotEmpty()
+        val mediaExist = singleChoice.mediaUrl.isNotBlank()
+        return imgUrlsList.isNotEmpty() && imgUrlsList[0].isNotEmpty() && !mediaExist
     }
 
     fun firstPicVisibility(singleChoice: SingleChoice): Int {
@@ -246,7 +250,7 @@ class ExamDetailViewModel : BaseRecycleViewModel<SingleChoiceWrap>() {
     }
 
     fun mediaPlayVisibility(singleChoice: SingleChoice): Int {
-        return if (singleChoice.mediaUrl.isNotEmpty()) {
+        return if (singleChoice.mediaUrl.isNotEmpty() && currentExamShowMode == ExamShowMode.Test ) {
             View.VISIBLE
         } else {
             View.GONE

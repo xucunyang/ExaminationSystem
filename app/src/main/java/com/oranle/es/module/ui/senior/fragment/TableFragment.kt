@@ -73,6 +73,7 @@ class TableFragment : BaseFragment<FragmentTableBinding>() {
         ) {
             binding.vm = viewModel
             binding.item = item
+            binding.index = getPosition().toString()
         }
 
         override val layoutRes: Int

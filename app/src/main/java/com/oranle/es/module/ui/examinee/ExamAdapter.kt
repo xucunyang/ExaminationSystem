@@ -8,15 +8,21 @@ import android.widget.RadioButton
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import cn.jzvd.Jzvd
 import com.oranle.es.R
 import com.oranle.es.databinding.ItemExamTestBinding
+import com.oranle.es.module.base.view.JzvdStdMp3
 import com.oranle.es.module.examination.FIRST_LETTER
 import com.oranle.es.module.examination.viewmodel.ExamDetailViewModel
 import com.oranle.es.module.examination.viewmodel.SingleChoiceWrap
 import com.oranle.es.module.ui.examinee.widget.VideoPlayAdapter
+import timber.log.Timber
+import java.lang.Exception
 
 class ExamAdapter(val viewModel: ExamDetailViewModel) :
     VideoPlayAdapter<ExamAdapter.VH<ItemExamTestBinding>>() {
+
+    var lastVH: VH<ItemExamTestBinding>? = null
 
     private val mData = mutableListOf<SingleChoiceWrap>()
 
@@ -33,6 +39,8 @@ class ExamAdapter(val viewModel: ExamDetailViewModel) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: VH<ItemExamTestBinding>, position: Int) {
+        lastVH = holder
+
         val binding = holder.binding
 
         val bean = mData[position]
@@ -49,6 +57,12 @@ class ExamAdapter(val viewModel: ExamDetailViewModel) :
             next.setOnClickListener {
                 if (position + 1 < itemCount && recyclerView != null) {
                     recyclerView!!.smoothScrollToPosition(position + 1)
+                    try {
+                        mp3View.mediaInterface.pause()
+                    }catch (e: Exception) {
+                        e.printStackTrace()
+                        Timber.e(e)
+                    }
                 }
             }
 
@@ -69,6 +83,14 @@ class ExamAdapter(val viewModel: ExamDetailViewModel) :
     }
 
     override fun onPageSelected(itemPosition: Int, itemView: View?) {
+        Timber.d("onPageSelected itemPosition: $itemPosition, $itemView")
+        try {
+            val jzvdStdMp3 = itemView?.findViewById<JzvdStdMp3>(R.id.mp3_view)
+            jzvdStdMp3?.mediaInterface?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Timber.d("onPageSelected ${e.message}")
+        }
     }
 
     private var recyclerView: RecyclerView? = null

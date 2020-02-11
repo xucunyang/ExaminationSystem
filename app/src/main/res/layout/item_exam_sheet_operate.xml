@@ -8,6 +8,10 @@
             type="com.oranle.es.module.ui.senior.viewmodel.ExamSheetOperateViewModel" />
 
         <variable
+            name="index"
+            type="String" />
+
+        <variable
             name="item"
             type="com.oranle.es.data.entity.Assessment" />
     </data>
@@ -30,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@{item.id + ``}"
+                android:text="@{index}"
                 android:textColor="@color/black"
                 android:textSize="22dp" />
 

@@ -7,6 +7,7 @@ import android.view.View;
 import com.oranle.es.R;
 
 import cn.jzvd.JzvdStd;
+import timber.log.Timber;
 
 /**
  * 这个本质上就是播放的时候不隐藏缩略图
@@ -35,7 +36,11 @@ public class JzvdStdMp3 extends JzvdStd {
         } else if (v.getId() == R.id.fullscreen) {
 
         } else {
-            super.onClick(v);
+            try {
+                super.onClick(v);
+            } catch (Exception e) {
+                Timber.d(e);
+            }
         }
     }
 
