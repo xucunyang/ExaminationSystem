@@ -164,7 +164,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         allStudents: List<User>,
         classesInCharge: List<ClassEntity>
     ): MutableList<WrapReportBean> {
-        val reports = getDB().getReportDao().getReportsByUserIds(stuIds)
+        var reports = getDB().getReportDao().getReportsByUserIds(stuIds)
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
 
@@ -176,6 +176,8 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             val rules = getDB().getRuleDao().getRulesBySheetId(it.id)
             allRuleList.add(rules)
         }
+
+        reports = removeDuplicate(reports, allAssessments)
 
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
@@ -215,7 +217,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         val (classesInCharge, allStudents, stuIds) = getTripleData(clazz, currentUser)
 
         // get report from db
-        val reports =
+        var reports =
             if (assessment != null)
                 getDB().getReportDao().getReportsByUserIdAndSheetId(assessment.id, stuIds)
             else
@@ -238,6 +240,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         val multiTestSheet = getDB().getAssessmentDao().getAssessmentByTitle(MULTI_SMART_TEST)
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
+        reports = removeDuplicate(reports, allAssessments)
         reports.forEachIndexed { index, it ->
             val student = getStudentById(allStudents, it.userId)
             val classEntity = getClassById(classesInCharge, student.classId)
@@ -266,7 +269,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         studentId: Int, sheetId: Int = -1
     ): List<WrapReportBean> {
         // get report from db
-        val reports = if (sheetId == -1) {
+        var reports = if (sheetId == -1) {
             getDB().getReportDao().getReportsByUserId(studentId)
         } else {
             getDB().getReportDao().getReportsByUserIdAndSheetId(studentId, sheetId)
@@ -283,6 +286,7 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
         }
 
         val wrapReportBeans = mutableListOf<WrapReportBean>()
+        reports = removeDuplicate(reports, allAssessments)
         reports.forEachIndexed { index, it ->
             val student = getDB().getUserDao().getUsersByUserId(studentId)[0]
             val classEntity = getDB().getClassDao().getClassById(student.classId)
@@ -379,6 +383,20 @@ class StatisticViewModel : BaseRecycleViewModel<WrapReportBean>() {
             }
         }
         throw IllegalArgumentException("can not find Rules with id: $specifyId")
+    }
+
+    private fun removeDuplicate(
+        reports: List<SheetReport>,
+        allAssessment: List<Assessment>
+    ): List<SheetReport> {
+        val clearedReports = mutableListOf<SheetReport>()
+        reports.forEach { report ->
+            allAssessment.forEach { assessment ->
+                if (report.sheetId == assessment.id)
+                    clearedReports.add(report)
+            }
+        }
+        return clearedReports
     }
 
     /**
