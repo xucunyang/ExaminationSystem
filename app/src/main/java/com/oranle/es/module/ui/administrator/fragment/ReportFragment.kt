@@ -16,7 +16,7 @@ import com.oranle.es.databinding.ItemReportHorBinding
 import com.oranle.es.module.base.BaseAdapter
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.examination.viewmodel.TypedScore
-import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
+import com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel
 import java.io.Serializable
 
 class ReportFragment : BaseFragment<FragmentReportBinding>() {
@@ -25,7 +25,8 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
         fun newInstance(
             assessment: Assessment? = null,
             clazz: ClassEntity? = null,
-            isShowAll: Boolean = false
+            isShowAll: Boolean = false,
+            studentId: Int = -1
         ): ReportFragment {
             val fragment = ReportFragment()
             val args = Bundle()
@@ -35,12 +36,13 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
             args.putSerializable("clazz", clazz)
             // 所有班级所有表
             args.putBoolean("isShowAll", isShowAll)
+            args.putInt("studentId", studentId)
             fragment.arguments = args
             return fragment
         }
     }
 
-    private lateinit var mViewModel: GroupStatisticViewModel
+    private lateinit var mViewModel: StatisticViewModel
 
     override val layoutId: Int
         get() = R.layout.fragment_report
@@ -50,6 +52,7 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
         val assessment = arguments?.getSerializable("assessment") as? Assessment
         val isShowAll = arguments?.getBoolean("isShowAll", false)
         val clazz = arguments?.getSerializable("clazz") as? ClassEntity
+        val studentId = arguments?.getInt("studentId", -1)
 
         mViewModel = getViewModel()
 
@@ -83,17 +86,19 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
         if (isShowAll != null && isShowAll) {
             mViewModel.loadAllReport()
+        } else if (studentId != null && studentId != -1 && assessment != null) {
+            mViewModel.loadReportByStudentUserIdAndSheetId(studentId, assessment.id)
         } else {
             mViewModel.loadReport(assessment, clazz)
         }
     }
 
-    inner class ReportAdapter(vm: GroupStatisticViewModel) :
-        BaseAdapter<WrapReportBean, ItemReportBinding, GroupStatisticViewModel>(vm) {
+    inner class ReportAdapter(vm: StatisticViewModel) :
+        BaseAdapter<WrapReportBean, ItemReportBinding, StatisticViewModel>(vm) {
         override fun doBindViewHolder(
             binding: ItemReportBinding,
             item: WrapReportBean,
-            viewModel: GroupStatisticViewModel
+            viewModel: StatisticViewModel
         ) {
             binding.apply {
                 vm = viewModel
@@ -107,12 +112,12 @@ class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
     }
 
-    inner class AllSheetAdapter(vm: GroupStatisticViewModel) :
-        BaseAdapter<WrapReportBean, ItemReportHorBinding, GroupStatisticViewModel>(vm) {
+    inner class AllSheetAdapter(vm: StatisticViewModel) :
+        BaseAdapter<WrapReportBean, ItemReportHorBinding, StatisticViewModel>(vm) {
         override fun doBindViewHolder(
             binding: ItemReportHorBinding,
             item: WrapReportBean,
-            viewModel: GroupStatisticViewModel
+            viewModel: StatisticViewModel
         ) {
             binding.apply {
                 vm = viewModel
@@ -139,7 +144,8 @@ data class WrapReportBean(
     val time: Long,
     val assessment: Assessment,
     val typedScore: List<TypedScore>,
-    val rules: List<ReportRule>
+    val rules: List<ReportRule>,
+    val isMultiSmartSheet: Boolean
 ) : Serializable {
     fun totalScore(): Float {
         var total = 0F

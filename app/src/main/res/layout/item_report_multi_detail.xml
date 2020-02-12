@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/gray_69" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="[江宁小学]"
+            android:textColor="@color/item_yellow_e3"
+            android:textSize="@dimen/sp_25"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="    能运用所学的字、词和句式写作；认为语文、历史比数学、科学更容易学习；较为容易明白别人的指示、谈话内容及其言外之意；与人交流时，较为细心聆听，善用言语；亦较为善记人名、地点、日期或琐事细节。 得分：0.8"
+            android:textColor="@color/item_yellow_e3"
+            android:textSize="@dimen/sp_21" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="[说明]"
+            android:textSize="@dimen/sp_23"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="    能运用所学的字、词和句式写作；认为语文、历史比数学、科学更容易学习；较为容易明白别人的指示、谈话内容及其言外之意；与人交流时，较为细心聆听，善用言语；亦较为善记人名、地点、日期或琐事细节。 得分：0.8"
+            android:textSize="@dimen/sp_21" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="[建议]"
+            android:textSize="@dimen/sp_23"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:text="    能运用所学的字、词和句式写作；认为语文、历史比数学、科学更容易学习；较为容易明白别人的指示、谈话内容及其言外之意；与人交流时，较为细心聆听，善用言语；亦较为善记人名、地点、日期或琐事细节。 得分：0.8"
+            android:textSize="@dimen/sp_21" />
+
+
+    </LinearLayout>
+</layout>

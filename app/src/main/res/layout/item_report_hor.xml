@@ -16,13 +16,14 @@
 
         <variable
             name="vm"
-            type="com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel" />
+            type="com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back_shadow"
+        android:onClick="@{(v) -> vm.showDetail(v, bean)}"
         android:orientation="vertical">
 
         <LinearLayout
@@ -176,7 +177,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{(v) -> vm.showDetail(v, bean)}"
                 android:text="@{bean.assessment.title}"
                 android:textSize="@dimen/sp_22" />
 

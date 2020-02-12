@@ -10,12 +10,12 @@ import com.oranle.es.databinding.FragmentGroupBinding
 import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.base.toast
 import com.oranle.es.module.ui.administrator.AdministratorActivity
-import com.oranle.es.module.ui.administrator.viewmodel.GroupStatisticViewModel
+import com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel
 import timber.log.Timber
 
 class GroupStatisticFragment : BaseFragment<FragmentGroupBinding>() {
 
-    lateinit var viewModel: GroupStatisticViewModel
+    lateinit var viewModel: StatisticViewModel
 
     var currentClass: ClassEntity? = null
     var school: String? = null

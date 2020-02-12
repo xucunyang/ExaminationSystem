@@ -28,6 +28,7 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
     fun onDelete(entity: Assessment) {
         viewModelScope.launch {
             val deleteSize = withContext(IO) {
+                getDB().getReportDao().deleteReportBySheetId(entity.id)
                 getDB().getRuleDao().deleteReportRuleBySheetId(entity.id)
                 getDB().getSingleChoiceDao().deleteSingleChoicesBySheetId(entity.id)
                 getDB().getAssessmentDao().deleteAssessment(entity)
@@ -42,7 +43,6 @@ class ExamSheetOperateViewModel : BaseRecycleViewModel<Assessment>() {
     }
 
     fun onViewDetail(v: View, entity: Assessment) {
-        toast("onclick on change")
         val activity = v.context as SeniorAdminActivity
         val dialog = ExamDetailDialog(activity, entity, ExamShowMode.AdminView)
         dialog.show(activity.supportFragmentManager, "")

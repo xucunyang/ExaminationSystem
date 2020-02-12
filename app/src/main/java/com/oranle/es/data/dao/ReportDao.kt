@@ -21,6 +21,9 @@ interface ReportDao {
     @Query("select * from sheet_report where userId = :userId")
     suspend fun getReportsByUserId(userId: Int): List<SheetReport>
 
+    @Query("select * from sheet_report where userId = :userId AND sheetId = :sheetId")
+    suspend fun getReportsByUserIdAndSheetId(userId: Int, sheetId: Int): List<SheetReport>
+
     @Query("select * from sheet_report where sheetId = :sheetId")
     suspend fun getReportsBySheetId(sheetId: Int): List<SheetReport>
 
@@ -41,5 +44,8 @@ interface ReportDao {
 
     @Query("delete from sheet_report where userId = :userId")
     suspend fun deleteReportByUserId(userId: Int)
+
+    @Query("delete from sheet_report where sheetId = :sheetId")
+    suspend fun deleteReportBySheetId(sheetId: Int)
 
 }
