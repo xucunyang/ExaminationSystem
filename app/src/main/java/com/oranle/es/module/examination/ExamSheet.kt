@@ -60,13 +60,14 @@ data class ExamSheet @JvmOverloads constructor(
             return "量表解析错误：题目数量与答案不匹配"
         }
 
-        if (reportRuleList == null) {
+        if (reportRuleList == null || reportRuleList.isEmpty()) {
             return "量表解析错误：报告规则不存在，请检查"
         } else {
             var total = 0
             for (rule in reportRuleList) {
                 total += rule.size
             }
+            Timber.d("量表解析错误：报告规则与单选数量不一致 {$reportRuleList} 总共：$total $singleChoiceSize")
             if (total != singleChoiceSize)
                 return "量表解析错误：报告规则与单选数量不一致"
         }
