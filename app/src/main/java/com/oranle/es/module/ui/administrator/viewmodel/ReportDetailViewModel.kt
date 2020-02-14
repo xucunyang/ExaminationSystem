@@ -9,6 +9,7 @@ import com.oranle.es.module.base.BaseViewModel
 import com.oranle.es.module.base.classify
 import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import timber.log.Timber
+import java.math.BigDecimal
 
 class ReportDetailViewModel : BaseViewModel() {
 
@@ -40,7 +41,8 @@ class ReportDetailViewModel : BaseViewModel() {
                 if (it.wholeScore != 0F) {
                     sb.append("满分${it.wholeScore}分，")
                 }
-                sb.append("共得分${classifyScore.elementAt(index).score}分")
+                val score = classifyScore.elementAt(index).score.toString()
+                sb.append("共得分${BigDecimal(score)}分")
                 sb.append(System.lineSeparator())
             }
         }

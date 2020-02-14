@@ -25,6 +25,7 @@ import com.oranle.es.module.ui.administrator.fragment.WrapReportBean
 import com.oranle.es.util.ImageUtil
 import timber.log.Timber
 import java.io.IOException
+import java.math.BigDecimal
 
 @BindingAdapter("app:items")
 fun <E> setItems(listView: RecyclerView, items: List<E>) {
@@ -194,10 +195,10 @@ fun classify(rules: List<ReportRule>, scoreList: List<TypedScore>)
     val classifyList = mutableSetOf<TypedScore>()
 
     rules.forEachIndexed() { index, rule ->
-        var scoreTotal = 0F
+        var scoreTotal = BigDecimal("0")
         scoreList.forEach { detail ->
             if (rule.id == detail.ruleId) {
-                scoreTotal += detail.score
+                scoreTotal = scoreTotal.add(BigDecimal(detail.score.toString()))
             }
         }
         classifyList.add(
@@ -205,7 +206,7 @@ fun classify(rules: List<ReportRule>, scoreList: List<TypedScore>)
                 index = index,
                 ruleId = rule.id,
                 select = "none",
-                score = scoreTotal
+                score = scoreTotal.toFloat()
             )
         )
     }
@@ -258,7 +259,7 @@ fun getLayout(context: Context, typeStr: String, score: Float): View {
     val titleTv = child.findViewById<TextView>(R.id.type)
     val scoreTv = child.findViewById<TextView>(R.id.score)
     titleTv.text = "【$typeStr】"
-    scoreTv.text = "得分：$score"
+    scoreTv.text = "得分：${BigDecimal(score.toString())}"
     return child
 }
 

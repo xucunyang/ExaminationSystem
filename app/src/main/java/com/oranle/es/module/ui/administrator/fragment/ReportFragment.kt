@@ -18,6 +18,7 @@ import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.examination.viewmodel.TypedScore
 import com.oranle.es.module.ui.administrator.viewmodel.StatisticViewModel
 import java.io.Serializable
+import java.math.BigDecimal
 
 class ReportFragment : BaseFragment<FragmentReportBinding>() {
 
@@ -148,11 +149,11 @@ data class WrapReportBean(
     val isMultiSmartSheet: Boolean
 ) : Serializable {
     fun totalScore(): Float {
-        var total = 0F
+        var totalBigDecimal = BigDecimal("0")
         typedScore.forEach {
-            total += it.score
+            totalBigDecimal = totalBigDecimal.add(BigDecimal(it.score.toString()))
         }
-        return total
+        return totalBigDecimal.toFloat()
     }
 
 }
