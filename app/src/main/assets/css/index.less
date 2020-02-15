@@ -1,0 +1,35 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  .box {
+    height: 100%;
+    width: 100%;
+    background: url('../image/1.jpg') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+  }
+  .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .learn,
+    .expression,
+    .daily {
+      background-color: pink;
+      width: 300px;
+      height: 80px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 80px;
+      background: url('../image/2.jpg') no-repeat;
+      background-size: 300px 80px;
+    }
+  }
+}
