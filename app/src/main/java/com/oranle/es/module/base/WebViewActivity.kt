@@ -24,7 +24,7 @@ class WebViewActivity : BaseActivity<LayoutWebviewBinding>() {
         get() = R.layout.layout_webview
 
     private val url by argument<String>(URL)
-    val mTitle by argument<String>(TITLE)
+    val mTitle by argument<String?>(TITLE)
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

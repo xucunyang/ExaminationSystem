@@ -19,7 +19,7 @@ inline fun <reified T> Context.start(extras: Bundle? = null, newTask: Boolean = 
     startActivity(intent)
 }
 
-fun <T : Any> androidx.fragment.app.FragmentActivity.argument(key: String) =
+fun <T : Any?> androidx.fragment.app.FragmentActivity.argument(key: String?) =
     lazy {
         intent?.extras?.get(key) as? T ?: error("Intent Argument $key is missing")
     }
