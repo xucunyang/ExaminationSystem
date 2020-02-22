@@ -28,7 +28,7 @@ class CommDialog : BaseDialogFragment<DialogCommonBinding>() {
 
     override fun getDialogHeight() = 300
 
-    override fun getDialogWidth() =  400
+    override fun getDialogWidth() = 400
 
     private var listener: ((Boolean) -> Unit)? = null
 

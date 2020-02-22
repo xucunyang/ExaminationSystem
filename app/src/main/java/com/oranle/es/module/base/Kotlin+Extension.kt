@@ -18,18 +18,24 @@ import kotlin.coroutines.EmptyCoroutineContext
 val UI: CoroutineDispatcher = Dispatchers.Main
 val IO: CoroutineDispatcher = Dispatchers.IO
 
-fun runOnUI(block: suspend CoroutineScope.() -> Unit): Job = GlobalScope.launch(context = UI, block = block)
+fun runOnUI(block: suspend CoroutineScope.() -> Unit): Job =
+    GlobalScope.launch(context = UI, block = block)
 
-fun runInBackground(block: suspend CoroutineScope.() -> Unit): Job = GlobalScope.async(context = IO, block = block)
+fun runInBackground(block: suspend CoroutineScope.() -> Unit): Job =
+    GlobalScope.async(context = IO, block = block)
 
-fun <T> asyncOnUI(block: suspend CoroutineScope.() -> T): Deferred<T> = GlobalScope.async(context = UI, block = block)
+fun <T> asyncOnUI(block: suspend CoroutineScope.() -> T): Deferred<T> =
+    GlobalScope.async(context = UI, block = block)
 
-fun <T> asyncInBackground(block: suspend CoroutineScope.() -> T): Deferred<T> = GlobalScope.async(context = IO, block = block)
+fun <T> asyncInBackground(block: suspend CoroutineScope.() -> T): Deferred<T> =
+    GlobalScope.async(context = IO, block = block)
 
-fun <T> GlobalScope.asyncWithLifecycle(lifecycleOwner: LifecycleOwner,
-                                       context: CoroutineContext = EmptyCoroutineContext,
-                                       start: CoroutineStart = CoroutineStart.DEFAULT,
-                                       block: suspend CoroutineScope.() -> T): Deferred<T> {
+fun <T> GlobalScope.asyncWithLifecycle(
+    lifecycleOwner: LifecycleOwner,
+    context: CoroutineContext = EmptyCoroutineContext,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> T
+): Deferred<T> {
 
     val deferred = async(context, start, block)
 
@@ -38,17 +44,23 @@ fun <T> GlobalScope.asyncWithLifecycle(lifecycleOwner: LifecycleOwner,
     return deferred
 }
 
-fun GlobalScope.launchWithLifecycle(lifecycleOwner: LifecycleOwner?,
-                                    context: CoroutineContext = EmptyCoroutineContext,
-                                    start: CoroutineStart = CoroutineStart.DEFAULT,
-                                    block: suspend CoroutineScope.() -> Unit) {
+fun GlobalScope.launchWithLifecycle(
+    lifecycleOwner: LifecycleOwner?,
+    context: CoroutineContext = EmptyCoroutineContext,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+) {
 
     val job = launch(context, start, block)
 
     lifecycleOwner?.lifecycle?.addObserver(CoroutinesLifecycleObserver(job))
 }
 
-fun GlobalScope.blockWithTryCatch(tryBlock: () -> Unit, catchBlock: () -> Unit, finalBlock: () -> Unit): Unit {
+fun blockWithTryCatch(
+    tryBlock: () -> Unit,
+    catchBlock: () -> Unit,
+    finalBlock: () -> Unit
+) {
     try {
         tryBlock()
     } catch (e: Exception) {
@@ -58,26 +70,35 @@ fun GlobalScope.blockWithTryCatch(tryBlock: () -> Unit, catchBlock: () -> Unit, 
     }
 }
 
-fun launchWrapped(lifecycleOwner: LifecycleOwner?,
-                              context: CoroutineContext = EmptyCoroutineContext,
-                              block: suspend CoroutineScope.() -> Unit,
-                              exceptionHandler: (Exception) -> Unit,
-                              finalBlock: () -> Unit,
-                              start: CoroutineStart = CoroutineStart.DEFAULT) {
-        val TAG = "test-extension"
-        Timber.d("$TAG ${Thread.currentThread().name} start")
-        val job: Job
+fun <T> launchWrapped(
+    lifecycleOwner: LifecycleOwner? = null,
+    asyncBlock: suspend CoroutineScope.() -> T,
+    uiBlock: ((T) -> Unit)? = null,
+    exceptionHandler: ((Exception) -> Unit)? = null,
+    finalBlock: (() -> Unit)? = null,
+    context: CoroutineContext = UI,
+    start: CoroutineStart = CoroutineStart.DEFAULT
+) {
+    val job: Job = GlobalScope.launch(context, start) {
         try {
-            job = GlobalScope.launch(context, start, block)
-            lifecycleOwner?.lifecycle?.addObserver(CoroutinesLifecycleObserver(job))
-            Timber.d("$TAG ${Thread.currentThread().name} launch end")
-        } catch (e: Exception) {
-            Timber.d("$TAG  {Thread.currentThread().name} Exception $e")
-            exceptionHandler(e)
+            val result = withContext(IO) {
+                asyncBlock()
+            }
+            uiBlock?.let { it.invoke(result) }
+        } catch (e: java.lang.Exception) {
+            log("[Exception]: $e")
+            e.printStackTrace()
+            exceptionHandler?.invoke(e)
         } finally {
-            finalBlock()
+            finalBlock?.invoke()
         }
-        Timber.d("$TAG  ${Thread.currentThread().name} execute end")
+    }
+    lifecycleOwner?.lifecycle?.addObserver(CoroutinesLifecycleObserver(job))
+}
+
+fun log(msg: String) {
+    val tag = "Kt-extension"
+    Timber.d("$tag ${Thread.currentThread().name} $msg")
 }
 
 object MainHandler : Handler(Looper.getMainLooper())
@@ -91,7 +112,10 @@ fun runOnUIThread(uiWork: () -> Unit) {
 }
 
 @SuppressLint("ShowToast")
-fun toast(text: CharSequence?, @ColorInt messageColor: Int = Color.WHITE, vararg views: Pair<View, Int> = arrayOf()) =
+fun toast(
+    text: CharSequence?, @ColorInt messageColor: Int = Color.WHITE,
+    vararg views: Pair<View, Int> = arrayOf()
+) =
     runOnUIThread {
         Toast.makeText(SessionApp.instance, text, Toast.LENGTH_SHORT)
             .also {
