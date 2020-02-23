@@ -11,13 +11,13 @@ import androidx.fragment.app.FragmentManager
 import com.oranle.es.BuildConfig
 import com.oranle.es.app.SessionApp
 import com.oranle.es.data.api.ROOT_PATH
-import com.oranle.es.data.api.ServiceApi
 import com.oranle.es.module.base.CommDialog
-import com.oranle.es.module.base.launchWrapped
 import com.oranle.es.module.base.log
 import com.oranle.es.module.base.toast
 import com.oranle.es.util.FileUtil
-import java.io.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.File
 
 
 class UpgradeUtil(val fragmentManager: FragmentManager) {
@@ -28,72 +28,119 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
 
     fun checkUpgrade() {
 
-        downloadConfig()
+        val externalFileDir = SessionApp.instance!!.getExternalFilesDir(null)
+        if (externalFileDir == null) {
+            log("getExternalFilesDir is null")
+            return
+        }
+        val configPath = "${externalFileDir.path}/config"
+        DownloadUtil.download(
+            url = "${ROOT_PATH}config",
+            path = configPath,
+            downloadListener = object : DownloadListener {
+                override fun onFinish(path: String?) {
 
-//        launchWrapped(
-//            asyncBlock = {
-//                ServiceApi.checkUpgradeApi().checkAsync().await()
-//            },
-//            uiBlock = { apkNameInfo ->
-//                if (!apkNameInfo.isNullOrBlank()) {
-////                    if (apkNameInfo.endsWith(".apk")) {
-////                        val startIndex = apkNameInfo.indexOf(".apk")
-////                        val versionNum = apkNameInfo.substring(startIndex, apkNameInfo.length - 1)
-////                        log("apkNameInfo $versionNum")
-//
-//                    // TODO 保存已下载的apk版本信息
-//                    val serverApkVersion: Int
-//                    serverApkVersion = try {
-//                        apkNameInfo.toInt()
-//                    } catch (e: NumberFormatException) {
-//                        e.printStackTrace()
-//                        log("$e")
-//                        1
-//                    }
-//
-//                    if (serverApkVersion > BuildConfig.VERSION_CODE) {
-//                        showUpgradeTip(apkNameInfo)
-//                        log(
-//                            "upgrade,server Apk Version: $serverApkVersion, " +
-//                                    "current version ${BuildConfig.VERSION_CODE}"
-//                        )
-//                    } else {
-//                        log(
-//                            "do not need upgrade,server Apk Version: $serverApkVersion, " +
-//                                    "current version ${BuildConfig.VERSION_CODE}"
-//                        )
-//                    }
-////                    }
-//                    /*else {
-//                            log("not end with '.apk' $apkNameInfo")
-//                        }*/
-//                }
-//            }
-//        )
+                    val json = FileUtil.readFileContent(configPath)
+                    log("on finish read file $json")
+                    var versionInfo: String? = null
+                    var msgInfo: String? = null
+                    try {
+                        val jsonObject = JSONObject(json)
+                        versionInfo = getStrFromJson(jsonObject, "version")
+                        msgInfo = getStrFromJson(jsonObject, "msg")
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        log("$e")
+                    }
+
+                    if (!versionInfo.isNullOrBlank()) {
+                        if (versionInfo.endsWith(".apk")) {
+                            val endIndex = versionInfo.indexOf(".apk")
+                            val versionNum =
+                                versionInfo.substring(0, endIndex)
+
+                            log("apkNameInfo $versionNum")
+
+                            val serverApkVersion: Int
+                            serverApkVersion = try {
+                                versionNum.toInt()
+                            } catch (e: NumberFormatException) {
+                                e.printStackTrace()
+                                log("$e")
+                                1
+                            }
+
+                            if (serverApkVersion > BuildConfig.VERSION_CODE) {
+
+                                val sb = StringBuilder()
+                                sb.append(msgInfo)
+                                sb.append(System.lineSeparator())
+                                sb.append("是否升级")
+                                tipDialog.setContent(sb.toString())
+                                tipDialog.setOKListener { flag ->
+                                    if (flag) downloadApk(versionInfo)
+                                }
+                                tipDialog.show(fragmentManager, "")
+
+                                log(
+                                    "upgrade,server Apk Version: $serverApkVersion, " +
+                                            "current version ${BuildConfig.VERSION_CODE}"
+                                )
+                            } else {
+                                log(
+                                    "do not need upgrade,server Apk Version: $serverApkVersion, " +
+                                            "current version ${BuildConfig.VERSION_CODE}"
+                                )
+                            }
+                        }
+                        /*else {
+                                log("not end with '.apk' $apkNameInfo")
+                            }*/
+                    }
+
+                    updateUI {
+
+                    }
+                }
+
+                override fun onFail(errorInfo: String?) {
+                    updateUI {
+                        toast("下载失败")
+                        deleteConfigFile()
+                    }
+                }
+
+                private fun deleteConfigFile() {
+                    val file = File(configPath)
+                    if (file.exists()) {
+                        val delete = file.delete()
+                        if (delete) {
+                            log("delete for useless")
+                        }
+                    }
+                }
+
+                override fun onProgress(progress: Int) {
+                    updateUI {
+                        log("onProgress $progress")
+                    }
+                }
+
+                override fun onStart() {
+//                    deleteConfigFile()
+                }
+            })
     }
 
-    /**
-     *  提示是否升级
-     */
-    private fun showUpgradeTip(apkNameInfo: String) {
-
-//        launchWrapped(
-//            asyncBlock = {
-//                ServiceApi.getUpgradeLog().getLogAsync().await()
-//            },
-//            uiBlock = {
-//                if (!it.isNullOrBlank()) {
-//                    val sb = StringBuilder()
-//                    sb.append(it)
-//                    sb.append(System.lineSeparator())
-//                    sb.append("是否升级")
-//                    tipDialog.setContent(it)
-//                    tipDialog.setOKListener { flag ->
-//                        if (flag) downloadApk(apkNameInfo)
-//                    }
-//                    tipDialog.show(fragmentManager, "")
-//                }
-//            })
+    private fun getStrFromJson(jsonObj: JSONObject, key: String): String? {
+        var value: String? = null
+        try {
+            value = jsonObj.optString(key)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            log("$e")
+        }
+        return value
     }
 
     private fun downloadApk(apkNameInfo: String) {
@@ -106,9 +153,11 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
             log("getExternalFilesDir is null")
             return
         }
-        val apkDestPath = "${externalFileDir.path}/${apkNameInfo}.apk"
+
+        val apkDestPath = "${externalFileDir.path}/${apkNameInfo}"
+
         DownloadUtil.download(
-            url = "$ROOT_PATH$apkNameInfo.apk",
+            url = "$ROOT_PATH$apkNameInfo",
             path = apkDestPath,
             downloadListener = object : DownloadListener {
                 override fun onFinish(path: String?) {
@@ -159,58 +208,6 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
                 DownloadUtil.cancelDownload()
             }
         }
-    }
-
-    private fun downloadConfig() {
-
-        val externalFileDir = SessionApp.instance!!.getExternalFilesDir(null)
-        if (externalFileDir == null) {
-            log("getExternalFilesDir is null")
-            return
-        }
-        val configPath = "${externalFileDir.path}/config"
-        DownloadUtil.download(
-            url = "${ROOT_PATH}config",
-            path = configPath,
-            downloadListener = object : DownloadListener {
-                override fun onFinish(path: String?) {
-
-                    val json = FileUtil.readFileContent(configPath)
-                    log("on finish read file $json")
-
-                    updateUI {
-
-                    }
-                }
-
-                override fun onFail(errorInfo: String?) {
-                    updateUI {
-                        toast("下载失败")
-                        deleteConfigFile()
-                    }
-                }
-
-                private fun deleteConfigFile() {
-                    val file = File(configPath)
-                    if (file.exists()) {
-                        val delete = file.delete()
-                        if (delete) {
-                            log("delete for useless")
-                        }
-                    }
-                }
-
-                override fun onProgress(progress: Int) {
-                    updateUI {
-                        log("onProgress $progress")
-                    }
-                }
-
-                override fun onStart() {
-//                    deleteConfigFile()
-                }
-            })
-
     }
 
     private fun updateUI(block: () -> Unit) {
