@@ -75,7 +75,7 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
                                 val sb = StringBuilder()
                                 sb.append(msgInfo)
                                 sb.append(System.lineSeparator())
-                                sb.append("是否升级")
+                                sb.append("是否升级?")
                                 tipDialog.setContent(sb.toString())
                                 tipDialog.setOKListener { flag ->
                                     if (flag) downloadApk(versionInfo)
