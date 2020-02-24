@@ -2,7 +2,9 @@ package com.oranle.es.module.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
+import android.widget.Toast
 import com.oranle.es.R
 import com.oranle.es.databinding.ActivityMainBinding
 import com.oranle.es.module.base.BaseActivity
@@ -10,6 +12,8 @@ import com.oranle.es.module.base.WebViewActivity
 import com.oranle.es.module.ui.innovation.InnovationActivity
 import com.oranle.es.module.ui.login.ExaminationSystemLoginActivity
 import com.oranle.es.module.upgrade.UpgradeUtil
+import kotlin.system.exitProcess
+
 
 class HomeActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -101,6 +105,23 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
         bundle.putString("url", "file:///android_asset/natural/natural-type.html")
         intent.putExtras(bundle)
         view.context.startActivity(intent)
+    }
+
+    //两秒内按返回键两次退出程序
+    private var exitTime: Long = 0
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() === KeyEvent.ACTION_DOWN) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Toast.makeText(applicationContext, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+                exitTime = System.currentTimeMillis()
+            } else {
+                finish()
+                exitProcess(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }
