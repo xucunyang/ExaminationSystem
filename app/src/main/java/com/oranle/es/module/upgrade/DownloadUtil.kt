@@ -34,10 +34,14 @@ object DownloadUtil {
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
-                log("onResponse ${response.message()}")
+                log("onResponse ${response?.message()}")
                 //将Response写入到从磁盘中，详见下面分析
                 //注意，这个方法是运行在子线程中的
-                writeResponseToDisk(path, response, downloadListener)
+                if (response != null) {
+                    writeResponseToDisk(path, response, downloadListener)
+                } else {
+                    log("onResponse response is null")
+                }
             }
 
             override fun onFailure(
@@ -99,7 +103,11 @@ object DownloadUtil {
                 os.write(data, 0, len)
                 currentLength += len.toLong()
                 //计算当前下载进度
-                downloadListener.onProgress((100 * currentLength / totalLength).toInt())
+                downloadListener.onProgress(
+                    (100 * currentLength / totalLength).toInt(),
+                    currentLength,
+                    totalLength
+                )
             }
         } catch (e: IOException) {
             e.printStackTrace()

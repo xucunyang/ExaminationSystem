@@ -120,9 +120,9 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
                     }
                 }
 
-                override fun onProgress(progress: Int) {
+                override fun onProgress(progress: Int, current: Long, total: Long) {
                     updateUI {
-                        log("onProgress $progress")
+                        log("onProgress $progress, current:$current, total:$total")
                     }
                 }
 
@@ -191,10 +191,11 @@ class UpgradeUtil(val fragmentManager: FragmentManager) {
                     }
                 }
 
-                override fun onProgress(progress: Int) {
+                override fun onProgress(progress: Int, current: Long, total: Long) {
                     updateUI {
                         upgradeDialog.setProgress(progress)
-                        upgradeDialog.setContent("${progress}%，下载中...")
+
+                        upgradeDialog.setContent("${progress}%，下载中...\n${current/1024}k/${total/1024}k")
                     }
                 }
 
