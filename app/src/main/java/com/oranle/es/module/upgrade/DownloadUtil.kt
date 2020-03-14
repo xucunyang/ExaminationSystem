@@ -7,7 +7,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import timber.log.Timber
 import java.io.*
+import java.lang.Exception
 import java.util.concurrent.Executors
 
 
@@ -63,13 +65,18 @@ object DownloadUtil {
         response: Response<ResponseBody>,
         downloadListener: DownloadListener
     ) {
-        //从response获取输入流以及总大小
-        writeFileFromIS(
-            File(path),
-            response.body()!!.byteStream(),
-            response.body()!!.contentLength(),
-            downloadListener
-        )
+        try {
+            //从response获取输入流以及总大小
+            writeFileFromIS(
+                File(path),
+                response.body()!!.byteStream(),
+                response.body()!!.contentLength(),
+                downloadListener
+            )
+        } catch (e: Exception) {
+            Timber.e(e)
+            e.printStackTrace()
+        }
     }
 
     private const val sBufferSize = 8192
