@@ -17,7 +17,7 @@ class StudentReportAdapter(
     ) {
         binding.bean = item
         binding.vm = viewModel
-        binding.position = getPosition() - 1
+        binding.position = getPosition()
     }
 
     override val layoutRes: Int

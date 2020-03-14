@@ -44,8 +44,12 @@ abstract class RecyclerWithHeaderAdapter<E, VDB : ViewDataBinding, VM : BaseRecy
     override fun onBindViewHolder(holder: BaseViewHolder<VDB>, position: Int) {
         val itemViewType = getItemViewType(position)
         if (itemViewType == TYPE_NORMAL) {
-            super.onBindViewHolder(holder, position)
+            super.onBindViewHolder(holder, position - headerViewList.size)
         }
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount() + headerViewList.size + footerViewList.size
     }
 
     fun addHeader(viewDataBinding: VDB) {
