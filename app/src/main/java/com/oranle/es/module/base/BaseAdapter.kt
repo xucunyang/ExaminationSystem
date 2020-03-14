@@ -14,9 +14,9 @@ abstract class BaseAdapter<E, VDB : ViewDataBinding, VM : BaseRecycleViewModel<E
     diffCallback: DiffUtil.ItemCallback<E> = DefaultDiff<E>()
 ) : ListAdapter<E, BaseViewHolder<VDB>>(diffCallback) {
 
-    //    init {
-//        this.submitList(viewModel.items.value)
-//    }
+    init {
+        this.submitList(viewModel.items.value)
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -39,7 +39,7 @@ abstract class BaseAdapter<E, VDB : ViewDataBinding, VM : BaseRecycleViewModel<E
         binding.executePendingBindings()
     }
 
-    private var currPosition : Int = 0
+    private var currPosition: Int = 0
     fun getPosition() = currPosition + 1
 
     abstract fun doBindViewHolder(binding: VDB, item: E, viewModel: VM)
@@ -52,7 +52,7 @@ class BaseViewHolder<out Binding : ViewDataBinding>(
     val binding: Binding
 ) : RecyclerView.ViewHolder(binding.root)
 
-class DefaultDiff<E>  : DiffUtil.ItemCallback<E>() {
+class DefaultDiff<E> : DiffUtil.ItemCallback<E>() {
     override fun areItemsTheSame(oldItem: E, newItem: E) = oldItem == newItem
 
     @SuppressLint("DiffUtilEquals")

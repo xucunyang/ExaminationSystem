@@ -55,14 +55,16 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
         val nameEt = dataBinding!!.organizationNameEt
         val confirm = dataBinding!!.confirm
         if (!TextUtils.isEmpty(organizationName)) {
+            dataBinding?.add?.text = "修改"
             nameEt.setText(organizationName)
             nameEt.isEnabled = false
             confirm.visibility = View.GONE
         } else {
-            nameEt.hint = "请设置单位名称，设置后不可更改"
+            dataBinding?.add?.text = "添加"
             nameEt.clearFocus()
             confirm.visibility = View.VISIBLE
         }
+
         confirm.setOnClickListener { v ->
             val name = nameEt.editableText.toString()
             val tip: String
@@ -70,11 +72,19 @@ class OrganizationNameFragment : BaseFragment<FragmentUnitNameBinding>() {
                 spUtil.setOrganizationName(name)
                 nameEt.isEnabled = false
                 confirm.visibility = View.GONE
+                dataBinding?.add?.text = "修改"
                 tip = "设置成功"
             } else {
                 tip = "单位名称为空"
             }
             Toast.makeText(activity, tip, Toast.LENGTH_SHORT).show()
+        }
+
+        dataBinding!!.add.setOnClickListener {
+            if (dataBinding?.add?.text == "修改") {
+                nameEt.isEnabled = true
+                confirm.visibility = View.VISIBLE
+            }
         }
 
         dataBinding!!.addClass.setOnClickListener { (activity as SeniorAdminActivity).showAddClassFrag() }

@@ -16,7 +16,7 @@ import timber.log.Timber
 
 class AdminViewModel : BaseRecycleViewModel<User>() {
 
-    val eidtLogin = "编辑登陆权限"
+    val eidtLogin = "编辑权限"
     val forbidenLogin = "已禁止登录"
     val operateTip = MutableLiveData<String>(eidtLogin)
 

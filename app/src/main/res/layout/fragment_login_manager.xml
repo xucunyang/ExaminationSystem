@@ -33,55 +33,54 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    style="@style/menu_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_btn"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="查看全部"
-                    android:textSize="20dp" />
+                    android:visibility="gone" />
 
                 <TextView
+                    style="@style/menu_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_btn"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="查询并导出账号"
-                    android:textSize="20dp" />
+                    android:visibility="gone" />
 
                 <TextView
+                    style="@style/menu_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_btn"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="批量转移"
-                    android:textSize="20dp" />
+                    android:visibility="gone" />
 
                 <TextView
+                    style="@style/menu_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_btn"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:text="批量设置量表权限"
-                    android:textSize="20dp" />
+                    android:visibility="gone" />
 
                 <TextView
+                    style="@style/menu_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_btn"
                     android:onClick="@{(v) -> vm.onAddPersonal(v)}"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="增加评测人"
-                    android:textSize="20dp" />
+                    android:text="增加评测人" />
 
             </LinearLayout>
         </RelativeLayout>

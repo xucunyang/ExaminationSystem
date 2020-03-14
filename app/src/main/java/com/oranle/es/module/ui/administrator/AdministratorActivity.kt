@@ -25,7 +25,7 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Timber.d("xxx %s", intent.extras!!["user"])
+        Timber.d("get intent extra %s", intent.extras!!["user"])
         initView()
     }
 
@@ -34,7 +34,7 @@ class AdministratorActivity : BaseActivity<ActivityAdminBinding>() {
         dataBinding.apply {
             val currentUser = SpUtil.instance.getCurrentUser()
             currentUser?.apply {
-                userInfo.text = "${currentUser.alias},  ${currentUser!!.getRoleStr()}"
+                userInfo.text = "${currentUser!!.getRoleStr()} ${currentUser.alias}"
             }
         }
 

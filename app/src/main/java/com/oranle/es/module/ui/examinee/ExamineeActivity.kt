@@ -12,6 +12,7 @@ import com.oranle.es.module.base.BaseFragment
 import com.oranle.es.module.ui.administrator.fragment.ReportFragment
 import com.oranle.es.module.ui.examinee.fragment.ExamStartFragment
 import com.oranle.es.module.ui.examinee.fragment.ObjectiveTestSelectFragment
+import com.oranle.es.module.ui.examinee.fragment.StudentReportFragment
 import com.oranle.es.module.ui.examinee.fragment.SubjectiveTestSelectFragment
 import com.oranle.es.module.ui.senior.fragment.ModifyPwdFragment
 
@@ -24,6 +25,7 @@ class ExamineeActivity : BaseActivity<ActivityExamineeBinding>() {
     private val objectiveTestSelectFragment = ObjectiveTestSelectFragment()
     private val reportFragment = ReportFragment.newInstance()
     private val modifyPwdFragment = ModifyPwdFragment()
+    private val studentReportFragment = StudentReportFragment()
 
     override val layoutId: Int
         get() = R.layout.activity_examinee
@@ -40,7 +42,7 @@ class ExamineeActivity : BaseActivity<ActivityExamineeBinding>() {
         dataBinding.apply {
             val currentUser = SpUtil.instance.getCurrentUser()
             currentUser?.apply {
-                userInfo.text = "${currentUser.alias},  ${currentUser!!.getRoleStr()}"
+                userInfo.text = "${currentUser.getRoleStr()} ${currentUser.alias}"
             }
         }
 
@@ -56,7 +58,7 @@ class ExamineeActivity : BaseActivity<ActivityExamineeBinding>() {
     }
 
     fun showReportFragment(v: View) {
-        showFragment(reportFragment)
+        showFragment(studentReportFragment)
     }
 
     fun showModifyInfo(v: View) {

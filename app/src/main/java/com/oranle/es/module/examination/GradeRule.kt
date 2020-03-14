@@ -129,7 +129,7 @@ object GradeRule {
         }
     } else {
         if (bean.rightAnswer == bean.selectOption!!)
-            bean.rule.singleScore
+            bean.rule.calculatedScore
         else
             0f
     }

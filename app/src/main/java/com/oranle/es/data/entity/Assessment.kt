@@ -1,6 +1,5 @@
 package com.oranle.es.data.entity
 
-import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore

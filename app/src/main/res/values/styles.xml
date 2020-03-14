@@ -47,14 +47,14 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="title" >
+    <style name="title">
         <item name="android:padding">@dimen/dp_15</item>
         <item name="android:textSize">@dimen/sp_32</item>
     </style>
 
     <style name="dialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
         <!-- 窗口背景色 -->
-<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--        <item name="android:windowBackground">@android:color/transparent</item>-->
         <!--是否有覆盖-->
         <item name="android:windowContentOverlay">@null</item>
         <!-- 浮于Activity之上 -->
@@ -97,6 +97,27 @@
         <item name="android:paddingStart">@dimen/dp_45</item>
         <item name="android:textSize">@dimen/sp_25</item>
         <item name="android:background">@drawable/shape_menu_item_bg</item>
+    </style>
+
+    <style name="menu_btn">
+        <item name="android:paddingStart">@dimen/dp_15</item>
+        <item name="android:paddingEnd">@dimen/dp_15</item>
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+        <item name="android:background">@drawable/bg_btn</item>
+    </style>
+
+    <style name="list_title_style">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="list_content_style">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/sp_20</item>
+        <item name="android:textColor">@color/black_77</item>
     </style>
 
 </resources>

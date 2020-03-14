@@ -45,7 +45,7 @@
                 android:background="@color/menu_blue"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="增加(设置成功后无法修改)"
+                android:text="添加"
                 android:textColor="@color/black"
                 android:textSize="22sp" />
 
