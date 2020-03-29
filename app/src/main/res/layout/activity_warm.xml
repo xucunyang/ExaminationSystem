@@ -1,47 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/gray">
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_1"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_30"
         android:background="@color/white"
-        android:gravity="center"
-        android:onClick="onDivergent"
-        android:text="发散思维训练"
-        android:textSize="@dimen/sp_18"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_1"
-        android:background="@color/white"
-        android:gravity="center"
-        android:onClick="onLogic"
-        android:text="逻辑思维训练"
-        android:textSize="@dimen/sp_18" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_1"
-        android:background="@color/white"
-        android:gravity="center"
-        android:onClick="onVisual"
-        android:text="视觉空间训练"
-        android:visibility="gone"
-        android:textSize="@dimen/sp_18" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginBottom="@dimen/dp_1"
-        android:background="@color/white"
-        android:gravity="center"
-        android:onClick="onMathematical"
-        android:text="数理逻辑训练"
-        android:textSize="@dimen/sp_18" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dp_15"
+            android:text="创新能力"
+            android:textSize="@dimen/sp_25"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="onDivergent"
+            android:text="发散思维训练"
+            android:textSize="@dimen/sp_18" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="onLogic"
+            android:text="逻辑思维训练"
+            android:textSize="@dimen/sp_18" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="onVisual"
+            android:text="视觉空间训练"
+            android:textSize="@dimen/sp_18" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:background="@color/gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginBottom="@dimen/dp_1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="onMathematical"
+            android:text="数理逻辑训练"
+            android:textSize="@dimen/sp_18" />
+
+    </LinearLayout>
+
 </layout>

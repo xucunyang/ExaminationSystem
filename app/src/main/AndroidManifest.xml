@@ -92,6 +92,7 @@
         <activity android:name=".module.ui.innovation.StrainActivity" />
         <activity android:name=".module.ui.innovation.TopicActivity" />
         <activity android:name=".module.ui.innovation.WarmActivity" />
+        <activity android:name=".module.ui.innovation.CombinedTrainActivity" />
 
         <receiver
             android:name=".module.receiver.MyReceiver"

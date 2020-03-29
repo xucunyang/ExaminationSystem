@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_30"
+            android:background="@color/gray"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="综合训练"
+                android:textSize="@dimen/sp_25"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onLanguage"
+                android:text="语言力思维能力"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onDigital"
+                android:text="数字推理"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onAnalogy"
+                android:text="类比思维推理"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onDialectical"
+                android:text="辩证思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onStrain"
+                android:text="应变思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onReverse"
+                android:text="逆向思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onLogicThink"
+                android:text="逻辑思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onLenovo"
+                android:text="联想思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onDivergentThink"
+                android:text="发散思维训练"
+                android:textSize="@dimen/sp_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:onClick="onImage"
+                android:text="形象思维训练"
+                android:textSize="@dimen/sp_18" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">智能测评系统</string>
+    <string name="app_name">多元智能发展评测与训练系统</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="question_template">1 请问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？问如图所示的几种云，第几幅预示着暴风雨天气即将来临？</string>
     <string name="title_report">[%s]个人报告</string>
+    <string name="unit_name">单位名称</string>
 
 
     <!--  语言力思维逻辑  -->

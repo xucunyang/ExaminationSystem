@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="vm"
             type="com.oranle.es.module.ui.senior.viewmodel.ClassViewModel" />
@@ -28,13 +29,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@color/menu_blue"
+                android:paddingStart="15dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="学校名称"
-                android:textColor="@color/black"
+                android:text="@string/unit_name"
+                android:textColor="@color/white"
                 android:textSize="22sp" />
 
             <TextView
@@ -46,7 +47,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="添加"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp" />
 
         </LinearLayout>
@@ -88,13 +89,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@color/menu_blue"
+                android:paddingStart="15dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="班级名称"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp" />
 
             <TextView
@@ -106,7 +107,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="增加"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="22sp" />
 
         </LinearLayout>
