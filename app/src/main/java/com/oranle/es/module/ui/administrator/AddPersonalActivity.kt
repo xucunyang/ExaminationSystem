@@ -5,9 +5,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProviders
-
 import com.oranle.es.R
-import com.oranle.es.data.repository.DBRepository.getDB
+import com.oranle.es.data.entity.User
+import com.oranle.es.data.sp.SpUtil
 import com.oranle.es.databinding.ActivityAddPersonalBinding
 import com.oranle.es.module.base.BaseActivity
 import com.oranle.es.module.base.IO
@@ -16,16 +16,9 @@ import com.oranle.es.module.base.launchWithLifecycle
 import com.oranle.es.module.ui.administrator.fragment.model.AddPersonalViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
-import androidx.core.content.ContextCompat.getSystemService
-import com.oranle.es.data.entity.ClassEntity
-import com.oranle.es.data.entity.User
-import com.oranle.es.data.sp.SpUtil
-import com.oranle.es.module.ui.senior.fragment.AddOrModifyManagerDialog
-import com.oranle.es.module.ui.senior.fragment.DialogClassViewModel
-import java.util.ArrayList
-
 
 class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
+
     lateinit var classSelectData: Array<String?>
     val sexArray = mutableListOf<String>()
     private var originUser: User? = null
@@ -39,11 +32,11 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
     }
 
     private fun initView() {
-        originUser = intent.getSerializableExtra("user")as? User
+        originUser = intent.getSerializableExtra("user") as? User
         viewModel = ViewModelProviders.of(this).get(AddPersonalViewModel::class.java)
         dataBinding.viewModel = viewModel
         dataBinding.lifecycleOwner = this
-        if(originUser!=null){
+        if (originUser != null) {
             viewModel.userLoginName.value = originUser!!.userName
             viewModel.name.value = originUser!!.alias
             viewModel.pwd.value = originUser!!.psw
@@ -52,9 +45,9 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
             viewModel.className.value = originUser!!.className
             viewModel.schoolName.value = originUser!!.schoolName
         }
-        GlobalScope.launchWithLifecycle(this, UI){
+        GlobalScope.launchWithLifecycle(this, UI) {
             val classes = withContext(IO) {
-               viewModel.getAllStudentByManager()
+                viewModel.getAllStudentByManager()
             }
             viewModel.classes.value = classes
             classSelectData = arrayOfNulls(classes.size)
@@ -64,26 +57,34 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
             classes.forEachIndexed { index, entity ->
                 array[index] = entity.className
                 classSelectData[index] = entity.className
+                if(originUser?.classId == entity.id) {
+                    currentSelect = index
+                }
             }
 
             val classAdapter =
-                ArrayAdapter<String>(this@AddPersonalActivity, android.R.layout.simple_list_item_1, array)
+                ArrayAdapter<String>(
+                    this@AddPersonalActivity,
+                    android.R.layout.simple_list_item_1,
+                    array
+                )
             dataBinding.spinnerClass.adapter = classAdapter
             dataBinding.spinnerClass.setSelection(currentSelect)
-            dataBinding.spinnerClass.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            dataBinding.spinnerClass.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel.className.value = classes[position]!!.className
-                    viewModel.classId.value = classes[position]!!.id
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        viewModel.className.value = classes[position]!!.className
+                        viewModel.classId.value = classes[position]!!.id
+                    }
                 }
-            }
         }
 
 
@@ -108,25 +109,26 @@ class AddPersonalActivity : BaseActivity<ActivityAddPersonalBinding>() {
             )
         dataBinding.spinnerSex.adapter = sexAdapter
 
-        dataBinding.spinnerClass.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        dataBinding.spinnerClass.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                viewModel.sex.value = sexArray[position]
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    viewModel.sex.value = sexArray[position]
+                }
             }
-        }
     }
 
-    fun onCommit(view: View){
-        if (originUser == null){
+    fun onCommit(view: View) {
+        if (originUser == null) {
             viewModel.onAddPersonal()
-        }else{
+        } else {
             viewModel.updateUser(originUser!!)
         }
     }

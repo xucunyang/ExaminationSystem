@@ -3,6 +3,7 @@ package com.oranle.es.module.ui.senior.fragment
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -163,11 +164,14 @@ class AddOrModifyManagerDialog(val cxt: Context) : DialogFragment() {
                             viewModel.updateUser(originUser!!)
                         }
 
-                    if (result) {
-                        dismiss()
-                    } else {
-                        toast("出错")
-                    }
+                    Handler().postDelayed(
+                        Runnable {
+                            if (result) {
+                                dismiss()
+                            } else {
+                                toast("出错")
+                            }
+                        }, 100)
 
                     Timber.d("vm data select ${viewModel.items.value}")
                 }
