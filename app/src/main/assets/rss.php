@@ -1,7 +1,7 @@
 <?php
 /**
  * RSS输出
- * @copyright (c) Emlog All Rights Reserved
+ * @怡享康复 www.njyxkf.com (c) Emlog All Rights Reserved
  */
 
 require_once './init.php';

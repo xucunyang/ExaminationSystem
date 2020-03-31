@@ -2,7 +2,7 @@
 /**
  * xmlrpc服务接口
  *
- * @copyright (c) Emlog All Rights Reserved
+ * @ (c) Emlog All Rights Reserved
  */
 
 ob_start();
