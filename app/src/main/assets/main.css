@@ -355,3 +355,15 @@ p.comment-top a{margin-left:10px;}
 
 /** Twitter **/
 .t_img{background:url(images/img.gif) no-repeat;padding: 0 7px;margin: 0 0 0 10px;}
+
+embed {
+    max-width:100% !important;
+
+    width:auto;
+
+    height:auto;
+
+    vertical-align:middle;
+
+    border:0;
+}
