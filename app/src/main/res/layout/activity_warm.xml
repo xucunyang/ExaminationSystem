@@ -15,7 +15,7 @@
             android:background="@color/white"
             android:gravity="center"
             android:paddingBottom="@dimen/dp_15"
-            android:text="创新能力"
+            android:text="基礎熱身訓練"
             android:textSize="@dimen/sp_25"
             android:textStyle="bold" />
 
