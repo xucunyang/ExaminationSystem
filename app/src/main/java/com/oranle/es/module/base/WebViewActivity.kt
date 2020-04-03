@@ -6,6 +6,7 @@ import android.net.http.SslError
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
+import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -40,7 +41,7 @@ class WebViewActivity : BaseActivity<LayoutWebviewBinding>() {
             }
             webView.webViewClient = (mWebViewClient)
             webView.webChromeClient = mWebChromeClient
-
+            webView.overScrollMode = View.OVER_SCROLL_NEVER
 
             includeTitle.tvTitle?.text = mTitle
             webView.loadUrl(url)
