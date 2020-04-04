@@ -47,6 +47,15 @@ class WebViewActivity : BaseActivity<LayoutWebviewBinding>() {
             webView.loadUrl(url)
         }
 
+        rootDataBinding.apply {
+            backBtn.setOnClickListener {
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                } else {
+                    onBackPressed()
+                }
+            }
+        }
     }
 
     private val mWebViewClient = object : WebViewClient() {

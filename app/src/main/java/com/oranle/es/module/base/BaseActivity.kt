@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +18,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.oranle.es.R
+import com.oranle.es.databinding.ActivityBaseBinding
+import com.oranle.es.module.ui.home.HomeActivity
+import kotlinx.android.synthetic.main.activity_base.view.*
 import timber.log.Timber
 
 
@@ -30,16 +35,88 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> :
 
     lateinit var dataBinding: ViewBinding
 
+    lateinit var rootDataBinding: ActivityBaseBinding
+
     private val progressUtil = ProgressUtil()
+
+    private var clickHomeNum = 0
+
+    private var clickBackNum = 0
+
+    private var firstClickTime = 0L
+
+    val VALID_TIME = 4000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dataBinding = DataBindingUtil.setContentView(this, layoutId)
+        rootDataBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_base);
+
+        dataBinding = DataBindingUtil.inflate<ViewBinding>(
+            LayoutInflater.from(this), layoutId,
+            null, false
+        )
+
+        rootDataBinding.root.container.addView(dataBinding.root)
         dataBinding.lifecycleOwner = this
+
+        initNavBar(rootDataBinding)
 
         checkPermission()
     }
+
+    private fun initNavBar(rootDataBinding: ActivityBaseBinding) {
+        rootDataBinding.apply {
+            backBtn.setOnClickListener {
+                if (this@BaseActivity !is HomeActivity) {
+                    onBackPressed()
+                } else {
+                    Timber.d("already back to home activity")
+                    if (firstClickTime != 0L && System.currentTimeMillis() - firstClickTime < VALID_TIME)
+                        clickBackNum++
+                    else {
+                        clickBackNum = 0
+                        Timber.i("time out back")
+                    }
+                }
+            }
+
+            homeBtn.setOnClickListener {
+                if (this@BaseActivity is HomeActivity) {
+                    Timber.i("already at home activity, don't need back to home activity")
+                    checkCanExitApp()
+                } else {
+                    this@BaseActivity.start<HomeActivity>()
+                }
+            }
+        }
+    }
+
+    private fun checkCanExitApp() {
+        clickHomeNum++
+        if (clickHomeNum == 0) {
+            firstClickTime = System.currentTimeMillis()
+        } else {
+            if (System.currentTimeMillis() - firstClickTime <= VALID_TIME) {
+                   if (clickHomeNum >= 5 && clickBackNum >= 3) {
+                    Timber.i("exit app")
+                    onBackPressed()
+                    resetClickNum()
+                }
+            } else {
+                firstClickTime = System.currentTimeMillis()
+                resetClickNum()
+                Timber.i("time out home")
+            }
+        }
+    }
+
+    private fun resetClickNum() {
+        clickHomeNum = 0
+        clickBackNum = 0
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

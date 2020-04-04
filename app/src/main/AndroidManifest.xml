@@ -30,6 +30,7 @@
         <activity
             android:name=".module.ui.home.HomeActivity"
             android:screenOrientation="landscape"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".module.ui.administrator.AdministratorActivity"
@@ -93,6 +94,7 @@
         <activity android:name=".module.ui.innovation.TopicActivity" />
         <activity android:name=".module.ui.innovation.WarmActivity" />
         <activity android:name=".module.ui.innovation.CombinedTrainActivity" />
+        <activity android:name=".module.ui.innovation.VisionActivity" />
 
         <receiver
             android:name=".module.receiver.MyReceiver"
