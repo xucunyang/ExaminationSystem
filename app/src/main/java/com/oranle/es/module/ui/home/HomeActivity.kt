@@ -17,6 +17,8 @@ import kotlin.system.exitProcess
 
 class HomeActivity : BaseActivity<ActivityMainBinding>() {
 
+    var hasShow = false
+
     override val layoutId: Int
         get() = R.layout.activity_main
 
@@ -28,7 +30,10 @@ class HomeActivity : BaseActivity<ActivityMainBinding>() {
         viewModel = getViewModel()
         initDialog(viewModel)
 
-        UpgradeUtil(supportFragmentManager).checkUpgrade()
+        if (!hasShow) {
+            UpgradeUtil(supportFragmentManager).checkUpgrade()
+            hasShow = true
+        }
     }
 
     fun onInnovationAbility(view: View) {

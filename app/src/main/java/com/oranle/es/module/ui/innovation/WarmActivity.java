@@ -29,7 +29,7 @@ public class WarmActivity extends BaseActivity {
     }
 
     public void onVisual(View view) {
-
+        startActivity(new Intent(this, VisionActivity.class));
     }
 
     public void onMathematical(View view) {

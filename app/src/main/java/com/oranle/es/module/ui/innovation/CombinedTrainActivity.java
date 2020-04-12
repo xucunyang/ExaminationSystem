@@ -37,10 +37,6 @@ public class CombinedTrainActivity extends BaseActivity<ActivityCombinedTrainBin
         startActivity(new Intent(this, DigitalActivity.class));
     }
 
-    public void onCombinedTrain(View view) {
-        startActivity(new Intent(this, WarmActivity.class));
-    }
-
     public void onStrain(View view) {
         startActivity(new Intent(this, StrainActivity.class));
     }

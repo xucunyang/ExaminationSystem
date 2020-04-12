@@ -281,3 +281,11 @@ fun getLayoutForMulti(context: Context, bean: MultiSmartSheet?, score: Float): V
     adviceTv.text = bean.advice
     return child
 }
+
+@BindingAdapter("app:bind_img")
+fun bindImg(iv: ImageView, drawable: Int) {
+
+    Timber.d("setOrientation $drawable")
+    iv.setImageResource(drawable)
+
+}
