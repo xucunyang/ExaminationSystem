@@ -367,3 +367,9 @@ embed {
 
     border:0;
 }
+
+ .music-box {
+    width:400px;
+    height:100px;
+    background-color:#fff;
+}
