@@ -99,7 +99,7 @@ abstract class BaseActivity<ViewBinding : ViewDataBinding> :
             firstClickTime = System.currentTimeMillis()
         } else {
             if (System.currentTimeMillis() - firstClickTime <= VALID_TIME) {
-                   if (clickHomeNum >= 5 && clickBackNum >= 3) {
+                if (clickHomeNum >= 5 && clickBackNum >= 3) {
                     Timber.i("exit app")
                     onBackPressed()
                     resetClickNum()
